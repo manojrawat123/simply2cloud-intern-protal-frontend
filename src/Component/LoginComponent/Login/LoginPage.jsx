@@ -1,25 +1,35 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import logo from "../../../image/simply2cloud.jpg";
-import PersonIcon from "@mui/icons-material/Person";
-import LockIcon from "@mui/icons-material/Lock";
+import inputLoginArr from './logininp';
+import { DataContext } from '../../../context';
+import { CircularProgress } from '@mui/material';
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import API_BASE_URL from '../../../config';
+
 
 const LoginPage = () => {
 
-  const inputTag = [{
-    type: "email",
-    id: "username",
-    name: "username",
-    required: true,
-    placeholder: "Enter your Email",
-    icon: <PersonIcon className="absolute top-2 border-r border-black peer-focus:text-violet-700" />
-  }, {
-    type: "password",
-    id: "password",
-    name: "password",
-    required: true,
-    placeholder: "Enter Your Password",
-    icon: <LockIcon className="absolute top-2 border-r border-black peer-focus:text-violet-700" />
-  }]
+  const [loginButton, setLoginButton] = useState(false);
+  const navigate = useNavigate();
+
+  const loginFunc = (e) => {
+    e.preventDefault();
+    setLoginButton(true);
+    axios.post(`${API_BASE_URL}/login/`, {
+      email: e.target.username.value,
+      password: e.target.password.value,
+    }).then((value)=>{
+        Cookies.set('token', value.data.token.access, { secure: true });
+        navigate("/");
+    }).catch((err)=>{
+      console.log(err);
+    }).finally(()=>{
+      setLoginButton(false);
+    })
+  }
+
 
   return (
     <>
@@ -39,14 +49,11 @@ const LoginPage = () => {
                         alt="logo"
                       />
                     </div>
-                    <form onSubmit={(e) => {
-                      e.preventDefault()
-                      console.log(e.target.values)
-                    }}>
+                    <form onSubmit={loginFunc}>
                       {/* Username input */}
-                      {inputTag.map((element, index) => {
+                      {inputLoginArr.map((element, index) => {
                         return (
-                          <div className="relative my-4" data-te-input-wrapper-init>
+                          <div className="relative my-4" data-te-input-wrapper-init key={index}>
                             <input
                               type={element.type}
                               id={element.id}
@@ -69,7 +76,7 @@ const LoginPage = () => {
                             background: "green",
                           }}
                         >
-                          Login
+                        {loginButton ?  <CircularProgress size={19} color='inherit'/> : "Login"}
                         </button>
                       </div>
                       {/* End of Loading Button */}

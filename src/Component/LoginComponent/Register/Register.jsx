@@ -3,6 +3,8 @@ import registerInputArr from './registerdata'
 import generateValidationSchema from './registerValidationSchema'
 import genrateInitalValues from '../../genrateInitialValues/InitialValues';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from 'axios';
+import API_BASE_URL from '../../../config';
 
 const Register = () => {
 
@@ -17,8 +19,19 @@ const Register = () => {
                     <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">Registeration Details</h2>
                     <Formik
                         initialValues={initialValues}
-                        onSubmit={() => {
-                            console.log("Student Registered");
+                        onSubmit={(values)=>{
+                            console.log(values)
+                            axios.post(`${API_BASE_URL}/register/`, {
+                                email: values.email,
+                                name: values.name,
+                                phone: values.phone,
+                                s2c_certified : values.certified, 
+                                password: values.password,
+                              }).then((value)=>{
+                                console.log(value.data);
+                              }).catch((err)=>{
+                                console.log(err);
+                              })
                         }}
                         validationSchema={validationSchema}
                     >
@@ -31,7 +44,7 @@ const Register = () => {
 
                                         if (element.type == "checkbox") {
                                             return (
-                                                <div className='lg:col-span-3 sm:col-span-2 col-span-1'>
+                                                <div className='lg:col-span-3 sm:col-span-2 col-span-1' key={index}>
                                                     <Field
                                                         type={element.type}
                                                         name={element.name}
@@ -45,7 +58,7 @@ const Register = () => {
                                             )
                                         }
                                         return (
-                                            <div className=''>
+                                            <div className='' key={index}>
                                                 <h4 className="text-blue-600 mb-2">{element.placeholder} <span className="text-red-500">*</span></h4>
                                                 <div className={"w-full relative col-span-1 "}>
                                                     {element.icon}
@@ -61,20 +74,15 @@ const Register = () => {
                                             </div>
                                         )
                                     })}
-
                                 </div>
                                     <div className="mb-4 mx-5">
                                         <button
                                             type="submit"
-
                                             className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
                                         >
                                             Register
                                         </button>
                                     </div>
-
-
-
                             </Form>
                         )}
                     </Formik>

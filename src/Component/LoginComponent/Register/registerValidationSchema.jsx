@@ -5,7 +5,7 @@ const generateValidationSchema = (inputFields) => {
 
   inputFields.forEach((field) => {
     validationObject[field.name] = field.required
-      ? Yup.string().required(`${field.label || field.name} is required`)
+      ? Yup.string().required(`${field.name} is required`)
       : Yup.string();
     
     if (field.type === 'email') {
