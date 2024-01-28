@@ -5,7 +5,7 @@ import Heading from '../../../RepeatedCode/tags/Heading'
 const Trending = () => {
     return (
 
-        
+        <div className='flex justify-center'>
         <div className=''>
              <Heading heading={"Trending at Simply 2 Cloud"} />
             
@@ -17,7 +17,7 @@ const Trending = () => {
                 })}
             </div>
         </div>
-
+        </div>
     )
 }
 

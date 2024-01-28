@@ -1,19 +1,20 @@
 import React from 'react';
 import Trending from './TrendingPage/Trending';
-import Heading from '../../RepeatedCode/tags/Heading';
 import Courses from './Courses/Courses';
 import Internship from './Internship/Internship';
+import ProductSlider from '../../Component/Slider/Slider';
+import StudentProfile from './StudentDetails/StudentProfile';
 
 const WelcomePage = () => {
   return (
     <div className='mx-8'>
-      <div className='flex justify-center'>
-        <Trending />
-      </div>
-      <Heading heading={"Welcome to Job Portals Of Simply 2 Cloud"} />
       
-<Internship />
+        <Trending />
+      <Internship />
      <Courses />
+      {/* <ProductSlider /> */}
+      <StudentProfile />
+      
     </div>
   )
 }
