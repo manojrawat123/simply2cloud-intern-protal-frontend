@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import logo from "../../../image/simply2cloud.jpg";
-import inputLoginArr from './logininp';
+import inputLoginArr from './loginInp';
 import { DataContext } from '../../../context';
 import { CircularProgress } from '@mui/material';
 import axios from "axios";
