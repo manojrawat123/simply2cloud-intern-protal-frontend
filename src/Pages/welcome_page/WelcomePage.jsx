@@ -5,8 +5,9 @@ import Internship from './Internship/Internship';
 import ProductSlider from '../../Component/Slider/Slider';
 import StudentProfile from './StudentDetails/StudentProfile';
 import { DataContext } from '../../context';
-import UserGreeting from './greeting_user/userGreeting';
 import SkeletonLoader from '../../Component/Loaders/SkeletonLoader';
+import UserGreeting from './greeting_user/UserGreeting'
+
 
 const WelcomePage = () => {
   const { profileFunc, userDetails } = useContext(DataContext);
