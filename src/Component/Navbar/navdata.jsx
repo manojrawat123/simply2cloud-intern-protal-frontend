@@ -1,5 +1,7 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-[
+
+const navItem = [
     {
       "id": 1,
       "label": "Home",
@@ -48,6 +50,15 @@
       "link": "/login",
       "visibility": "logout",
       "user": "any"
-    }
+    },
+    {
+      "id": 4,
+      "label": <AccountCircleIcon />,
+      "link": "/profile",
+      "visibility": "login",
+      "user": "user"
+    },
   ]
+
+  export default navItem;
   

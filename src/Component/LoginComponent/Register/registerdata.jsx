@@ -43,11 +43,19 @@ const design = "absolute top-2 border-r border-black peer-focus:text-violet-700"
           icon: <LockIcon className={design} />
         },
         {
-          type: "text",
+          type: "password",
+          id: "password2",
+          name: "password2",
+          required: true,
+          placeholder: "Confirm Password",
+          icon: <LockIcon className={design} />
+        },
+        {
+          type: "textarea",
           id: "location",
           name: "location",
           required: true,
-          placeholder: "Enter Your Location",
+          placeholder: "Enter Your Address",
           icon: <LocationOnIcon className={design} />
         },
         {

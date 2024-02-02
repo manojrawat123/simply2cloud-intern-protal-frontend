@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import logo from "../../../image/simply2cloud.jpg";
-import inputLoginArr from './loginInp';
 import { DataContext } from '../../../context';
 import { CircularProgress } from '@mui/material';
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from '../../../config';
+import inputLoginArr from './loginInpArr';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const LoginPage = () => {
@@ -22,8 +23,20 @@ const LoginPage = () => {
       password: e.target.password.value,
     }).then((value)=>{
         Cookies.set('token', value.data.token.access, { secure: true });
+        if(!Cookies.get("token")){
+          console.log("cookie not set");
+          Cookies.set('token', value.data.token.access);
+        }
+        Cookies.set('user_type', value.data.user_type);
         navigate("/");
     }).catch((err)=>{
+      if(err.response.status == 400){
+        toast.error("Invalid Info", {position : "top-center"})
+      }
+      console.log({
+        email: e.target.username.value,
+        password: e.target.password.value,
+      })
       console.log(err);
     }).finally(()=>{
       setLoginButton(false);
@@ -33,6 +46,7 @@ const LoginPage = () => {
 
   return (
     <>
+    <ToastContainer />
       <section className="gradient-form h-[100vh] bg-neutral-200  dark:bg-neutral-700">
         <div className=" h-full p-10">
           <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200 md:w-[55%] mx-auto">
