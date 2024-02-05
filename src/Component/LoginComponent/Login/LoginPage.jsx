@@ -30,14 +30,18 @@ const LoginPage = () => {
         Cookies.set('user_type', value.data.user_type);
         navigate("/");
     }).catch((err)=>{
-      if(err.response.status == 400){
-        toast.error("Invalid Info", {position : "top-center"})
+
+      console.log(err);
+      if(err.response){
+
+        if(err.response.status == 400){
+          toast.error("Invalid Info", {position : "top-center"})
+        }
       }
-      console.log({
-        email: e.target.username.value,
+        console.log({
+          email: e.target.username.value,
         password: e.target.password.value,
       })
-      console.log(err);
     }).finally(()=>{
       setLoginButton(false);
     })

@@ -2,7 +2,12 @@ const genrateInitalValues = (inputArr)=>{
     let initialValues = {};
 
     inputArr.forEach(element => {
-        initialValues[element.name] = ""
+        if(element.type == "array"){
+            initialValues[element.name] = []
+        }
+        else{
+            initialValues[element.name] = ""
+        }
     })
     return initialValues;
 }

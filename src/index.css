@@ -2,28 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn-preview,
-.btn-upload {
-  background-color: #3498db; /* Blue color */
-  color: #fff; /* White color */
-  padding: 0.5rem 1rem;
-  border: none;
+
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
 }
 
-.btn-edit,
-.btn-delete,
-.btn-add-more {
-  background-color: #3498db; /* Blue color */
-  color: #fff; /* White color */
-  padding: 0.5rem 1rem;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-delete {
-  background-color: #e74c3c; /* Red color */
-}
-
-.btn-add-more {
-  background-color: #2ecc71; /* Green color */
+::-webkit-scrollbar-thumb{
+  background-color: rgb(179, 179, 179);
 }

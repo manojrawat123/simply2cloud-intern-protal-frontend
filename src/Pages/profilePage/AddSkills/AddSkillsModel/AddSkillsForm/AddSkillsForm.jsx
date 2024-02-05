@@ -17,15 +17,17 @@ const AddSkillsForm = (props) => {
 
   const { profileFunc, userDetails } = useContext(DataContext);
 
+  
+
   useEffect(() => {
     if (!userDetails) {
       profileFunc();
     }
   });
 
+
   return (
     <div>
-     
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
@@ -56,7 +58,7 @@ const AddSkillsForm = (props) => {
                   toast.error("Internal Server Error", {
                     position: "top-center",
                   });
-                  console.log(err)
+                  console.log(err);
                 })
                 .finally(() => {
                   setAddButton(false);

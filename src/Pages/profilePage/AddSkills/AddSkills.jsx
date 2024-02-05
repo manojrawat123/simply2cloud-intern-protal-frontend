@@ -12,6 +12,7 @@ import 'reactjs-popup/dist/index.css';
 import AddSkillsModel from './AddSkillsModel/AddSkillsModel';
 import DeleteSkill from './DeleteSkill/DeleteSkill';
 import { ToastContainer } from 'react-toastify';
+import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
 
 const AddSkill = (props) => {
 
@@ -19,7 +20,6 @@ const AddSkill = (props) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteSkillObj, setDeleteSkillObj] = useState();
 
-  const skills = props.skills;
 
   return (
     <div className=" col-span-2">
@@ -31,12 +31,7 @@ const AddSkill = (props) => {
       <div className="text-blue-500 p-8 rounded-lg shadow-md text-left">
         <div className="mb-6  ">
           <NormalH heading={"Skill Info"} />
-          { skills?.length == 0 ? <><div className="flex items-center justify-center h-[10rem]">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2 text-gray-600">No Skills added !</h2>
-                    <p className="text-gray-500">Sorry, there is no data to display.</p>
-                </div>
-            </div></> :   skills.map((element, index) => {
+          { props.skills?.length == 0 ? <NoDataPage domain={"No Skills Added"}/>:   skills.map((element, index) => {
             return (
               <div key={index} className="flex items-center justify-between mb-2 border border-solid mt-4 p-4">
                 <span className="text-blue-500 font-bold">{element.skill_name}</span>&nbsp;&nbsp;

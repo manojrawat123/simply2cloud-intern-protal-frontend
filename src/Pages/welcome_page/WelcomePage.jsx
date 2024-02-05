@@ -8,7 +8,6 @@ import { DataContext } from '../../context';
 import SkeletonLoader from '../../Component/Loaders/SkeletonLoader';
 import UserGreeting from './greeting_user/UserGreeting'
 
-
 const WelcomePage = () => {
   const { profileFunc, userDetails } = useContext(DataContext);
     useEffect(()=>{

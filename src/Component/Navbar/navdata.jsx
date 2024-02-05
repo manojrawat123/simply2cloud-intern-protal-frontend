@@ -7,7 +7,7 @@ const navItem = [
       "label": "Home",
       "link": "/",
       "visibility": "login",
-      "user": "user"
+      "user": "both"
     },
     {
       "id": 2,
@@ -15,6 +15,13 @@ const navItem = [
       "link": "/jobs",
       "visibility": "login",
       "user": "user"
+    },
+    {
+      "id": 2,
+      "label": "Post Jobs",
+      "link": "/post-jobs",
+      "visibility": "login",
+      "user": "company"
     },
     {
       "id": 3,
