@@ -17,27 +17,28 @@ const JobPostForm = (props) => {
   const initialValues = genrateInitalValues(JobsPostFormArr);
   const [addButton, setAddButton] = useState(false);
 
-  const { companyProfileFunc, companyUserDetail, avaibleSkills } = useContext(DataContext);
+  const { companyProfileFunc, companyUserDetail, avaibleSkills, getJobsPostedByCompanyFunc } = useContext(DataContext);
   const token = Cookies.get("token");
 
-  useEffect(()=>{
-        companyProfileFunc();
-  },[])
+  useEffect(() => {
+    companyProfileFunc();
+  }, [])
 
-  const jobPostFunc = (values, { resetForm }) => {
+  const jobPostFunc = (values, { resetForm, setFieldValue }) => {
     setAddButton(true);
-    const data = values 
+    const data = values
     Object.entries(data).map(([key, item]) => {
       if (Array.isArray(item)) {
         if (key == "benefits" || key == "responsibilities") {
           data[key] = item.map((element) => element.value).join("\n");
         }
-        else{
-            data[key] = item.map(element => element.value);
+        else {
+          data[key] = item.map(element => element.value);
         }
       }
     });
-    data["company"] = companyUserDetail?.company_details?.id
+    data["company"] = Cookies.get("company");
+    data["company_user"] = Cookies.get("user");
     console.log(data);
     axios
       .post(`${API_BASE_URL}/job-post/`, data, {
@@ -47,19 +48,43 @@ const JobPostForm = (props) => {
       })
       .then(() => {
         toast.success("Job Posted Successfully", { position: "top-center" });
-        resetForm(); 
+        resetForm();
+        getJobsPostedByCompanyFunc()
+
+        try {
+
+          props.setIsModalOpen(false);
+
+
+        } catch (error) {
+
+        }
+
+
+        try {
+
+          setFieldValue("responsibilities", []);
+          setFieldValue("benifits", []);
+          setFieldValue("skills_required", []);
+          setFieldValue("skills_preferred", []);
+        } catch (error) {
+
+        }
+
       })
       .catch((err) => {
         console.log(err);
         toast.error("Internal Server Error", { position: "top-center" });
+      }).finally(() => {
+        setAddButton(false)
       });
   };
 
-  
+
 
   return (
     <div>
-    <ToastContainer />
+      <ToastContainer />
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
@@ -90,6 +115,7 @@ const JobPostForm = (props) => {
 
                           <CreatableSelect
                             isMulti
+                            value={values[element.name]}
                             placeholder={element.placeholder}
                             options={values[element.name]}
                             onChange={(selectedOptions) => {
@@ -129,6 +155,7 @@ const JobPostForm = (props) => {
                           </h4>
                           <Select
                             isMulti
+                            value={values[element.name]}
                             name={element.name}
                             options={avaibleSkills?.map((element, index) => {
                               return { value: element.id, label: element.name };

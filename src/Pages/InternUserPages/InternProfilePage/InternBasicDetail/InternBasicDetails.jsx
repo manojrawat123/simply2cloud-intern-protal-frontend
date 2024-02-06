@@ -6,19 +6,18 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
-import LHeading from '../../../RepeatedCode/tags/LHeading';
-import NormalH from '../../../RepeatedCode/tags/NormalH';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { Check } from '@mui/icons-material';
 import axios from 'axios';
-import API_BASE_URL from '../../../config';
 import { CircularProgress } from '@mui/material';
 import Cookies from 'js-cookie';
-import { DataContext } from '../../../context';
 import { toast } from 'react-toastify';
+import { DataContext } from '../../../../context';
+import NormalH from '../../../../RepeatedCode/tags/NormalH';
+import API_BASE_URL from '../../../../config';
 
-const BasicDetail = (props) => {
+const InternBasicDetail = (props) => {
 
     const [currentValue, setCurrentValue] = useState();
     const [editButton, setEditButton] = useState();
@@ -50,7 +49,7 @@ const BasicDetail = (props) => {
         const updateData = {
             [label]: currentValue
         }
-        console.log(updateData)
+        console.log(updateData);
         axios.put(`${API_BASE_URL}/profile/`, updateData, {
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -115,4 +114,4 @@ const BasicDetail = (props) => {
     );
 };
 
-export default BasicDetail;
+export default InternBasicDetail;

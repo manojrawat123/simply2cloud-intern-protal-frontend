@@ -3,6 +3,7 @@ import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
 import JobPostModal from './JobsPost/JobsPostModal/JobPostModal';
 import { DataContext } from '../../../context';
 import JobCard from './JobDisplay/DisplayJobsCard';
+import { ToastContainer } from 'react-toastify';
 
 const CompanyJobs = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -14,19 +15,24 @@ const CompanyJobs = () => {
     },[])
     return (
       <>
-  
+  <ToastContainer />
       <JobPostModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen}/>
-  
-        <div className="h-[50vh] mt-20">
 
-{
+
+      {
   jobPostedByCompany?.length == 0 ?
-  <NoDataPage domain={"No Job Posted By You"}/> :
-  jobPostedByCompany?.map(()=>{
-    return <JobCard />
-  })
+  <div className='h-[65vh] flex items-center justify-center'>
 
+  <NoDataPage domain={"No Job Posted By You"}/>
+  </div>
+   :
+   <div className='mx-[2rem] my-[2rem] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10'>
+  {jobPostedByCompany?.map((element, index)=>{
+    return <JobCard key={index} jobs={element}/>
+  })}
+  </div>
 }
+  
   
           <div className="flex justify-center items-center py-4">
             <button
@@ -38,7 +44,6 @@ const CompanyJobs = () => {
              Post Jobs
             </button>
           </div>
-        </div>
       </>
     );
 }

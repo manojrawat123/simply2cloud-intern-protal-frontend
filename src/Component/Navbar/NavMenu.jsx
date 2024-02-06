@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { CloseOutlined } from '@mui/icons-material';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import Cookies from 'js-cookie';
 import navItem from './navdata';
+import { DataContext } from '../../context';
 
 
 const NavMenu = () => {
-
     const [mobMenuVis, setMobileVis] = useState(false);
+    const { logoutFunc } = useContext(DataContext);
     const location = useLocation();
-    const navigate = useNavigate();
 
     return (
         <nav
@@ -48,6 +48,7 @@ const NavMenu = () => {
                                 </NavLink>
                             )
                         }
+                        // Nav Logic for Company User
                         else if (Cookies.get('token') && element.visibility == "login" && (element.user == Cookies.get("user_type") || element.user == "both")) {
                             return (
                                 <NavLink to={element.link} key={index}
@@ -60,9 +61,7 @@ const NavMenu = () => {
                             return (
                                 <button
                                     onClick={() => {
-                                        Cookies.remove('token');
-                                        Cookies.remove('user_type')
-                                        navigate("/login")
+                                       logoutFunc()
                                     }}
                                     className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${element.link == "signup" ? 'lg:ml-auto' : "lg:ml-8"} ${element.link == location.pathname ? ' bg-blue-700 text-white' : ' '}`}>
 

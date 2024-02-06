@@ -5,7 +5,7 @@ import { Star } from "@mui/icons-material";
 
 const iconCss = `absolute top-2 border-r border-black peer-focus:text-violet-700`;
 
-const inputSkillsArr = [
+const internSkillInputArr = [
   {
     type: "text",
     id: "skillName",
@@ -41,4 +41,4 @@ const inputSkillsArr = [
   }
 ];
 
-export default inputSkillsArr;
+export default internSkillInputArr;

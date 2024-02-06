@@ -2,19 +2,18 @@
 import React, { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import LHeading from '../../../RepeatedCode/tags/LHeading';
 import { Rating } from '@mui/material';
-import NormalH from '../../../RepeatedCode/tags/NormalH';
 import { NavLink } from 'react-router-dom';
 // import AddSkillModel from './AddSkillsModel/AddSkillsModel';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import AddSkillsModel from './AddSkillsModel/AddSkillsModel';
-import DeleteSkill from './DeleteSkill/DeleteSkill';
 import { ToastContainer } from 'react-toastify';
-import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
+import NormalH from '../../../../RepeatedCode/tags/NormalH';
+import InternAddSkillModel from './InternSkillAddModel/InternAddSkillModel';
+import DeleteInternSkills from './InternDeleteSkills/InternSkillDelete';
+import NoDataPage from '../../../../Component/NoDataPage/NoDataPage';
 
-const AddSkill = (props) => {
+const InternSkills = (props) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -25,13 +24,14 @@ const AddSkill = (props) => {
     <div className=" col-span-2">
       {/* Modal of Add Skills Form Modal */}
       <ToastContainer />
-      <AddSkillsModel isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <InternAddSkillModel isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       {/* End Add Skill Form Modal */}
 
       <div className="text-blue-500 p-8 rounded-lg shadow-md text-left">
         <div className="mb-6  ">
           <NormalH heading={"Skill Info"} />
-          { props.skills?.length == 0 ? <NoDataPage domain={"No Skills Added"}/>:   skills.map((element, index) => {
+          { props.skills?.length == 0 ? <NoDataPage domain={"No Skills Added"}/>:  
+           props.skills?.map((element, index) => {
             return (
               <div key={index} className="flex items-center justify-between mb-2 border border-solid mt-4 p-4">
                 <span className="text-blue-500 font-bold">{element.skill_name}</span>&nbsp;&nbsp;
@@ -78,7 +78,7 @@ const AddSkill = (props) => {
 
       {/* delete Modal  */}
       {showConfirmDelete && (
-        <DeleteSkill setShowConfirmDelete={setShowConfirmDelete} selectedSkillObj={deleteSkillObj} />
+        <DeleteInternSkills setShowConfirmDelete={setShowConfirmDelete} selectedSkillObj={deleteSkillObj} />
       )}
       {/* End Delete */}
 
@@ -86,4 +86,4 @@ const AddSkill = (props) => {
   );
 };
 
-export default AddSkill;
+export default InternSkills;

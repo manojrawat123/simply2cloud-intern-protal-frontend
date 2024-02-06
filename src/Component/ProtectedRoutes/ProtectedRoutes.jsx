@@ -7,7 +7,7 @@ const ProtectedRoutes = () => {
   const navigate = useNavigate();
 
     useEffect(()=>{
-        if (!Cookies.get('token')){
+        if (!Cookies.get('token') || !Cookies.get("user") == "user"){
             return navigate("/login");
         }
     },[])

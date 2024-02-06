@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import inputSkillsArr from "./AddSkillsArr";
-import generateValidationSchema from "../../../../../Component/GenrateValidationSchema/genrateValidationSchema";
-import genrateInitalValues from "../../../../../Component/genrateInitialValues/InitialValues";
 import { CircularProgress, Rating } from "@mui/material";
 import axios from "axios";
-import API_BASE_URL from "../../../../../config";
 import Cookies from "js-cookie";
-import { DataContext } from "../../../../../context";
 import { ToastContainer, toast } from "react-toastify";
+import generateValidationSchema from "../../../../../../Component/GenrateValidationSchema/genrateValidationSchema";
+import genrateInitalValues from "../../../../../../Component/genrateInitialValues/InitialValues";
+import internSkillInputArr from "./InternSkillInputArr";
+import API_BASE_URL from "../../../../../../config";
+import { DataContext } from "../../../../../../context";
 
-const AddSkillsForm = (props) => {
-  const validationSchema = generateValidationSchema(inputSkillsArr);
-  const initialValues = genrateInitalValues(inputSkillsArr);
+const InternAddSkillsForm = (props) => {
+  const validationSchema = generateValidationSchema(internSkillInputArr);
+  const initialValues = genrateInitalValues(internSkillInputArr);
   const [addButton, setAddButton] = useState();
 
   const { profileFunc, userDetails } = useContext(DataContext);
@@ -76,7 +76,7 @@ const AddSkillsForm = (props) => {
             }) => (
               <Form>
                 <div className="mb-4 grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
-                  {inputSkillsArr.map((element, index) => {
+                  {internSkillInputArr.map((element, index) => {
                     if (element.type == "select") {
                       return (
                         <div className="" key={index}>
@@ -155,4 +155,4 @@ const AddSkillsForm = (props) => {
   );
 };
 
-export default AddSkillsForm;
+export default InternAddSkillsForm;

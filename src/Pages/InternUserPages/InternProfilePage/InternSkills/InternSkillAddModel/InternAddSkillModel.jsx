@@ -1,12 +1,12 @@
 import Modal from "react-modal";
 import React from 'react'
 import { Close } from "@mui/icons-material";
-import AddSkillsForm from "./AddSkillsForm/AddSkillsForm";
+import InternAddSkillsForm from "./AddSkillForm/InternAddSkillForm";
 
 
 
 
-const AddSkillsModel = (props) => {
+const InternAddSkillModel = (props) => {
     return (
         <>
             <Modal
@@ -32,7 +32,7 @@ const AddSkillsModel = (props) => {
                     <Close />
                 </div>
 
-                <AddSkillsForm setIsModalOpen={props.setIsModalOpen}/>
+                <InternAddSkillsForm setIsModalOpen={props.setIsModalOpen}/>
 
             </Modal>
 
@@ -40,4 +40,4 @@ const AddSkillsModel = (props) => {
     )
 }
 
-export default AddSkillsModel
+export default InternAddSkillModel

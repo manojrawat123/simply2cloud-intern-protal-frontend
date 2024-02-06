@@ -27,7 +27,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard({ jobs }) {
+export default function JobCard({ jobs }) {
 
   const [expanded, setExpanded] = React.useState(false);
 
@@ -138,3 +138,4 @@ export default function RecipeReviewCard({ jobs }) {
     </Card>
   );
 }
+

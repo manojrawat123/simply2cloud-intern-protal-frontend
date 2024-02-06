@@ -18,15 +18,22 @@ const navItem = [
     },
     {
       "id": 2,
-      "label": "Post Jobs",
+      "label": "Manage Jobs",
       "link": "/post-jobs",
       "visibility": "login",
       "user": "company"
     },
     {
+      "id": 2,
+      "label": "Post New Jobs",
+      "link": "/post-new-jobs",
+      "visibility": "login",
+      "user": "company"
+    },
+    {
       "id": 3,
-      "label": "About Us",
-      "link": "/about",
+      "label": "Add Skills",
+      "link": "/addskill",
       "visibility": "login",
       "user": "user"
     },

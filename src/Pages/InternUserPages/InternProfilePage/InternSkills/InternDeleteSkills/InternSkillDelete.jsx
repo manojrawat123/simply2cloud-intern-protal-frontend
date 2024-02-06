@@ -1,12 +1,12 @@
 import { CircularProgress } from '@mui/material'
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
-import API_BASE_URL from '../../../../config';
+import React, { useContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
-import { DataContext } from '../../../../context';
+import API_BASE_URL from '../../../../../config';
+import { DataContext } from '../../../../../context';
 
-const DeleteSkill = (props) => {
+const DeleteInternSkills = (props) => {
   const [deleteButton, setDeleteButton] = useState(false);
   const token = Cookies.get("token")
   const { profileFunc } = useContext(DataContext);
@@ -64,4 +64,4 @@ const DeleteSkill = (props) => {
   )
 }
 
-export default DeleteSkill
+export default DeleteInternSkills
