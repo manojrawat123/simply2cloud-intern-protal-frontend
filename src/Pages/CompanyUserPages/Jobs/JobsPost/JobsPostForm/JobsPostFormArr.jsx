@@ -11,11 +11,19 @@ const iconCss = `absolute top-2 border-r border-black peer-focus:text-violet-700
 
 const jobFields = [
   {
+    type: "dynamic",
+    id: "job_categoery",
+    name: "job_categoery",
+    required: true,
+    placeholder: "Please Select Job Title",
+    icon: <WorkIcon className={iconCss} />,
+  },
+  {
     type: "text",
     id: "job_title",
     name: "job_title",
     required: true,
-    placeholder: "Enter Job Title",
+    placeholder: "Enter Job SubTitle",
     icon: <WorkIcon className={iconCss} />,
   },
   {

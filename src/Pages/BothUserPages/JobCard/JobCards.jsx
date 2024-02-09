@@ -8,13 +8,20 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import { Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@mui/material';
+import { Table, TableHead, TableRow, TableCell, TableBody, Typography, CircularProgress } from '@mui/material';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { format } from "date-fns";
+import Cookies from 'js-cookie';
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
+import axios from 'axios';
+import API_BASE_URL from '../../../config';
+import { ToastContainer, toast } from 'react-toastify';
+import InternJobProfileModal from '../../InternUserPages/InPrfPage/InJobProfile/InJobProfileDis/InJobProfModl/InJobProfModal';
+import { DataContext } from '../../../context';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,6 +37,44 @@ const ExpandMore = styled((props) => {
 export default function JobCard({ jobs }) {
 
   const [expanded, setExpanded] = React.useState(false);
+  const [applyButton, setApplyButton] = React.useState(false);
+  const profile_id = Cookies.get('profile_id');
+  const {
+    getJobsForStudentFunc
+  } = React.useContext(DataContext);
+
+  const applyJobFunc = () => {
+    setApplyButton(true);
+
+    const user_id = Cookies.get('user');
+    const token = Cookies.get('token');
+    
+    axios.post(`${API_BASE_URL}/intern-job-apply/`, {
+      user: user_id,
+      job: jobs.id,
+      company_user : jobs.company.company_user.id,
+      intern_job_profile : profile_id
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(() => {
+        getJobsForStudentFunc();
+        toast.success("Skill Added Sucessfully!", {
+          position: "top-center",
+        });
+      })
+      .catch((err) => {
+        toast.error("Internal Server Error", {
+          position: "top-center",
+        });
+        console.log(err);
+      })
+      .finally(() => {
+        setApplyButton(false);
+      });
+  }
 
   const fieldsArray = {
     'Location': jobs.location,
@@ -51,7 +96,6 @@ export default function JobCard({ jobs }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             {jobs.company.company_name.substring(0, 1)}
@@ -59,7 +103,7 @@ export default function JobCard({ jobs }) {
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            {Cookies.get("user_type") == "company" ? <MoreVertIcon /> : null}
           </IconButton>
         }
 
@@ -86,25 +130,40 @@ export default function JobCard({ jobs }) {
             )
           }
           )}
+
         </table>
+
 
 
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
+
+
+        {/* <IconButton aria-label="share">
           <ShareIcon />
+        </IconButton> */}
+
+        {Cookies.get("user_type") == "user" ? 
+        profile_id == "undefined" ? <InternJobProfileModal fromJobPage={true} applyJobFunc={applyJobFunc} applyButton={applyButton}/> :
+          <div className='text-center mx-auto'>
+            <button className="px-4 py-2 font-semibold border border-blue-700 border-solid  outline-blue-500  text-blue-500 rounded hover:bg-blue-700 hover:text-white"
+              onClick={applyJobFunc}
+            >
+              {applyButton ? <CircularProgress color='inherit' size={19} /> : "Apply Now"}
+            </button>
+          </div> : ""}
+        <IconButton aria-label="add to favorites">
+          <TurnedInNotIcon />
         </IconButton>
-        <ExpandMore
+
+        {/* <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
           <ExpandMoreIcon />
-        </ExpandMore>
+        </ExpandMore> */}
       </CardActions>
       {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

@@ -15,6 +15,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { format } from "date-fns";
+import Heading from '../../../RepeatedCode/tags/Heading';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,21 +28,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard({ jobs }) {
+export default function InternProfileCard({ profile, isCompany }) {
 
   const [expanded, setExpanded] = React.useState(false);
+  console.log(profile)
 
   const fieldsArray = {
-    'Location': jobs.location,
-    'Posted at': format(new Date(jobs.posted_at), "dd MMM yy h a"),
-    'Application Deadline': format(new Date(jobs.application_deadline), "dd MMM yy"),
-    'Education': jobs.education,
-    'Required Experience': jobs.experience,
-    'Salary': jobs.salary,
-    // 'Skills Required': jobs.skills,
-    // 'Skills Preferred': jobs.,
-    // 'Responsibilities': jobs.respon,
-    // 'Benefits': jobs.
+    'Expected Salary': profile.expected_salary,
+    'Year Of Experience': `${profile.experience_years} Year ++`,
   };
 
   const handleExpandClick = () => {
@@ -49,12 +43,11 @@ export default function RecipeReviewCard({ jobs }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} className='border-2 rounded-2xl'>
       <CardHeader
-
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {jobs.company.company_name.substring(0, 1)}
+            {/* {jobs.company.company_name.substring(0, 1)} */}
           </Avatar>
         }
         action={
@@ -64,17 +57,20 @@ export default function RecipeReviewCard({ jobs }) {
         }
 
         title={<Typography variant="div" fontWeight="bold" className='text-lg'>
-          {jobs.job_title}
+          {isCompany ? profile?.intern?.name : profile.title}
         </Typography>}
-        subheader={`Posted On ${format(new Date(jobs.updated_at), "dd MMM yy h a")}`}
+        subheader={`${isCompany ? `${profile.job_categoery.job_category} (${profile.title})` : `(${profile.job_categoery.job_category})`}`}
       />
       <CardContent>
         <table>
           {Object.entries(fieldsArray).map(([key, value]) => {
             return (
+
+
               <tr key={key} variant='tr'>
                 <td key={key} variant='th' fontSize={"1rem"} className='font-bold' >
                   {key}&nbsp;&nbsp;
+
                 </td>
                 <td variant='td' fontSize={"1rem"} fontWeight="400">
                   {value}
@@ -83,8 +79,15 @@ export default function RecipeReviewCard({ jobs }) {
             )
           }
           )}
-        </table>
 
+
+        </table>
+        <div>
+          <h1 className='font-bold underline text-center mt-4'>Your Details</h1>
+          {profile.desc.split('\n').map((element, index) => {
+            return <div key={index}>{index + 1}. {element}</div>
+          })}
+        </div>
 
       </CardContent>
       <CardActions disableSpacing>
@@ -106,3 +109,4 @@ export default function RecipeReviewCard({ jobs }) {
     </Card>
   );
 }
+

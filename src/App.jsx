@@ -15,10 +15,14 @@ import Cookies from "js-cookie";
 import RenderAlgo from "./Pages/welcome_page/RenderAlgo";
 import CompanyProtectedRoutes from "./Component/ProtectedRoutes/CompanyProtectedRoutes";
 import CompanyJobs from "./Pages/CompanyUserPages/Jobs/CompanyJobs";
-import UserJobs from "./Pages/InternUserPages/InternUserJobs/UserJobs";
 import JobPostForm from "./Pages/CompanyUserPages/Jobs/JobsPost/JobsPostForm/JobPostForm";
-import InternProfilePage from "./Pages/InternUserPages/InternProfilePage/InternProfilePage";
-import InternAddSkillsForm from "./Pages/InternUserPages/InternProfilePage/InternSkills/InternSkillAddModel/AddSkillForm/InternAddSkillForm";
+import InternAddSkillsForm from "./Pages/InternUserPages/InPrfPage/InSkills/InSkillAddModel/AddSkillForm/InAddSkillForm";
+import InternProfilePage from "./Pages/InternUserPages/InPrfPage/InProfilePage";
+import UserJobs from "./Pages/InternUserPages/InUserJobs/UserJobs";
+import JobApplications from "./Pages/CompanyUserPages/JobApplication/JobApplications";
+import ApprovedApplication from "./Pages/CompanyUserPages/JobApplication/ApprovedApplication/ApprovedApplication";
+import RejectedApplication from "./Pages/CompanyUserPages/JobApplication/RejectedApplication/RejectedApplication";
+
 
 function App() {
   return (
@@ -52,12 +56,20 @@ function App() {
 
        
         {/* Company Routes */}
-
         <Route path="" Component={CompanyProtectedRoutes}>
           <Route path="/post-jobs" Component={CompanyJobs} />
         </Route>
         <Route path="" Component={CompanyProtectedRoutes}>
           <Route path="/post-new-jobs" Component={JobPostForm} />
+        </Route>
+        <Route path="" Component={CompanyProtectedRoutes}>
+          <Route path="/job-application" Component={JobApplications} />
+        </Route>
+        <Route path="" Component={CompanyProtectedRoutes}>
+          <Route path="/job-application-rejected" Component={RejectedApplication} />
+        </Route>
+        <Route path="" Component={CompanyProtectedRoutes}>
+          <Route path="/job-application-approved" Component={ApprovedApplication} />
         </Route>
       </Routes>
 

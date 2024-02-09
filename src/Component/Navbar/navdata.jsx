@@ -31,6 +31,27 @@ const navItem = [
       "user": "company"
     },
     {
+      "id": 2,
+      "label": "Job Application",
+      "link": "/job-application",
+      "visibility": "login",
+      "user": "company"
+    },
+    // {
+    //   "id": 2,
+    //   "label": "Rejected Application",
+    //   "link": "/job-application-rejected",
+    //   "visibility": "login",
+    //   "user": "company"
+    // },
+    // {
+    //   "id": 2,
+    //   "label": "Approved Application",
+    //   "link": "/job-application-approved",
+    //   "visibility": "login",
+    //   "user": "company"
+    // },
+    {
       "id": 3,
       "label": "Add Skills",
       "link": "/addskill",

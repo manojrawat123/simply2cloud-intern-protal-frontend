@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import React from 'react'
 import { Close } from "@mui/icons-material";
-import InternAddSkillsForm from "./AddSkillForm/InternAddSkillForm";
+import InternAddSkillsForm from "./AddSkillForm/InAddSkillForm";
 
 
 

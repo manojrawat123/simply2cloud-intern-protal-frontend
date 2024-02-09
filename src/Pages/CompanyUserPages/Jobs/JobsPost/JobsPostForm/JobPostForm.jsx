@@ -17,29 +17,35 @@ const JobPostForm = (props) => {
   const initialValues = genrateInitalValues(JobsPostFormArr);
   const [addButton, setAddButton] = useState(false);
 
-  const { companyProfileFunc, companyUserDetail, avaibleSkills, getJobsPostedByCompanyFunc } = useContext(DataContext);
+  const {
+    companyProfileFunc,
+    companyUserDetail,
+    avaibleSkills,
+    getJobsPostedByCompanyFunc,
+    jobCategoeryOpt,
+  } = useContext(DataContext);
   const token = Cookies.get("token");
 
   useEffect(() => {
     companyProfileFunc();
-  }, [])
+  }, []);
 
   const jobPostFunc = (values, { resetForm, setFieldValue }) => {
     setAddButton(true);
-    const data = values
+    const data = values;
     Object.entries(data).map(([key, item]) => {
       if (Array.isArray(item)) {
         if (key == "benefits" || key == "responsibilities") {
           data[key] = item.map((element) => element.value).join("\n");
-        }
-        else {
-          data[key] = item.map(element => element.value);
+        } else {
+          data[key] = item.map((element) => element.value);
         }
       }
     });
     data["company"] = Cookies.get("company");
     data["company_user"] = Cookies.get("user");
-    console.log(data);
+    data["job_categoery"] = data["job_categoery"].value
+    console.log(values);
     axios
       .post(`${API_BASE_URL}/job-post/`, data, {
         headers: {
@@ -49,38 +55,30 @@ const JobPostForm = (props) => {
       .then(() => {
         toast.success("Job Posted Successfully", { position: "top-center" });
         resetForm();
-        getJobsPostedByCompanyFunc()
-
+        getJobsPostedByCompanyFunc();
         try {
-
           props.setIsModalOpen(false);
+        } catch (error) {}
 
+        
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(values.job_categoery);
+        
+        toast.error("Internal Server Error", { position: "top-center" });
+      })
+      .finally(() => {
 
-        } catch (error) {
-
-        }
-
-
+        setAddButton(false);
         try {
-
           setFieldValue("responsibilities", []);
           setFieldValue("benifits", []);
           setFieldValue("skills_required", []);
           setFieldValue("skills_preferred", []);
-        } catch (error) {
-
-        }
-
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Internal Server Error", { position: "top-center" });
-      }).finally(() => {
-        setAddButton(false)
+        } catch (error) {}
       });
   };
-
-
 
   return (
     <div>
@@ -147,6 +145,45 @@ const JobPostForm = (props) => {
                     }
 
                     if (element.type == "dynamic") {
+                      if (element.name == "job_categoery") {
+                        return (
+                          <div className="" key={index}>
+                            <h4 className="text-blue-600 mb-2">
+                              {element.placeholder}
+                              <span className="text-red-500">*</span>
+                            </h4>
+                            <div className={"w-full relative col-span-1 "}>
+                              {element.icon}
+                              <Select
+                                 name={element.name}
+                                 noOptionsMessage={"Press Enter"}
+                                 value={values[element.name]}
+                                 options={jobCategoeryOpt?.map(
+                                   (skillElement, index) => {
+                                     return {
+                                       value: skillElement.id,
+                                       label: skillElement.job_category,
+                                     };
+                                   }
+                                 )}
+                                 onChange={(selectedOptions) => {
+                                  console.log(selectedOptions)
+                                   setFieldValue(element.name, selectedOptions);
+                                 }}
+                                 placeholder={element.placeholder}
+                                 required
+                                 className=""
+                              />
+                            </div>
+                            <ErrorMessage
+                              name={element.name}
+                              component="div"
+                              className="text-red-500"
+                            />
+                          </div>
+                        );
+                      }
+
                       return (
                         <div className="" key={index}>
                           <h4 className="text-blue-600 mb-2">
@@ -155,21 +192,34 @@ const JobPostForm = (props) => {
                           </h4>
                           <Select
                             isMulti
-                            value={values[element.name]}
                             name={element.name}
-                            options={avaibleSkills?.map((element, index) => {
-                              return { value: element.id, label: element.name };
-                            })}
-                            onChange={(selectedOptions) =>
-                              setFieldValue(element.name, selectedOptions)
-                            }
+                            noOptionsMessage={"Press Enter"}
+                            value={values[element.name]}
+                            options={avaibleSkills?.map(
+                              (skillElement, index) => {
+                                return {
+                                  value: skillElement.id,
+                                  label: skillElement.name,
+                                };
+                              }
+                            )}
+                            onChange={(selectedOptions) => {
+                              setFieldValue(element.name, selectedOptions);
+                            }}
                             placeholder={element.placeholder}
                             required
                             className=""
                           >
                             <option value="">Please Select</option>
                             {element.options?.map((elementOpt, index) => (
-                              <option value={elementOpt} key={index}>
+                              <option
+                                value={
+                                  (element.name = "job_categoery"
+                                    ? elementOpt.value
+                                    : elementOpt)
+                                }
+                                key={index}
+                              >
                                 {elementOpt}
                               </option>
                             ))}

@@ -9,9 +9,9 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { ToastContainer } from 'react-toastify';
 import NormalH from '../../../../RepeatedCode/tags/NormalH';
-import InternAddSkillModel from './InternSkillAddModel/InternAddSkillModel';
-import DeleteInternSkills from './InternDeleteSkills/InternSkillDelete';
 import NoDataPage from '../../../../Component/NoDataPage/NoDataPage';
+import InternAddSkillModel from './InSkillAddModel/InAddSkillModel';
+import DeleteInternSkills from './InDelSkills/InSkillDelete';
 
 const InternSkills = (props) => {
 

@@ -69,7 +69,7 @@ const InternBasicDetail = (props) => {
         <div className=" col-span-1">
 
             {/* <ProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} currentEditValue={currentEditValue} /> */}
-            <div className="text-blue-500 p-8 rounded-lg shadow-md text-left">
+            <div className="text-blue-500 p-8 rounded-xl shadow-md text-left border-2">
                 <div className="mb-6  ">
                     <NormalH heading={"Contact Info"} />
                     {Object.entries(user_basic_data).map(([key, element], index) => (
@@ -102,9 +102,9 @@ const InternBasicDetail = (props) => {
                                     </div>
                                 </Popup>
 
-                                <button>
+                                {/* <button>
                                     <DeleteIcon className="text-red-500" />
-                                </button>
+                                </button> */}
                             </span>
                         </div>
                     ))}

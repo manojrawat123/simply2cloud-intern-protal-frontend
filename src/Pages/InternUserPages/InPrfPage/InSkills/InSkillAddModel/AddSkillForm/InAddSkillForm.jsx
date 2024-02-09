@@ -6,9 +6,9 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import generateValidationSchema from "../../../../../../Component/GenrateValidationSchema/genrateValidationSchema";
 import genrateInitalValues from "../../../../../../Component/genrateInitialValues/InitialValues";
-import internSkillInputArr from "./InternSkillInputArr";
 import API_BASE_URL from "../../../../../../config";
 import { DataContext } from "../../../../../../context";
+import internSkillInputArr from "./InSkillInpArr";
 
 const InternAddSkillsForm = (props) => {
   const validationSchema = generateValidationSchema(internSkillInputArr);

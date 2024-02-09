@@ -14,13 +14,19 @@ export default function InternJobSearchByLocation(props) {
     <Autocomplete
       value={value}
       onChange={(event, newValue) => {
-        props.setSelectedLocation(newValue.location_slug);
+        props.setSelectedLocation(newValue?.location_slug);
       if (!newValue){
-        props.setIsFilter(false);
+        if (!props.selectedTitles && !props.selectedCategoery){
+          props.setIsFilter(false);
+        }
+        else{
+          jobSearchFilterFunc(props.selectedCategoery?.id, props?.selectedTitles, null, props.setFilteredJobs);  
+        }
       }
       else{
         props.setIsFilter(true);
-        jobSearchFilterFunc(props.selectedTitle, newValue.location_slug,props.setFilteredJobs);
+        console.log(props.selectedCategoery)
+        jobSearchFilterFunc(props?.selectedCategoery?.id, props.selectedTitle, newValue.location_slug, props.setFilteredJobs);
       }
         
       
@@ -78,10 +84,3 @@ export default function InternJobSearchByLocation(props) {
     />
   );
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { location_slug: 'The Shawshank Redemption', year: 1994 },
-  { location_slug: 'The Godfather', year: 1972 },
-  { location_slug: 'The Godfather: Part II', year: 1974 },
-];

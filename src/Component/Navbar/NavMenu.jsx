@@ -59,14 +59,14 @@ const NavMenu = () => {
                         }
                         else if (Cookies.get('token') && element.user == "button") {
                             return (
-                                <button
+                                <div
                                     onClick={() => {
                                        logoutFunc()
                                     }}
                                     className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${element.link == "signup" ? 'lg:ml-auto' : "lg:ml-8"} ${element.link == location.pathname ? ' bg-blue-700 text-white' : ' '}`}>
 
                                     {element.label}
-                                </button>
+                                </div>
                             )
                         }
                     })}
