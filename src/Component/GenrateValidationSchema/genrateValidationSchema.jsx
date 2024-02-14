@@ -32,8 +32,8 @@ const generateValidationSchema = (inputFields) => {
     }
     if (field.type == "dynamic" || field.type == "array"){
 
-      if (field.name == "job_categoery"){
-        validationObject[field.name] = Yup.object()
+      if (field.name == "job_categoery" || field.name == "sub_categoery" || field.name == "skill_name"){
+        validationObject[field.name] = Yup.object();
       }
       else{
         validationObject[field.name] = Yup.array().min(1, "Please Select One Skill");

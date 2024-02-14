@@ -15,7 +15,15 @@ const jobFields = [
     id: "job_categoery",
     name: "job_categoery",
     required: true,
-    placeholder: "Please Select Job Title",
+    placeholder: "Please Select Job Categoery",
+    icon: <WorkIcon className={iconCss} />,
+  },
+  {
+    type: "dynamic",
+    id: "sub_categoery",
+    name: "sub_categoery",
+    required: true,
+    placeholder: "Please Select Job SubCategoery",
     icon: <WorkIcon className={iconCss} />,
   },
   {
@@ -23,7 +31,7 @@ const jobFields = [
     id: "job_title",
     name: "job_title",
     required: true,
-    placeholder: "Enter Job SubTitle",
+    placeholder: "Enter Job Title",
     icon: <WorkIcon className={iconCss} />,
   },
   {

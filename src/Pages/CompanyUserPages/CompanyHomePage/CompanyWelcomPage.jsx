@@ -8,7 +8,7 @@ import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
 
 const CompanyWelcomPage = () => {
 
-  const {companyProfileFunc, companyUserDetail} = useContext(DataContext);
+  const { companyProfileFunc, companyUserDetail } = useContext(DataContext);
 
   useEffect(()=>{
       companyProfileFunc();

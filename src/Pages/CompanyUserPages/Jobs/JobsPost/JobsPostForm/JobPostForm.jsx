@@ -15,19 +15,28 @@ import API_BASE_URL from "../../../../../config";
 const JobPostForm = (props) => {
   const validationSchema = generateValidationSchema(JobsPostFormArr);
   const initialValues = genrateInitalValues(JobsPostFormArr);
+  const [filterSubCategoery,setFilterSubCategoery] = useState([]);
   const [addButton, setAddButton] = useState(false);
 
   const {
-    companyProfileFunc,
-    companyUserDetail,
+    jobSubCategoeryOpt,
+        companyJobPageFunc,
     avaibleSkills,
     getJobsPostedByCompanyFunc,
     jobCategoeryOpt,
+    companyProfileFunc
+
   } = useContext(DataContext);
   const token = Cookies.get("token");
 
+  console.log("jobCategoery",jobCategoeryOpt);
+  console.log("job Sub Categoery Opt", jobSubCategoeryOpt)
+
   useEffect(() => {
-    companyProfileFunc();
+    companyJobPageFunc();
+    if(!Cookies.get("company")){
+      companyProfileFunc();
+    }
   }, []);
 
   const jobPostFunc = (values, { resetForm, setFieldValue }) => {
@@ -42,9 +51,12 @@ const JobPostForm = (props) => {
         }
       }
     });
+    
     data["company"] = Cookies.get("company");
     data["company_user"] = Cookies.get("user");
-    data["job_categoery"] = data["job_categoery"].value
+    data["job_categoery"] = data["job_categoery"].value;
+    data["sub_categoery"] = data["sub_categoery"].value;
+
     console.log(values);
     axios
       .post(`${API_BASE_URL}/job-post/`, data, {
@@ -59,13 +71,10 @@ const JobPostForm = (props) => {
         try {
           props.setIsModalOpen(false);
         } catch (error) {}
-
-        
       })
       .catch((err) => {
         console.log(err);
         console.log(values.job_categoery);
-        
         toast.error("Internal Server Error", { position: "top-center" });
       })
       .finally(() => {
@@ -76,6 +85,8 @@ const JobPostForm = (props) => {
           setFieldValue("benifits", []);
           setFieldValue("skills_required", []);
           setFieldValue("skills_preferred", []);
+          setFieldValue("sub_categoery", []);
+          setFilterSubCategoery([]);
         } catch (error) {}
       });
   };
@@ -110,7 +121,6 @@ const JobPostForm = (props) => {
                             {element.placeholder}
                             <span className="text-red-500">*</span>
                           </h4>
-
                           <CreatableSelect
                             isMulti
                             value={values[element.name]}
@@ -145,7 +155,7 @@ const JobPostForm = (props) => {
                     }
 
                     if (element.type == "dynamic") {
-                      if (element.name == "job_categoery") {
+                      if (element.name == "job_categoery"  || element.name == "sub_categoery") {
                         return (
                           <div className="" key={index}>
                             <h4 className="text-blue-600 mb-2">
@@ -156,19 +166,40 @@ const JobPostForm = (props) => {
                               {element.icon}
                               <Select
                                  name={element.name}
-                                 noOptionsMessage={"Press Enter"}
+                                
                                  value={values[element.name]}
-                                 options={jobCategoeryOpt?.map(
-                                   (skillElement, index) => {
-                                     return {
-                                       value: skillElement.id,
-                                       label: skillElement.job_category,
-                                     };
+                                 options={element.name == "sub_categoery" ? filterSubCategoery?.map(
+                                  (subcatel, index) => {
+                                    return {
+                                      value: subcatel.id,
+                                      label: subcatel.sub_category_name,
+                                    };
+                                  }
+                                ): jobCategoeryOpt?.map(
+                                  (skillElement, index) => {
+                                    return {
+                                      value: skillElement.id,
+                                      label: skillElement.job_category,
+                                    };
+                                  }
+                                )}
+                                onFocus={()=>{
+                                  if((!values.job_categoery || values.job_categoery == []) & element.name == "sub_categoery"){
+                                    toast.error("Please Select Job Categoery First", {position: "top-center"});
                                    }
-                                 )}
+                                   console.log(values.job_categoery)
+                                }}
                                  onChange={(selectedOptions) => {
-                                  console.log(selectedOptions)
-                                   setFieldValue(element.name, selectedOptions);
+                                   
+                                  if(element.name == "job_categoery"){
+                                    let fl = jobSubCategoeryOpt.filter((element, index)=>{
+                                      return element.category == selectedOptions.value
+                                    })
+                                    setFilterSubCategoery(fl);
+                                    setFieldValue("sub_categoery", "")
+                                  }
+                                  setFieldValue(element.name, selectedOptions);
+                                   
                                  }}
                                  placeholder={element.placeholder}
                                  required
@@ -193,7 +224,6 @@ const JobPostForm = (props) => {
                           <Select
                             isMulti
                             name={element.name}
-                            noOptionsMessage={"Press Enter"}
                             value={values[element.name]}
                             options={avaibleSkills?.map(
                               (skillElement, index) => {

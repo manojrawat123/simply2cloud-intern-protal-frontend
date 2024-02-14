@@ -5,29 +5,34 @@ import { DataContext } from '../../../../context';
 
 const filter = createFilterOptions();
 
-export default function InternJobSearchBySlug(props) {
+export default function InternJobSearchByCategoery(props) {
 
   const [value, setValue] = React.useState(null);
   const { jobSearchFilterFunc } = React.useContext(DataContext);
   
-  console.log(props);
   return (
     <Autocomplete
       value={value}
       onChange={(event, newValue) => {
         props.setSelectedCategoery(newValue);
+
+       
       if (!newValue){
+        props.setFilterSubCategoeryOpt([]);
         if (!props.selectedLocation && !props.selectedTitle){
           props.setIsFilter(false);
         }
-        jobSearchFilterFunc(null,props.selectedTitle, props.selectedLocation ,props.setFilteredJobs);  
+        jobSearchFilterFunc(null,props.selectedTitle, props.selectedLocation,props.selectedSubCategoery ,props.setFilteredJobs);  
       }
       else{
-        props.setIsFilter(true);
-          jobSearchFilterFunc(newValue.id, props.selectedTitle, props.selectedLocation ,props.setFilteredJobs);  
-      }
+        let fl = props.jobSubCategoeryOpt.filter((element, index)=>{
+          return element.category == newValue.id
+        });
+        props.setFilterSubCategoeryOpt(fl);
 
-      
+        props.setIsFilter(true);
+          jobSearchFilterFunc(newValue.id, props.selectedTitle, props.selectedLocation, props.selectedSubCategoery,props.setFilteredJobs);  
+      }
       if (typeof newValue === 'string') {
           setValue({
             job_category: newValue,

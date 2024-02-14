@@ -9,6 +9,8 @@ import genrateInitalValues from "../../../../../../Component/genrateInitialValue
 import API_BASE_URL from "../../../../../../config";
 import { DataContext } from "../../../../../../context";
 import internSkillInputArr from "./InSkillInpArr";
+import Select from 'react-select';
+import LoadingPage from "../../../../../../Component/LoadingPage/LodingPage";
 
 const InternAddSkillsForm = (props) => {
   const validationSchema = generateValidationSchema(internSkillInputArr);
@@ -17,13 +19,15 @@ const InternAddSkillsForm = (props) => {
 
   const { profileFunc, userDetails } = useContext(DataContext);
 
-  
-
   useEffect(() => {
     if (!userDetails) {
       profileFunc();
     }
   });
+
+  if (!userDetails){
+    return <LoadingPage />
+  }
 
 
   return (
@@ -36,10 +40,17 @@ const InternAddSkillsForm = (props) => {
           <Formik
             initialValues={initialValues}
             onSubmit={(values, { resetForm }) => {
+
               setAddButton(true);
               values["intern"] = userDetails?.user_details.id;
               const token = Cookies.get("token");
-
+              if (!isNaN(Cookies.get("profile_id"))) {
+                values["profile_id"] = Cookies.get("profile_id");
+              }
+              const id = values["skill_name"].value;
+              const skill_name = values["skill_name"].label;
+              values["skill_name"] = skill_name;
+              values["skill_id"] = id;
               axios
                 .post(`${API_BASE_URL}/skills/`, values, {
                   headers: {
@@ -50,6 +61,9 @@ const InternAddSkillsForm = (props) => {
                   toast.success("Skill Added Sucessfully!", {
                     position: "top-center",
                   });
+                  if(isNaN(Cookies.get("profile_id"))){
+                    
+                  }
                   profileFunc();
                   resetForm();
                   props.setIsModalOpen(false);
@@ -76,7 +90,43 @@ const InternAddSkillsForm = (props) => {
             }) => (
               <Form>
                 <div className="mb-4 grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
-                  {internSkillInputArr.map((element, index) => {
+                  {internSkillInputArr?.map((element, index) => {
+
+                    if (element.type == "dynamic") {
+                      return (
+                        <div className="" key={index}>
+                          <h4 className="text-blue-600 mb-2">
+                            {element.placeholder}
+                            <span className="text-red-500">*</span>
+                          </h4>
+                          <div className={"w-full relative col-span-1 "}>
+                            {element.icon}
+                            <Select
+                              name={element.name}
+                              value={values[element.name]}
+                              options={userDetails?.avaiable_skill?.map((av_skl, index) => {
+                                return {
+                                  value: av_skl.id,
+                                  label: av_skl.name,
+                                }
+                              })}
+                              onChange={(selectedOptions) => {
+                                setFieldValue(element.name, selectedOptions);
+                              }}
+                              placeholder={element.placeholder}
+                              required
+                              className=""
+                            />
+
+                          </div>
+                          <ErrorMessage
+                            name={element.name}
+                            component="div"
+                            className="text-red-500"
+                          />
+                        </div>
+                      )
+                    }
                     if (element.type == "select") {
                       return (
                         <div className="" key={index}>

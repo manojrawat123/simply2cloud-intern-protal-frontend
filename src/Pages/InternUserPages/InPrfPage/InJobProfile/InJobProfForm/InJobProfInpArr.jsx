@@ -14,6 +14,14 @@ const InternJobProfilieInputArr = [
     placeholder: "Select Job Profile",
     icon: <WorkIcon className={iconCss} />,
   },
+  {
+    type: "dynamic",
+    id: "sub_categoery",
+    name: "sub_categoery",
+    required: true,
+    placeholder: "Select Job Sub Categoery",
+    icon: <WorkIcon className={iconCss} />,
+  },
     {
       type: "text",
       id: "title",

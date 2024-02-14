@@ -20,13 +20,13 @@ export default function InternJobSearchByLocation(props) {
           props.setIsFilter(false);
         }
         else{
-          jobSearchFilterFunc(props.selectedCategoery?.id, props?.selectedTitles, null, props.setFilteredJobs);  
+          jobSearchFilterFunc(props.selectedCategoery?.id, props?.selectedTitles, null,props.selectedSubCategoery, props.setFilteredJobs);  
         }
       }
       else{
         props.setIsFilter(true);
         console.log(props.selectedCategoery)
-        jobSearchFilterFunc(props?.selectedCategoery?.id, props.selectedTitle, newValue.location_slug, props.setFilteredJobs);
+        jobSearchFilterFunc(props?.selectedCategoery?.id, props.selectedTitle, newValue.location_slug,props.selectedSubCategoery, props.setFilteredJobs);
       }
         
       

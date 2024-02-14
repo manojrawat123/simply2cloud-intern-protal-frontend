@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import { DataContext } from '../../../context';
-import LoadingPage from '../../../Component/LoadingPage/LodingPage';
-import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
-import InternJobAppliedCard from '../../BothUserPages/JobAppliedCard/JobAppliedCard';
+import LoadingPage from '../../../../Component/LoadingPage/LodingPage';
+import InternJobAppliedCard from '../../../BothUserPages/JobAppliedCard/JobAppliedCard';
+import NoDataPage from '../../../../Component/NoDataPage/NoDataPage';
+import { DataContext } from '../../../../context';
 
 const RejectedApplication = () => {
 

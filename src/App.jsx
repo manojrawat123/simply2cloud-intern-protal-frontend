@@ -20,8 +20,10 @@ import InternAddSkillsForm from "./Pages/InternUserPages/InPrfPage/InSkills/InSk
 import InternProfilePage from "./Pages/InternUserPages/InPrfPage/InProfilePage";
 import UserJobs from "./Pages/InternUserPages/InUserJobs/UserJobs";
 import JobApplications from "./Pages/CompanyUserPages/JobApplication/JobApplications";
-import ApprovedApplication from "./Pages/CompanyUserPages/JobApplication/ApprovedApplication/ApprovedApplication";
+import NmInSearchPg from "./Pages/welcome_page/NmInSearchPg/NmInSearchPg";
+import NmUnAuthJobsPage from "./Pages/welcome_page/NmGetPaid/NmUserJobs/NmUserJobs";
 import RejectedApplication from "./Pages/CompanyUserPages/JobApplication/RejectedApplication/RejectedApplication";
+import ApprovedApplication from "./Pages/CompanyUserPages/JobApplication/ApprovedApplication/ApprovedApplication";
 
 
 function App() {
@@ -37,9 +39,12 @@ function App() {
         
 
         {/* Intern Routes */}
-        <Route path="" Component={ProtectedRoutes}>
+        {/* <Route path="" Component={ProtectedRoutes}> */}
           <Route path="" Component={RenderAlgo} />
-        </Route>
+          <Route path="/search" Component={NmInSearchPg} />
+          <Route path="/nm-jobs" Component={NmUnAuthJobsPage} />
+
+        {/* </Route> */}
 
         <Route path="" Component={ProtectedRoutes}>
           <Route path="/studentdetails" Component={StudentFullDetails} />

@@ -7,7 +7,7 @@ const iconCss = `absolute top-2 border-r border-black peer-focus:text-violet-700
 
 const internSkillInputArr = [
   {
-    type: "text",
+    type: "dynamic",
     id: "skillName",
     name: "skill_name",
     required: true,

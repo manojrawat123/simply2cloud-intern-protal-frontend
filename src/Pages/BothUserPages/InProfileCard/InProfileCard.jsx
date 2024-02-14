@@ -31,7 +31,6 @@ const ExpandMore = styled((props) => {
 export default function InternProfileCard({ profile, isCompany }) {
 
   const [expanded, setExpanded] = React.useState(false);
-  console.log(profile)
 
   const fieldsArray = {
     'Expected Salary': profile.expected_salary,

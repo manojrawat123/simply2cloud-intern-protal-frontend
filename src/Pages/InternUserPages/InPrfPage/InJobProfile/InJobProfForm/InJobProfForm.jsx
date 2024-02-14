@@ -19,11 +19,12 @@ const InternJobProfileForm = () => {
   const initialValues = genrateInitalValues(InternJobProfilieInputArr);
   const [addButton, setAddButton] = useState();
   const { userDetails, profileFunc } = useContext(DataContext);
+  const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
   
   useEffect(()=>{
-    if(!userDetails){
+    // if(!userDetails){
       profileFunc();
-    }
+    // }
   },[])
 
   const myCompleateJobProfileFunc = (values, { resetForm, setFieldValue }) => {
@@ -42,8 +43,15 @@ const InternJobProfileForm = () => {
     data["intern"] = Cookies.get("user");
     data["expected_salary"] = `${data.expected_salary}.00`
     data["job_categoery"] = data["job_categoery"].value
-
-    
+    data["sub_categoery"] = data["sub_categoery"].value;
+    if(Cookies.get("skills_ids") != ""){
+      const skills_id = decodeURIComponent(Cookies.get("skills_ids")).split(",").map(Number);
+      data["skills"] = skills_id ? skills_id : [];
+    }
+    if(Cookies.get("user_avaliable_skills_id") != ""){
+      const user_avl_skl = decodeURIComponent(Cookies.get("user_avaliable_skills_id")).split(",").map(Number);
+      data["available_skills"] = user_avl_skl ? user_avl_skl : [];
+    }
     const token = Cookies.get("token");
     axios
       .post(`${API_BASE_URL}/compleate-intern-job-profile/`, data, {
@@ -67,6 +75,7 @@ const InternJobProfileForm = () => {
       })
       .finally(() => {
         setAddButton(false);
+        resetForm();
         setFieldValue("desc", []);
       });
     console.log(data);
@@ -75,6 +84,7 @@ const InternJobProfileForm = () => {
 
   return (
     <div>
+      {console.log(userDetails)}
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
@@ -147,18 +157,31 @@ const InternJobProfileForm = () => {
 
                         <Select
                                  name={element.name}
-                                 noOptionsMessage={"Press Enter"}
                                  value={values[element.name]}
-                                 options={userDetails?.available_categoery?.map(
-                                   (skillElement, index) => {
-                                     return {
-                                       value: skillElement.id,
-                                       label: skillElement.job_category,
-                                     };
-                                   }
-                                 )}
+                                 options={element.name == "sub_categoery" ? filterSubCategoeryOpt?.map(
+                                  (subcatel, index) => {
+                                    return {
+                                      value: subcatel.id,
+                                      label: subcatel.sub_category_name,
+                                    };
+                                  }
+                                ): userDetails?.available_categoery?.map(
+                                  (skillElement, index) => {
+                                    return {
+                                      value: skillElement.id,
+                                      label: skillElement.job_category,
+                                    };
+                                  }
+                                )}
                                  onChange={(selectedOptions) => {
                                   console.log(selectedOptions);
+                                  if(element.name == "job_categoery"){
+                                    let fl = userDetails.available_sub_categoery?.filter((element, index)=>{
+                                      return element.category == selectedOptions.value
+                                    });
+                                    setFilterSubCategoeryOpt(fl);
+                                    setFieldValue("sub_categoery", "");                                             
+                                  }
                                    setFieldValue(element.name, selectedOptions);
                                  }}
                                  placeholder={element.placeholder}

@@ -1,25 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DataContext } from "../../../context";
-import NoDataPage from "../../../Component/NoDataPage/NoDataPage";
-import JobCard from "../../BothUserPages/JobCard/JobCards";
-import LoadingPage from "../../../Component/LoadingPage/LodingPage";
-import InternJobSearchBySlug from "./InJobSearch/InJobSrchBySlug";
-import InternJobSearchByLocation from "./InJobSearch/InJobSrchL";
-import InternJobSearchByCategoery from "./InJobSearch/inJobSrchByCateg";
+import { DataContext } from "../../../../context";
+import NoDataPage from "../../../../Component/NoDataPage/NoDataPage";
+import JobCard from "../../../BothUserPages/JobCard/JobCards";
+import LoadingPage from "../../../../Component/LoadingPage/LodingPage";
+import InternJobSearchBySlug from "./NnJobSearch/NmJobSrchBySlug";
+import InternJobSearchByLocation from "./NnJobSearch/NmJobSrchL";
+import InternJobSearchByCategoery from "./NnJobSearch/NmJobSrchByCateg";
 import { ToastContainer } from "react-toastify";
-import InternJobSearchBySubCategoery from "./InJobSearch/inJobSrchBySubCt";
+import InternJobSearchBySubCategoery from "./NnJobSearch/NmJobSrchBySubCt";
 
-const UserJobs = () => {
+const NmUnAuthJobsPage = () => {
   const {
-    getJobsForStudentFunc,
-    studentJobsObj,
+    getUnAuthJobsFunc,
+    unAuthJobs,
     searchTitleSlugsObj,
     searchLocationSlugObj,
     jobCategoeryOpt,
     jobSubCategoeryOpt
   } = useContext(DataContext);
 
-  
+
   const [filteredJobs, setFilteredJobs] = useState();
   const [isFilter, setIsFilter] = useState(false);
   const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
@@ -28,12 +28,11 @@ const UserJobs = () => {
   const [selectedCategoery, setSelectedCategoery] = useState();
   const [selectedSubCategoery, setSelectedSubCategoery] = useState();
 
-
   useEffect(() => {
-    getJobsForStudentFunc();
+    getUnAuthJobsFunc();
   }, []);
 
-  if (!studentJobsObj) {
+  if (!unAuthJobs) {
     return <LoadingPage />;
   }
 
@@ -44,7 +43,7 @@ const UserJobs = () => {
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
           <InternJobSearchByCategoery
             jobCategoeryOpt={jobCategoeryOpt}
-            studentJobsObj={studentJobsObj}
+            unAuthJobs={unAuthJobs}
             setIsFilter={setIsFilter}
             setFilteredJobs={setFilteredJobs}
             selectedLocation={selectedLocation}
@@ -53,25 +52,25 @@ const UserJobs = () => {
             selectedCategoery={selectedCategoery}
             selectedSubCategoery={selectedSubCategoery}
             setFilterSubCategoeryOpt={setFilterSubCategoeryOpt}
-          jobSubCategoeryOpt={jobSubCategoeryOpt}
-            />
+            jobSubCategoeryOpt={jobSubCategoeryOpt}
+          />
 
-          <InternJobSearchBySubCategoery 
-          jobSubCategoeryOpt={jobSubCategoeryOpt}
-          studentJobsObj={studentJobsObj}
-          setIsFilter={setIsFilter}
-          setFilteredJobs={setFilteredJobs}
-          selectedLocation={selectedLocation}
-          selectedTitle={selectedTitle}
-          setSelectedSubCategoery={setSelectedSubCategoery}
-          selectedCategoery={selectedCategoery}
-          selectedSubCategoery={selectedSubCategoery}
-          filterSubCategoeryOpt={filterSubCategoeryOpt}
+          <InternJobSearchBySubCategoery
+            jobSubCategoeryOpt={jobSubCategoeryOpt}
+            unAuthJobs={unAuthJobs}
+            setIsFilter={setIsFilter}
+            setFilteredJobs={setFilteredJobs}
+            selectedLocation={selectedLocation}
+            selectedTitle={selectedTitle}
+            setSelectedSubCategoery={setSelectedSubCategoery}
+            selectedCategoery={selectedCategoery}
+            selectedSubCategoery={selectedSubCategoery}
+            filterSubCategoeryOpt={filterSubCategoeryOpt}
           />
 
           <InternJobSearchBySlug
             searchTitleSlugsObj={searchTitleSlugsObj}
-            studentJobsObj={studentJobsObj}
+            unAuthJobs={unAuthJobs}
             setIsFilter={setIsFilter}
             setFilteredJobs={setFilteredJobs}
             selectedLocation={selectedLocation}
@@ -84,7 +83,7 @@ const UserJobs = () => {
 
           <InternJobSearchByLocation
             searchLocationSlugObj={searchLocationSlugObj}
-            studentJobsObj={studentJobsObj}
+            unAuthJobs={unAuthJobs}
             setIsFilter={setIsFilter}
             setFilteredJobs={setFilteredJobs}
             selectedLocation={selectedLocation}
@@ -95,15 +94,14 @@ const UserJobs = () => {
           />
         </div>
       </div>
-
       {!isFilter ? (
-        studentJobsObj?.length == 0 ? (
+        unAuthJobs?.length == 0 ? (
           <div className="h-[65vh] flex items-center justify-center">
-            <NoDataPage domain={"No Job Posted By You"} />
+            <NoDataPage domain={"No Job Posted"} />
           </div>
         ) : (
           <div className="mx-[2rem] my-[2rem] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
-            {studentJobsObj?.map((element, index) => {
+            {unAuthJobs?.map((element, index) => {
               return <JobCard key={index} jobs={element} />;
             })}
           </div>
@@ -125,4 +123,4 @@ const UserJobs = () => {
   );
 };
 
-export default UserJobs;
+export default NmUnAuthJobsPage;
