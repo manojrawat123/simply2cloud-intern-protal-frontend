@@ -5,7 +5,7 @@ import NmAutoCmpSrc from './NmAutoCmp/NmAutoCmpSrc';
 
 const SearchBar = () => {
   return (
-    <div className="flex w-[90%] mx-10 mt-8 relative">
+    <div className="flex md:w-[90%] w-full md:mx-10 mt-8 relative">
       {/* <input
         type="text"
         className="w-full px-4 py-4 rounded-l outline-none"
