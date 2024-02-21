@@ -16,6 +16,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { format } from "date-fns";
 import Heading from '../../../RepeatedCode/tags/Heading';
+import { NavLink } from 'react-router-dom';
+import API_BASE_URL from '../../../config';
+import Cookies from 'js-cookie';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -42,23 +47,29 @@ export default function InternProfileCard({ profile, isCompany }) {
   };
 
   return (
+
     <Card sx={{ maxWidth: 345 }} className='border-2 rounded-2xl'>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {/* {jobs.company.company_name.substring(0, 1)} */}
-          </Avatar>
+          profile?.user_image != null ? <img src={`${API_BASE_URL}/${profile.user_image}/`} className='w-[3rem] h-[3rem] rounded-full' /> :
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              {/* {jobs.company.company_name.substring(0, 1)} */}
+            </Avatar>
+
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            {
+              profile.intern.id == Cookies.get("user") ? <NavLink to={`/update-profile/${profile?.id}/`}> <ModeEditIcon /> </NavLink> : null
+            }
+            {console.log(profile.intern)}
           </IconButton>
         }
 
         title={<Typography variant="div" fontWeight="bold" className='text-lg'>
-          {isCompany ? profile?.intern?.name : profile.title}
+          {profile?.intern?.name}
         </Typography>}
-        subheader={`${isCompany ? `${profile.job_categoery.job_category} (${profile.title})` : `(${profile.job_categoery.job_category})`}`}
+        subheader={`${`${profile.job_categoery.job_category} (${profile.title})`}`}
       />
       <CardContent>
         <table>
@@ -87,24 +98,16 @@ export default function InternProfileCard({ profile, isCompany }) {
             return <div key={index}>{index + 1}. {element}</div>
           })}
         </div>
+        <div className="text-center mx-auto w-[100%] mt-4">
+          <NavLink to={`/intern-details/${profile.id}`}>
+            <button className="border mx-auto font-semibold border-blue-500 text-blue-500 px-2 py-1 flex items-center space-x-2 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:ring focus:border-blue-300">
+              <span>View</span>
+              <RemoveRedEyeIcon className="" />
+            </button>
+          </NavLink>
 
+        </div>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
     </Card>
   );
 }

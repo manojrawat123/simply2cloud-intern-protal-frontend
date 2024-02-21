@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import Trending from './TrendingPage/Trending';
 import Courses from './Courses/Courses';
 import Internship from './Internship/Internship';
-import ProductSlider from '../../Component/Slider/Slider';
-import StudentProfile from './StudentDetails/StudentProfile';
 import { DataContext } from '../../context';
 import SkeletonLoader from '../../Component/Loaders/SkeletonLoader';
 import UserGreeting from './greeting_user/UserGreeting'

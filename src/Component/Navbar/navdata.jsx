@@ -10,7 +10,7 @@ const navItem = [
   },
   {
     id: 2,
-    label: "Get Paid",
+    label: "Internship",
     link: "/nm-jobs",
     visibility: "both",
     user: "any",

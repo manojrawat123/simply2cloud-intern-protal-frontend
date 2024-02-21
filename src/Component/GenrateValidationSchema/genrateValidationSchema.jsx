@@ -4,6 +4,7 @@ const generateValidationSchema = (inputFields) => {
   let validationObject = {};
 
   inputFields.forEach((field) => {
+    
     validationObject[field.name] = field.required
       ? Yup.string().required(`This Field is required`)
       : Yup.string();

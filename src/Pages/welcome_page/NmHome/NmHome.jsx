@@ -20,7 +20,7 @@ const NmHome = () => {
     },[])
   return (
     <div>
-      <div className="grid  md:grid-cols-2 bg-orange-500">
+      <div className="grid md:grid-cols-2 bg-orange-500">
         <div className="flex h-[80vh] justify-center items-center">
           <div>
             <BHeading />

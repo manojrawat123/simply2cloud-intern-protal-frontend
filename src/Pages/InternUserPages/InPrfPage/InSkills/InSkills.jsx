@@ -23,7 +23,6 @@ const InternSkills = (props) => {
   return (
     <div className=" col-span-2">
       {/* Modal of Add Skills Form Modal */}
-      <ToastContainer />
       <InternAddSkillModel isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       {/* End Add Skill Form Modal */}
 

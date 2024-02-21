@@ -51,10 +51,12 @@ export default function JobCard({ jobs }) {
   const { getJobsForStudentFunc } = React.useContext(DataContext);
 
   const applyJobFunc = () => {
+    console.log("Debug");
+    
     setApplyButton(true);
-
     const user_id = Cookies.get("user");
     const token = Cookies.get("token");
+    console.log("Debug");
 
     axios
       .post(
@@ -73,7 +75,7 @@ export default function JobCard({ jobs }) {
       )
       .then(() => {
         getJobsForStudentFunc();
-        toast.success("Skill Added Sucessfully!", {
+        toast.success("Applied Sucessfully!", {
           position: "top-center",
         });
       })
@@ -158,7 +160,22 @@ export default function JobCard({ jobs }) {
           <ShareIcon />
         </IconButton> */}
 
-        {Cookies.get("user_type") == "user" ? (
+        {!Cookies.get("token") ? (
+          <div className="text-center mx-auto">
+            <button
+              className="px-4 py-2 font-semibold border border-blue-700 border-solid  outline-blue-500  text-blue-500 rounded hover:bg-blue-700 hover:text-white"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              {applyButton ? (
+                <CircularProgress color="inherit" size={19} />
+              ) : (
+                "Apply Now"
+              )}
+            </button>
+          </div>
+        ) : Cookies.get("user_type") == "user" ? (
           isNaN(Cookies.get("profile_id")) ? (
             <InternJobProfileModal
               fromJobPage={true}
@@ -169,13 +186,7 @@ export default function JobCard({ jobs }) {
             <div className="text-center mx-auto">
               <button
                 className="px-4 py-2 font-semibold border border-blue-700 border-solid  outline-blue-500  text-blue-500 rounded hover:bg-blue-700 hover:text-white"
-                onClick={() => {
-                  if (Cookies.get("token")) {
-                    applyJobFunc();
-                  } else {
-                    navigate("/signup");
-                  }
-                }}
+                onClick={applyJobFunc}
               >
                 {applyButton ? (
                   <CircularProgress color="inherit" size={19} />
@@ -185,22 +196,9 @@ export default function JobCard({ jobs }) {
               </button>
             </div>
           )
-        ) : 
-         !Cookies.get("token") ? <div className="text-center mx-auto">
-          <button
-            className="px-4 py-2 font-semibold border border-blue-700 border-solid  outline-blue-500  text-blue-500 rounded hover:bg-blue-700 hover:text-white"
-            onClick={() => {
-              navigate("/signup")
-            }}
-          >
-            {applyButton ? (
-              <CircularProgress color="inherit" size={19} />
-            ) : (
-              "Apply Now"
-            )}
-          </button>
-        </div> : ""}
-        
+        ) : (
+          ""
+        )}
         <IconButton aria-label="add to favorites">
           <TurnedInNotIcon />
         </IconButton>

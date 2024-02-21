@@ -21,11 +21,13 @@ const DataProviderFuncComp = ({ children }) => {
   const [jobApplication, setJobApplication] = useState();
   const [approvedApplication, setApprovedApplication] = useState(); 
   const [rejectedApplication, setRejectedApplication] = useState();
+  const [internProfileFullDetails, setInternProfileFullDetail] = useState();
 
-  const token = Cookies.get("token");
+  var token = Cookies.get("token");
   const navigate = useNavigate();
 
   const profileFunc = () => {
+    token = Cookies.get('token');
     axios
       .get(`${API_BASE_URL}/profile/`, {
         headers: {
@@ -47,7 +49,6 @@ const DataProviderFuncComp = ({ children }) => {
             user_avaliable_skills_id = value.data.skills_detail.map((element) => element.skill_id);
             Cookies.set("user_avaliable_skills_id", user_avaliable_skills_id); 
         }
-        console.log(Cookies.get("skills_ids") == "");
         try {
           Cookies.set("profile_id", value.data?.intern_job_profile[0]?.id);
         } catch (err) {
@@ -94,7 +95,6 @@ const DataProviderFuncComp = ({ children }) => {
         logoutFunc();
       });
   };
-
 
 
   const companyJobPageFunc = () => {
@@ -233,11 +233,25 @@ const DataProviderFuncComp = ({ children }) => {
 
 
   const unAuthInternSerchFunc = (ct_id, search)=>{
-    const queryParams = {params:{
-      [search] : ct_id
-    }}
-    console.log(queryParams)
-    axios.get(`${API_BASE_URL}/intern-unauth-search/`, queryParams).then((value) => {
+    let url;
+    let queryParams;
+    token = Cookies.get('token');
+    if (token){
+      url = `${API_BASE_URL}/intern-auth-search/`
+      queryParams = {params:{
+        [search] : ct_id
+      },
+      headers : {
+        "Authorization" : `Bearer ${token}`
+      }}
+    }
+    else{
+      url = `${API_BASE_URL}/intern-unauth-search/`
+      queryParams = {params:{
+        [search] : ct_id
+      }}
+    }
+    axios.get(url, queryParams, ).then((value) => {
         setUnAuthUserDetail(value.data.intern_job_profile);
       })
       .catch((err) => {
@@ -245,13 +259,31 @@ const DataProviderFuncComp = ({ children }) => {
       });
   }
 
+const internProfileFullDetailsFunc = (id)=>{
+token = Cookies.get("token");
+let url;
+let myConfig;
+if (token){
+  url = `${API_BASE_URL}/intern-auth-search/${id}/`
+  myConfig = {headers: {"Authorization" : `Bearer ${token}`}}
+}
+else{
+  url = `${API_BASE_URL}/intern-unauth-search/${id}/`;
+}
+  axios.get(url, myConfig).then((value) => {
+      setInternProfileFullDetail(value.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 
   const getUnAuthJobsFunc = ()=>{
     axios
       .get(`${API_BASE_URL}/job-unauth-search/`)
       .then((value) => {
-        console.log(value.data);
-        setUnAuthJobs(value.data.all_jobs);
+        setStudentJobObj(value.data.all_jobs);
         setSearchSlug(value.data.search_title_keywords);
         setSearchLocationSlug(value.data.search_location_slug);
         setJobSubCategoeryOpt(value.data.sub_categoery);
@@ -292,7 +324,9 @@ const DataProviderFuncComp = ({ children }) => {
         getUnAuthJobsFunc,
         unAuthJobs,
         approvedApplication,
-        rejectedApplication
+        rejectedApplication,
+        internProfileFullDetailsFunc,
+        internProfileFullDetails
       }}
     >
       {children}

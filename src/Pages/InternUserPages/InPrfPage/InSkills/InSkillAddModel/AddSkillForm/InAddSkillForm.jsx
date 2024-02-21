@@ -16,7 +16,7 @@ const InternAddSkillsForm = (props) => {
   const validationSchema = generateValidationSchema(internSkillInputArr);
   const initialValues = genrateInitalValues(internSkillInputArr);
   const [addButton, setAddButton] = useState();
-
+  const [profilePhoto, setProfilePhoto] = useState();
   const { profileFunc, userDetails } = useContext(DataContext);
 
   useEffect(() => {
@@ -25,13 +25,16 @@ const InternAddSkillsForm = (props) => {
     }
   });
 
-  if (!userDetails){
+  if (!userDetails) {
     return <LoadingPage />
   }
 
 
   return (
     <div>
+       
+       <ToastContainer />
+
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
@@ -51,8 +54,22 @@ const InternAddSkillsForm = (props) => {
               const skill_name = values["skill_name"].label;
               values["skill_name"] = skill_name;
               values["skill_id"] = id;
+              values["user_image"] = profilePhoto;
+              const formData = new FormData();
+              Object.entries(values).forEach(([key, value]) => {
+                if (key === 'user_image') {
+                  // Check if the value is a File object
+                  if (value instanceof File) {
+                    formData.append(key, profilePhoto);
+                  }
+                }
+                else {
+                  formData.append(key, value);
+                }
+              });
+
               axios
-                .post(`${API_BASE_URL}/skills/`, values, {
+                .post(`${API_BASE_URL}/skills/`, formData, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
@@ -61,14 +78,20 @@ const InternAddSkillsForm = (props) => {
                   toast.success("Skill Added Sucessfully!", {
                     position: "top-center",
                   });
-                  if(isNaN(Cookies.get("profile_id"))){
-                    
+                  if (isNaN(Cookies.get("profile_id"))) {
+
                   }
                   profileFunc();
                   resetForm();
-                  props.setIsModalOpen(false);
+                  try{
+                    props.setIsModalOpen(false);
+                  }
+                  catch{
+                    
+                  }
                 })
                 .catch((err) => {
+                  console.log(values);
                   toast.error("Internal Server Error", {
                     position: "top-center",
                   });
@@ -88,10 +111,39 @@ const InternAddSkillsForm = (props) => {
               setFieldValue,
               handleBlur,
             }) => (
-              <Form>
+              <Form encType="multipart/form-data">
                 <div className="mb-4 grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
                   {internSkillInputArr?.map((element, index) => {
 
+if (element.type == "file") {
+  return (
+    <div className="" key={index}>
+      <h4 className="text-blue-600 mb-2">
+        {element.placeholder}{" "}
+        <span className="text-red-500">*</span>
+      </h4>
+      <div className={"w-full relative col-span-1 "}>
+        {element.icon}
+        <input
+          type={element.type}
+          name={element.name}
+          placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
+          onChange={(e) => {
+            const uploadedFile = e.target.files[0];
+            setProfilePhoto(uploadedFile)
+          }}
+          required
+          className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
+        />
+      </div>
+      <ErrorMessage
+        name={element.name}
+        component="div"
+        className="text-red-500"
+      />
+    </div>
+  )
+}
                     if (element.type == "dynamic") {
                       return (
                         <div className="" key={index}>

@@ -20,16 +20,15 @@ const InternJobProfileForm = () => {
   const [addButton, setAddButton] = useState();
   const { userDetails, profileFunc } = useContext(DataContext);
   const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
-  
-  useEffect(()=>{
-    // if(!userDetails){
-      profileFunc();
-    // }
-  },[])
+  const [profilePhoto, setProfilePhoto] = useState();
+
+  useEffect(() => {
+    profileFunc();
+  }, [])
 
   const myCompleateJobProfileFunc = (values, { resetForm, setFieldValue }) => {
     setAddButton(true);
-   let data = values;
+    let data = values;
     Object.entries(data).map(([key, item]) => {
       if (Array.isArray(item)) {
         if (key == "desc") {
@@ -44,23 +43,38 @@ const InternJobProfileForm = () => {
     data["expected_salary"] = `${data.expected_salary}.00`
     data["job_categoery"] = data["job_categoery"].value
     data["sub_categoery"] = data["sub_categoery"].value;
-    if(Cookies.get("skills_ids") != ""){
+    if (Cookies.get("skills_ids") != "") {
       const skills_id = decodeURIComponent(Cookies.get("skills_ids")).split(",").map(Number);
       data["skills"] = skills_id ? skills_id : [];
     }
-    if(Cookies.get("user_avaliable_skills_id") != ""){
+    if (Cookies.get("user_avaliable_skills_id") != "") {
       const user_avl_skl = decodeURIComponent(Cookies.get("user_avaliable_skills_id")).split(",").map(Number);
       data["available_skills"] = user_avl_skl ? user_avl_skl : [];
     }
     const token = Cookies.get("token");
+    console.log(profilePhoto)
+    data["user_image"] = profilePhoto;
+    const formData = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'user_image') {
+        // Check if the value is a File object
+        if (value instanceof File) {
+          formData.append(key, profilePhoto);
+        }
+      }
+      else {
+        formData.append(key, value);
+      }
+    });
+
     axios
-      .post(`${API_BASE_URL}/compleate-intern-job-profile/`, data, {
+      .post(`${API_BASE_URL}/compleate-intern-job-profile/`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then(() => {
-        
         toast.success("Skill Added Sucessfully!", {
           position: "top-center",
         });
@@ -78,17 +92,15 @@ const InternJobProfileForm = () => {
         resetForm();
         setFieldValue("desc", []);
       });
-    console.log(data);
   }
 
 
   return (
     <div>
-      {console.log(userDetails)}
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
-           Compleate Profile
+            Compleate Profile
           </h2>
           <Formik
             initialValues={initialValues}
@@ -102,101 +114,130 @@ const InternJobProfileForm = () => {
               setFieldValue,
               handleBlur,
             }) => (
-              <Form>
+              <Form encType="multipart/form-data">
                 <div className="mb-4 grid md:grid-cols-2 grid-cols-1 gap-4 p-4">
                   {InternJobProfilieInputArr.map((element, index) => {
-                    if(element.type == "array"){
+
+
+                    if (element.type == "file") {
                       return (
                         <div className="" key={index}>
-                        <h4 className="text-blue-600 mb-2">
-                          {element.placeholder}
-                          <span className="text-red-500">*</span>
-                        </h4>
-                        <CreatableSelect
-                          isMulti
-                          value={values[element.name]}
-                          placeholder={element.placeholder}
-                          options={values[element.name]}
-                          onChange={(selectedOptions) => {
-                            setFieldValue(element.name, selectedOptions);
-                          }}
-                          getOptionLabel={(option) => option.label}
-                          getOptionValue={(option) => option.value}
-                          formatCreateLabel={(inputValue) =>
-                            `Add ${element.placeholder} : ${inputValue}`
-                          }
-                          isValidNewOption={(
-                            inputValue,
-                            selectValue,
-                            selectOptions
-                          ) =>
-                            inputValue.trim() !== "" &&
-                            !selectOptions.some(
-                              (option) => option.label === inputValue
-                            )
-                          }
-                        />
-                        <ErrorMessage
-                          name={element.name}
-                          component="div"
-                          className="text-red-500"
-                        />
-                      </div>
+                          <h4 className="text-blue-600 mb-2">
+                            {element.placeholder}{" "}
+                            <span className="text-red-500">*</span>
+                          </h4>
+                          <div className={"w-full relative col-span-1 "}>
+                            {element.icon}
+                            <input
+                              type={element.type}
+                              name={element.name}
+                              placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
+                              onChange={(e) => {
+                                const uploadedFile = e.target.files[0];
+                                setProfilePhoto(uploadedFile)
+                              }}
+                              required
+                              className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
+                            />
+                          </div>
+                          <ErrorMessage
+                            name={element.name}
+                            component="div"
+                            className="text-red-500"
+                          />
+                        </div>
+                      )
+                    }
+                    if (element.type == "array") {
+                      return (
+                        <div className="" key={index}>
+                          <h4 className="text-blue-600 mb-2">
+                            {element.placeholder}
+                            <span className="text-red-500">*</span>
+                          </h4>
+                          <CreatableSelect
+                            isMulti
+                            value={values[element.name]}
+                            placeholder={element.placeholder}
+                            options={values[element.name]}
+                            onChange={(selectedOptions) => {
+                              setFieldValue(element.name, selectedOptions);
+                            }}
+                            getOptionLabel={(option) => option.label}
+                            getOptionValue={(option) => option.value}
+                            formatCreateLabel={(inputValue) =>
+                              `Add ${element.placeholder} : ${inputValue}`
+                            }
+                            isValidNewOption={(
+                              inputValue,
+                              selectValue,
+                              selectOptions
+                            ) =>
+                              inputValue.trim() !== "" &&
+                              !selectOptions.some(
+                                (option) => option.label === inputValue
+                              )
+                            }
+                          />
+                          <ErrorMessage
+                            name={element.name}
+                            component="div"
+                            className="text-red-500"
+                          />
+                        </div>
                       )
                     }
 
-                    if(element.type == "dynamic"){
-                    return ( 
-                      <div className="" key={index}>
-                      <h4 className="text-blue-600 mb-2">
-                        {element.placeholder}
-                        <span className="text-red-500">*</span>
-                      </h4>
-                      <div className={"w-full relative col-span-1 "}>
-                        {element.icon}
+                    if (element.type == "dynamic") {
+                      return (
+                        <div className="" key={index}>
+                          <h4 className="text-blue-600 mb-2">
+                            {element.placeholder}
+                            <span className="text-red-500">*</span>
+                          </h4>
+                          <div className={"w-full relative col-span-1 "}>
+                            {element.icon}
+                            <Select
+                              name={element.name}
+                              value={values[element.name]}
+                              options={element.name == "sub_categoery" ? filterSubCategoeryOpt?.map(
+                                (subcatel, index) => {
+                                  return {
+                                    value: subcatel.id,
+                                    label: subcatel.sub_category_name,
+                                  };
+                                }
+                              ) : userDetails?.available_categoery?.map(
+                                (skillElement, index) => {
+                                  return {
+                                    value: skillElement.id,
+                                    label: skillElement.job_category,
+                                  };
+                                }
+                              )}
+                              onChange={(selectedOptions) => {
+                                if (element.name == "job_categoery") {
+                                  let fl = userDetails.available_sub_categoery?.filter((element, index) => {
+                                    return element.category == selectedOptions.value
+                                  });
+                                  setFilterSubCategoeryOpt(fl);
+                                  setFieldValue("sub_categoery", "");
+                                }
+                                setFieldValue(element.name, selectedOptions);
+                              }}
+                              placeholder={element.placeholder}
+                              required
+                              className=""
+                            />
 
-                        <Select
-                                 name={element.name}
-                                 value={values[element.name]}
-                                 options={element.name == "sub_categoery" ? filterSubCategoeryOpt?.map(
-                                  (subcatel, index) => {
-                                    return {
-                                      value: subcatel.id,
-                                      label: subcatel.sub_category_name,
-                                    };
-                                  }
-                                ): userDetails?.available_categoery?.map(
-                                  (skillElement, index) => {
-                                    return {
-                                      value: skillElement.id,
-                                      label: skillElement.job_category,
-                                    };
-                                  }
-                                )}
-                                 onChange={(selectedOptions) => {
-                                  console.log(selectedOptions);
-                                  if(element.name == "job_categoery"){
-                                    let fl = userDetails.available_sub_categoery?.filter((element, index)=>{
-                                      return element.category == selectedOptions.value
-                                    });
-                                    setFilterSubCategoeryOpt(fl);
-                                    setFieldValue("sub_categoery", "");                                             
-                                  }
-                                   setFieldValue(element.name, selectedOptions);
-                                 }}
-                                 placeholder={element.placeholder}
-                                 required
-                                 className=""
-                              />
-
-                      </div>
-                      <ErrorMessage
-                        name={element.name}
-                        component="div"
-                        className="text-red-500"
-                      />
-                    </div>
-                    )
+                          </div>
+                          <ErrorMessage
+                            name={element.name}
+                            component="div"
+                            className="text-red-500"
+                          />
+                        </div>
+                      )
                     }
                     return (
                       <div className="" key={index}>
@@ -231,7 +272,7 @@ const InternJobProfileForm = () => {
                     {addButton ? (
                       <CircularProgress size={19} color="inherit" />
                     ) : (
-                      "Add Skill"
+                      "Add Profile"
                     )}
                   </button>
                 </div>

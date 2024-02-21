@@ -81,6 +81,7 @@ const NavMenu = () => {
                 onMouseLeave={()=>{
                     setNavId(0);
                 }}
+                key={index}
                 >
                   <NavLink
                     to={element.link}

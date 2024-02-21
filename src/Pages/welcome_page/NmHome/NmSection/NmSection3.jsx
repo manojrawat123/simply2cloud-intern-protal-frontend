@@ -16,7 +16,7 @@ function NmSection3() {
     const images = [third1, third2, third3, third4, third5, third6, third7, third8, third9, third10, third11];
     
   return (
-    <div className="bg-pink-50 p-20">
+    <div className="bg-pink-50 p-2 md:p-20">
       <div className="text-left text-2xl font-semibold">
         <h1>Popular Services</h1>
       </div>
@@ -32,12 +32,12 @@ export default NmSection3;
 const ImageGrid = ({ imageSources}) => {
   const slideLeft = () =>{
     var slider = document.getElementById('slider')
-    slider.scrollLeft -= 5 * getImageWidth(); // Assuming each image has a consistent width
+    slider.scrollLeft -= 1 * getImageWidth(); // Assuming each image has a consistent width
   }
 
   const slideRight = () =>{
     var slider = document.getElementById('slider')
-    slider.scrollLeft += 5 * getImageWidth(); // Assuming each image has a consistent width
+    slider.scrollLeft += 1 * getImageWidth(); // Assuming each image has a consistent width
   }
   const getImageWidth = () => {
     // Replace this value with the actual width of one image in pixels

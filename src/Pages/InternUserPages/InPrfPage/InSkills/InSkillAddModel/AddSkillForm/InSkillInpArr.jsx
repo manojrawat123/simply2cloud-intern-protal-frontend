@@ -38,7 +38,15 @@ const internSkillInputArr = [
     options : [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10],
     placeholder: "Experience Level",
     icon: <Star className={`${iconCss} text-yellow-300`} />
-  }
+  },
+  {
+    type: "file",
+    id: "user_image",
+    name: "user_image",
+    required: false,
+    placeholder: "Upload Your Image",
+    icon: <WorkIcon className={iconCss} />,
+  },
 ];
 
 export default internSkillInputArr;

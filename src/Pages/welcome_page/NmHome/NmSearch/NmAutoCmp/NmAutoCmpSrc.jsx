@@ -3,6 +3,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { DataContext } from '../../../../../context';
 import { useNavigate } from 'react-router-dom';
+import "./NmAutoCmpStyle.css"
+
 
 const filter = createFilterOptions();
 
@@ -11,6 +13,7 @@ export default function NmAutoCmpSrc(props) {
   const [value, setValue] = React.useState(null);
   const {jobCategoeryOpt, unAuthHomePageFunc, avaibleSkills,jobSubCategoeryOpt} = React.useContext(DataContext);
   const navigate = useNavigate();
+  
 
   React.useEffect(()=>{
     unAuthHomePageFunc();
@@ -19,7 +22,7 @@ export default function NmAutoCmpSrc(props) {
 
   return (
     <Autocomplete
-    className='bg-white outline-black'
+    className='bg-white outline-black myAutocomplete'
       value={value}
       onChange={(event, newValue) => {
         if(typeof newValue != "object" || !newValue.id ){

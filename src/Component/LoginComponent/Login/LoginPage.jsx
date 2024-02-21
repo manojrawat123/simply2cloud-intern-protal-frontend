@@ -14,6 +14,7 @@ const LoginPage = () => {
 
   const [loginButton, setLoginButton] = useState(false);
   const navigate = useNavigate();
+  const { profileFunc } = useContext(DataContext);
 
   const loginFunc = (e) => {
     e.preventDefault();
@@ -28,7 +29,9 @@ const LoginPage = () => {
           Cookies.set('token', value.data.token.access);
         }
         Cookies.set('user_type', value.data.user_type);
+        
         navigate("/");
+    }).then(()=>{
     }).catch((err)=>{
 
       console.log(err);

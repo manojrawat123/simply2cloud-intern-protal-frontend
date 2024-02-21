@@ -80,14 +80,11 @@ const Img = ({ svgCode, name, svgSize }) => {
     }
     return (
         <div className="group text-gray-700">
-        <div className="text-center">
-
-            <div dangerouslySetInnerHTML={{ __html: svgCode }} className='p-1 mx-auto' style={containerStyle}/>
-
-            <hr className=" my-2 border-t duration-300 group-hover:border-green-500 group-hover:scale-150 border-gray-500 transition-transform" />
-
-            <div className="font-semibold">{name}</div>
-        </div>
+            <div className="text-center">
+                <div dangerouslySetInnerHTML={{ __html: svgCode }} className='p-1 mx-auto' style={containerStyle} />
+                <hr className=" my-2 border-t duration-300 group-hover:border-green-500 group-hover:scale-150 border-gray-500 transition-transform" />
+                <div className="font-semibold">{name}</div>
+            </div>
         </div>
     );
 };

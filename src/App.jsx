@@ -24,6 +24,7 @@ import NmInSearchPg from "./Pages/welcome_page/NmInSearchPg/NmInSearchPg";
 import NmUnAuthJobsPage from "./Pages/welcome_page/NmGetPaid/NmUserJobs/NmUserJobs";
 import RejectedApplication from "./Pages/CompanyUserPages/JobApplication/RejectedApplication/RejectedApplication";
 import ApprovedApplication from "./Pages/CompanyUserPages/JobApplication/ApprovedApplication/ApprovedApplication";
+import InternJobProfileUpdate from "./Pages/InternUserPages/InPrfPage/InJobProfile/InJobProfForm/InJobProfUpForm";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/login" Component={LoginPage} />
         <Route path="/signup" Component={Register} />
         <Route path="/company-register" Component={CompanyRegister} />
+        <Route path="/intern-details/:id" Component={StudentFullDetails} />
         
 
         {/* Intern Routes */}
@@ -44,13 +46,15 @@ function App() {
           <Route path="/search" Component={NmInSearchPg} />
           <Route path="/nm-jobs" Component={NmUnAuthJobsPage} />
 
-        {/* </Route> */}
+        {/* </Route> */} 
 
-        <Route path="" Component={ProtectedRoutes}>
-          <Route path="/studentdetails" Component={StudentFullDetails} />
-        </Route>
+        {/* <Route path="" Component={ProtectedRoutes}> */}
+        {/* </Route> */}
         <Route path="" Component={ProtectedRoutes}>
           <Route path="/profile" Component={InternProfilePage} />
+        </Route>
+        <Route path="" Component={ProtectedRoutes}>
+          <Route path="/update-profile/:id" Component={InternJobProfileUpdate} />
         </Route>
         <Route path="" Component={ProtectedRoutes}>
           <Route path="/jobs" Component={UserJobs} />
@@ -78,7 +82,7 @@ function App() {
         </Route>
       </Routes>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

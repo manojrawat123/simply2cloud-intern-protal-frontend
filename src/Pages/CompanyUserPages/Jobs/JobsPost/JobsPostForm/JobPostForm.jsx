@@ -30,7 +30,7 @@ const JobPostForm = (props) => {
   const token = Cookies.get("token");
 
   console.log("jobCategoery",jobCategoeryOpt);
-  console.log("job Sub Categoery Opt", jobSubCategoeryOpt)
+  console.log("Job Sub Categoery Opt", jobSubCategoeryOpt)
 
   useEffect(() => {
     companyJobPageFunc();
