@@ -25,6 +25,8 @@ import NmUnAuthJobsPage from "./Pages/welcome_page/NmGetPaid/NmUserJobs/NmUserJo
 import RejectedApplication from "./Pages/CompanyUserPages/JobApplication/RejectedApplication/RejectedApplication";
 import ApprovedApplication from "./Pages/CompanyUserPages/JobApplication/ApprovedApplication/ApprovedApplication";
 import InternJobProfileUpdate from "./Pages/InternUserPages/InPrfPage/InJobProfile/InJobProfForm/InJobProfUpForm";
+import EmailVerify from "./Component/LoginComponent/EmailVerify/EmailVerify";
+import MyApplicationPg from "./Pages/InternUserPages/MyApplicationPg/MyApplicationPg";
 
 
 function App() {
@@ -38,15 +40,15 @@ function App() {
         <Route path="/signup" Component={Register} />
         <Route path="/company-register" Component={CompanyRegister} />
         <Route path="/intern-details/:id" Component={StudentFullDetails} />
-        
+        <Route path="/accounts/activate/:userid_encode/:verify_token/" Component={EmailVerify} />
 
         {/* Intern Routes */}
         {/* <Route path="" Component={ProtectedRoutes}> */}
-          <Route path="" Component={RenderAlgo} />
-          <Route path="/search" Component={NmInSearchPg} />
-          <Route path="/nm-jobs" Component={NmUnAuthJobsPage} />
+        <Route path="" Component={RenderAlgo} />
+        <Route path="/search" Component={NmInSearchPg} />
+        <Route path="/nm-jobs" Component={NmUnAuthJobsPage} />
 
-        {/* </Route> */} 
+        {/* </Route> */}
 
         {/* <Route path="" Component={ProtectedRoutes}> */}
         {/* </Route> */}
@@ -60,10 +62,10 @@ function App() {
           <Route path="/jobs" Component={UserJobs} />
         </Route>
         <Route path="" Component={ProtectedRoutes}>
-          <Route path="/addskill" Component={InternAddSkillsForm} />
+          <Route path="/my-application" Component={MyApplicationPg} />
         </Route>
 
-       
+
         {/* Company Routes */}
         <Route path="" Component={CompanyProtectedRoutes}>
           <Route path="/post-jobs" Component={CompanyJobs} />

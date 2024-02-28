@@ -4,7 +4,7 @@ import generateValidationSchema from '../../GenrateValidationSchema/genrateValid
 import genrateInitalValues from '../../genrateInitialValues/InitialValues';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
-import API_BASE_URL from '../../../config';
+import API_BASE_URL, { API_ROUTE_URL } from '../../../config';
 import { CircularProgress } from '@mui/material';
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
@@ -26,14 +26,15 @@ const Register = () => {
             s2c_certified : values.certified, 
             address : values.location,
             password: values.password,
-            password2 : values.password2
+            password2 : values.password2,
+            url : API_ROUTE_URL
           }).then((value)=>{
-            
-              navigate("/login");
-              toast.success("You are registerd Successfully", {
+            console.log(value.data)
+              toast.success(value.data.message, {
                   position : "top-center"
-              });
-            resetForm();
+                });
+                resetForm();
+                // navigate("/login");
           }).catch((err)=>{
             if (err.response.data.errors.email && err.response.data.errors.phone){
                 toast.error("This Email and Phone Number is already in use", {

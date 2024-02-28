@@ -9,7 +9,7 @@ const filter = createFilterOptions();
 export default function InternJobSearchByCategoery(props) {
 
   const [value, setValue] = React.useState(null);
-  const { jobSearchFilterFunc } = React.useContext(DataContext);
+  const { jobSearchFilterFunc,tempFilterJobs } = React.useContext(DataContext);
   
   return (
     <Autocomplete
@@ -26,13 +26,16 @@ export default function InternJobSearchByCategoery(props) {
         jobSearchFilterFunc(null,props.selectedTitle, props.selectedLocation,props.selectedSubCategoery ,props.setFilteredJobs);  
       }
       else{
-        let fl = props.jobSubCategoeryOpt.filter((element, index)=>{
-          return element.category == newValue.id
-        });
-        props.setFilterSubCategoeryOpt(fl);
-
         props.setIsFilter(true);
+        
+        if (!props?.selectedSubCategoery && !props.selectedLocation){   
           jobSearchFilterFunc(newValue.id, props.selectedTitle, props.selectedLocation, props.selectedSubCategoery,props.setFilteredJobs);  
+        }
+        else {
+        // const fl = props.studentJobsObj?.filter((element) => element.location == newValue.location_slug)
+        const fs = tempFilterJobs?.filter((element) => element.job_categoery.id === newValue.id);
+        props.setFilteredJobs(fs)
+      }
       }
       if (typeof newValue === 'string') {
           setValue({

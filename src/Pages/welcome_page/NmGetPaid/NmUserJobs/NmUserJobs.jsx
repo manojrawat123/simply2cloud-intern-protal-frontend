@@ -31,10 +31,10 @@ const NmUnAuthJobsPage = () => {
   const [selectedSubCategoery, setSelectedSubCategoery] = useState();
 
   useEffect(() => {
-    if(Cookies.get("token") && Cookies.get("user_type") == "user"){
+    if (Cookies.get("token") && Cookies.get("user_type") == "user") {
       getJobsForStudentFunc()
     }
-    else{
+    else {
       getUnAuthJobsFunc();
     }
   }, []);
@@ -42,6 +42,8 @@ const NmUnAuthJobsPage = () => {
   if (!studentJobsObj) {
     return <LoadingPage />;
   }
+  console.log(studentJobsObj);
+
 
   return (
     <>
@@ -66,6 +68,7 @@ const NmUnAuthJobsPage = () => {
             jobSubCategoeryOpt={jobSubCategoeryOpt}
             unAuthJobs={studentJobsObj}
             setIsFilter={setIsFilter}
+            
             setFilteredJobs={setFilteredJobs}
             selectedLocation={selectedLocation}
             selectedTitle={selectedTitle}
@@ -75,7 +78,7 @@ const NmUnAuthJobsPage = () => {
             filterSubCategoeryOpt={filterSubCategoeryOpt}
           />
 
-          <InternJobSearchBySlug
+          {/* <InternJobSearchBySlug
             searchTitleSlugsObj={searchTitleSlugsObj}
             unAuthJobs={studentJobsObj}
             setIsFilter={setIsFilter}
@@ -85,13 +88,12 @@ const NmUnAuthJobsPage = () => {
             selectedTitle={selectedTitle}
             selectedCategoery={selectedCategoery}
             selectedSubCategoery={selectedSubCategoery}
-          />
-
-
+          /> */}
           <InternJobSearchByLocation
             searchLocationSlugObj={searchLocationSlugObj}
             unAuthJobs={studentJobsObj}
             setIsFilter={setIsFilter}
+            
             setFilteredJobs={setFilteredJobs}
             selectedLocation={selectedLocation}
             selectedTitle={selectedTitle}

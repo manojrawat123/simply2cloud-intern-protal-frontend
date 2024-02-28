@@ -22,8 +22,10 @@ const DataProviderFuncComp = ({ children }) => {
   const [approvedApplication, setApprovedApplication] = useState(); 
   const [rejectedApplication, setRejectedApplication] = useState();
   const [internProfileFullDetails, setInternProfileFullDetail] = useState();
+  const [tempFilterJobs , setTempFilterJobs] = useState();
 
   var token = Cookies.get("token");
+
   const navigate = useNavigate();
 
   const profileFunc = () => {
@@ -35,7 +37,6 @@ const DataProviderFuncComp = ({ children }) => {
         },
       })
       .then((value) => {
-        console.log(value.data);
         setUserDetails(value.data);
         Cookies.set("user_type", value.data.user_details.user_type);
         Cookies.set("user", value.data.user_details.id);
@@ -84,7 +85,6 @@ const DataProviderFuncComp = ({ children }) => {
         },
       })
       .then((value) => {
-        console.log(value.data);
         setAvaibleSkills(value.data.aviable_skills);
         setJobCategoeryOpt(value.data.categoery_option);
         setCompanyUserDetail(value.data);
@@ -105,7 +105,8 @@ const DataProviderFuncComp = ({ children }) => {
         },
       })
       .then((value) => {
-        console.log(value.data);
+
+
         setAvaibleSkills(value.data.aviable_skills);
         setJobCategoeryOpt(value.data.categoery_option);
         setJobSubCategoeryOpt(value.data.sub_categoery);
@@ -128,7 +129,6 @@ const DataProviderFuncComp = ({ children }) => {
         })
         .then((value) => {
           setJobPostedByCompany(value.data);
-          console.log(value.data);
         })
         .catch((err) => {
           console.log(err);
@@ -161,7 +161,6 @@ const DataProviderFuncComp = ({ children }) => {
         setSearchLocationSlug(value.data.search_location_slug);
         setJobSubCategoeryOpt(value.data.sub_categoery);
         setJobCategoeryOpt(value.data.search_categoery);
-        console.log(value.data);
       })
       .catch((err) => {
         console.log(err);
@@ -185,8 +184,8 @@ const DataProviderFuncComp = ({ children }) => {
         },
       })
       .then((value) => {
-        console.log(value.data);
         setFilteredJobs(value.data);
+        setTempFilterJobs(value.data);
       })
       .catch((err) => {
         console.log(err);
@@ -206,7 +205,6 @@ const DataProviderFuncComp = ({ children }) => {
       })
       .then((value) => {
         setJobApplication(value.data);
-        console.log(status)
         if (status == "Accepted"){
             setApprovedApplication(value.data);
         }
@@ -298,35 +296,36 @@ else{
     <DataContext.Provider
       value={{
         profileFunc,
-        userDetails,
         avaibleSkillsFunc,
-        avaibleSkills,
-        companyProfileFunc,
-        companyUserDetail,
         getJobsPostedByCompanyFunc,
-        jobPostedByCompany,
-        logoutFunc,
+        companyProfileFunc,
         getJobsForStudentFunc,
+        jobSearchFilterFunc,
+        logoutFunc,
+        getJobApplicationFunc,
+        companyJobPageFunc,
+        unAuthInternSerchFunc,
+        getUnAuthJobsFunc,
+        unAuthHomePageFunc,
+        setStudentJobObj,
+        internProfileFullDetailsFunc,
+        setUnAuthUserDetail,
+        userDetails,
+        avaibleSkills,
+        companyUserDetail,
+        jobPostedByCompany,
         studentJobsObj,
         searchTitleSlugsObj,
-        setStudentJobObj,
         searchLocationSlugObj,
-        jobSearchFilterFunc,
         jobCategoeryOpt,
-        getJobApplicationFunc,
         jobApplication,
         jobSubCategoeryOpt,
-        companyJobPageFunc,
-        unAuthHomePageFunc,
         unAuthUserDetail,
-        unAuthInternSerchFunc,
-        setUnAuthUserDetail,
-        getUnAuthJobsFunc,
         unAuthJobs,
         approvedApplication,
         rejectedApplication,
-        internProfileFullDetailsFunc,
-        internProfileFullDetails
+        internProfileFullDetails,
+        tempFilterJobs
       }}
     >
       {children}

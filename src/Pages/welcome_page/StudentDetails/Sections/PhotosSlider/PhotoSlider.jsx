@@ -8,7 +8,8 @@ const PhotoSlider = ({skills}) => {
   const [index, setIndex] = React.useState(0);
 
   const images = skills.map((element,index)=>{
-    return `${API_BASE_URL}/${element.user_image}`
+    return {url : `${API_BASE_URL}/${element.user_image}`,
+            skills_name : element.skill_name}
   })
   useEffect(() => {
     const lastIndex = images.length - 1;
@@ -32,14 +33,30 @@ const PhotoSlider = ({skills}) => {
   }, [index]);
   return (
     <section className="section relative bg-white">
-      <div className="title">
+      {/* <div className="title">
         <h2 className="text-xl font-semibold">
           <span>/</span>Portfolio Images
         </h2>
-      </div>
-      <div className="section-center">
 
-        {images.map((person, personIndex) => {
+      </div> */}
+
+     
+     { 
+     images?.length == 1 ? <>
+     <div className={``}> 
+            <h4 className="text-center sm:text-xl font-semibold mt-4 underline text-gray-700">{skills[0].skill_name}</h4>
+            <div className="flex justify-center items-center">
+              <img src={API_BASE_URL + "/" + skills[0].user_image} alt={"name"} className="person-img md:h-[460px] h-[300px] mt-4" />
+            </div>
+            </div>
+     </>:
+     <>
+     <div className="section-center">
+        
+
+        {
+
+          images.map((person, personIndex) => {
           
 
           let position = "nextSlide";
@@ -53,12 +70,16 @@ const PhotoSlider = ({skills}) => {
             position = "lastSlide";
           }
           return (
-            <article className={`${position} flex justify-center items-center `} key={"id"} >
-                {console.log(person)}
-              <img src={`${person}`} alt={"name"} className="person-img md:h-[460px] h-[300px] mt-4" />
+            <article className={`${position}  `} key={personIndex} > 
+            <h4 className="text-center sm:text-xl font-semibold mt-4 underline">{person.skills_name}</h4>
+            <div className="flex justify-center items-center">
+
+              <img src={`${person.url}`} alt={"name"} className="person-img md:h-[460px] h-[300px] mt-4" />
+            </div>
             </article>
           );
-        })}
+        })
+        }
       </div>
       <button className="absolute top-[215px] md:left-[6rem]" onClick={() => setIndex(index - 1)}>
           
@@ -67,7 +88,8 @@ const PhotoSlider = ({skills}) => {
         <button className="absolute right-0 md:right-[6rem] top-[215px]" onClick={() => setIndex(index + 1)}>
           <ArrowForwardIos />
         </button>
-        
+        </>
+        }
     </section>
   );
 };

@@ -21,9 +21,7 @@ const CompanyRegister = () => {
         setRegisterButton(true);
         values["user_type"] = "company"
         axios.post(`${API_BASE_URL}/company_register/`, values).then((value)=>{
-            
-              navigate("/login");
-              toast.success("You are registerd Successfully", {
+              toast.success("You are registerd Successfully. Verify Link Send to your email", {
                   position : "top-center"
               });
             resetForm();
@@ -33,7 +31,6 @@ const CompanyRegister = () => {
                     position : "top-center"
                 })
             }
-            
             else if (err.response.data.errors.email){
                 toast.error("This Email is already in use", {
                     position : "top-center"

@@ -9,7 +9,8 @@ const filter = createFilterOptions();
 export default function InternJobSearchByLocation(props) {
 
   const [value, setValue] = React.useState(null);
-  const { jobSearchFilterFunc } = React.useContext(DataContext);
+  const { jobSearchFilterFunc, tempFilterJobs } = React.useContext(DataContext);
+
 
   return (
     <Autocomplete
@@ -26,8 +27,14 @@ export default function InternJobSearchByLocation(props) {
       }
       else{
         props.setIsFilter(true);
-        console.log(props.selectedCategoery)
-        jobSearchFilterFunc(props?.selectedCategoery?.id, props.selectedTitle, newValue.location_slug,props.selectedSubCategoery, props.setFilteredJobs);
+        if (!props?.selectedCategoery && !props.selectedSubCategoery){
+          jobSearchFilterFunc(props?.selectedCategoery?.id, props.selectedTitle, newValue.location_slug,props.selectedSubCategoery, props.setFilteredJobs);
+        }
+        else {
+          // const fl = props.studentJobsObj?.filter((element) => element.location == newValue.location_slug)
+          const fs = tempFilterJobs?.filter((element) => element.location === newValue.location_slug);
+          props.setFilteredJobs(fs)
+        }
       }
         
       
@@ -43,6 +50,7 @@ export default function InternJobSearchByLocation(props) {
         } else {
           setValue(newValue);
         }
+
       }}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);

@@ -5,7 +5,7 @@ import { CircularProgress } from '@mui/material';
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import API_BASE_URL from '../../../config';
+import API_BASE_URL, { API_ROUTE_URL } from '../../../config';
 import inputLoginArr from './loginInpArr';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -22,6 +22,7 @@ const LoginPage = () => {
     axios.post(`${API_BASE_URL}/login/`, {
       email: e.target.username.value,
       password: e.target.password.value,
+      url : API_ROUTE_URL,
     }).then((value)=>{
         Cookies.set('token', value.data.token.access, { secure: true });
         if(!Cookies.get("token")){
@@ -29,22 +30,23 @@ const LoginPage = () => {
           Cookies.set('token', value.data.token.access);
         }
         Cookies.set('user_type', value.data.user_type);
-        
+        profileFunc()
         navigate("/");
     }).then(()=>{
     }).catch((err)=>{
-
       console.log(err);
       if(err.response){
-
         if(err.response.status == 400){
-          toast.error("Invalid Info", {position : "top-center"})
+          toast.error(err.response.data.error, {position : "top-center"})
+        }
+        else if (err.response.status == 401){
+          toast.error(err.response.data.error, {position : "top-center"})
+        }
+        else{
+        toast.error(err.response.data.error, {position : "top-center"})
         }
       }
-        console.log({
-          email: e.target.username.value,
-        password: e.target.password.value,
-      })
+        
     }).finally(()=>{
       setLoginButton(false);
     })

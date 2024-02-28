@@ -93,7 +93,7 @@ export default function InternProfileCard({ profile, isCompany }) {
 
         </table>
         <div>
-          <h1 className='font-bold underline text-center mt-4'>Your Details</h1>
+          <h1 className='font-bold underline text-center mt-4'>Details</h1>
           {profile.desc.split('\n').map((element, index) => {
             return <div key={index}>{index + 1}. {element}</div>
           })}

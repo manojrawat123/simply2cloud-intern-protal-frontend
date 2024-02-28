@@ -69,7 +69,7 @@ const UserJobs = () => {
           filterSubCategoeryOpt={filterSubCategoeryOpt}
           />
 
-          <InternJobSearchBySlug
+          {/* <InternJobSearchBySlug
             searchTitleSlugsObj={searchTitleSlugsObj}
             studentJobsObj={studentJobsObj}
             setIsFilter={setIsFilter}
@@ -79,7 +79,7 @@ const UserJobs = () => {
             selectedTitle={selectedTitle}
             selectedCategoery={selectedCategoery}
             selectedSubCategoery={selectedSubCategoery}
-          />
+          /> */}
 
 
           <InternJobSearchByLocation
@@ -95,7 +95,6 @@ const UserJobs = () => {
           />
         </div>
       </div>
-
       {!isFilter ? (
         studentJobsObj?.length == 0 ? (
           <div className="h-[65vh] flex items-center justify-center">

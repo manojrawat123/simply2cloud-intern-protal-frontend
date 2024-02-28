@@ -52,7 +52,6 @@ const InternJobProfileForm = () => {
       data["available_skills"] = user_avl_skl ? user_avl_skl : [];
     }
     const token = Cookies.get("token");
-    console.log(profilePhoto)
     data["user_image"] = profilePhoto;
     const formData = new FormData();
 
@@ -75,7 +74,7 @@ const InternJobProfileForm = () => {
         },
       })
       .then(() => {
-        toast.success("Skill Added Sucessfully!", {
+        toast.success("Profile Added Sucessfully!", {
           position: "top-center",
         });
         profileFunc();

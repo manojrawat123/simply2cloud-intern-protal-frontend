@@ -11,9 +11,10 @@ import generateValidationSchema from "../../../../../Component/GenrateValidation
 import genrateInitalValues from "../../../../../Component/genrateInitialValues/InitialValues";
 import { DataContext } from "../../../../../context";
 import API_BASE_URL from "../../../../../config";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import LoadingPage from "../../../../../Component/LoadingPage/LodingPage";
 import NoDataPage from "../../../../../Component/NoDataPage/NoDataPage";
+import { ArrowBack, ArrowLeft, ArrowLeftOutlined, BackHand, ForkLeft, RampLeft, SwipeLeft } from "@mui/icons-material";
 
 
 const InternJobProfileUpdate = () => {
@@ -91,13 +92,13 @@ const defaultValue = {
     });
 
     axios
-      .post(`${API_BASE_URL}/compleate-intern-job-profile/${id}`, formData, {
+      .put(`${API_BASE_URL}/compleate-intern-job-profile/${id}/`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then(() => {
-        toast.success("Skill Added Sucessfully!", {
+        toast.success("Profile Updated Sucessfully!", {
           position: "top-center",
         });
         profileFunc();
@@ -126,7 +127,13 @@ const defaultValue = {
 
   return (
     <div>
+      <ToastContainer />
+
+      
       <div className="w-[100%] py-10 bg-blue-50">
+        <NavLink to={'/profile'} className={'md:mx-10 mx-2 bg-white p-4 rounded-full'}>
+          <ArrowBack />
+        </NavLink>
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
             Update Profile

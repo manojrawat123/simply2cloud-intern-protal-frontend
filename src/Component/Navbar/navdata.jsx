@@ -12,8 +12,15 @@ const navItem = [
     id: 2,
     label: "Internship",
     link: "/nm-jobs",
-    visibility: "both",
-    user: "any",
+    visibility: "logout",
+    user: "user",
+  },
+  {
+    id: 2,
+    label: "Internship",
+    link: "/nm-jobs",
+    visibility: "login",
+    user: "user",
   },
   {
     id: 3,
@@ -59,34 +66,13 @@ const navItem = [
       },
     ],
   },
-  // {
-  //   "id": 2,
-  //   "label": "Rejected Application",
-  //   "link": "/job-application-rejected",
-  //   "visibility": "login",
-  //   "user": "company"
-  // },
-  // {
-  //   "id": 2,
-  //   "label": "Approved Application",
-  //   "link": "/job-application-approved",
-  //   "visibility": "login",
-  //   "user": "company"
-  // },
   {
     id: 9,
-    label: "Add Skills",
-    link: "/addskill",
+    label: "My Application",
+    link: "/my-application",
     visibility: "login",
     user: "user",
   },
-  // {
-  //   id: 10,
-  //   label: "Contact",
-  //   link: "/contact",
-  //   visibility: "login",
-  //   user: "user",
-  // },
   {
     id: 11,
     label: "Logout",
