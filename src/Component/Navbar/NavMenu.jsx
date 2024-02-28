@@ -42,88 +42,82 @@ const NavMenu = () => {
         </div>
       </div>
       <div
-        className={`menu w-full lg:block  lg:items-center lg:w-auto lg:px-3 px-8  ${
-          mobMenuVis ? "flex-grow" : " hidden"
-        }`}
+        className={`menu w-full lg:block  lg:items-center lg:w-auto lg:px-3 px-8  ${mobMenuVis ? "flex-grow" : " hidden"
+          }`}
       >
         <div className="text-md font-bold text-blue-700 lg:flex text-center">
           {navItem?.map((element, index) => {
-            if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" &&  (Cookies.get('user_type') != "company" || element.label == "Home"))) {
+            if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" && (Cookies.get('user_type') != "company" || element.label == "Home"))) {
               return (
                 <NavLink
                   to={element.link}
                   key={index}
-                  className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${
-                    element.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
-                  } ${
-                    element.link == location.pathname ||
-                    location.pathname == "company-register"
+                  className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${element.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
+                    } ${element.link == location.pathname ||
+                      location.pathname == "company-register"
                       ? " bg-blue-700 text-white"
                       : " "
-                  }`}
+                    }`}
                 >
                   {element.label}
                 </NavLink>
               );
             }
-            // Nav Logic for Company User
             else if (
               Cookies.get("token") &&
               element.visibility == "login" &&
-              (element.user == Cookies.get("user_type") ||
-                element.user == "both")
+              (element.user == Cookies.get("user_type") || element.user == "both")
             ) {
               return (
                 <div
-                onMouseEnter={()=>{
+                  onMouseEnter={() => {
                     setNavId(element.id);
-                }}
-                onMouseLeave={()=>{
+                  }}
+                  onMouseLeave={() => {
                     setNavId(0);
-                }}
-                key={index}
+                  }}
+                  key={index}
                 >
                   <NavLink
                     to={element.link}
                     key={index}
-                    className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${
-                      element.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
-                    } ${
-                      element.link == location.pathname
+                    className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${element.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
+                      } ${element.link == location.pathname
                         ? " bg-blue-700 text-white"
                         : " "
-                    }`}
+                      }`}
                   >
                     {element.label}
                   </NavLink>
                   {
-                  element.id == navId ?
-                  element.option ? (
-                    <div className="fixed bg-white border shadow-2xl ml-8 py-4">
-                      {element.option.map((opel, index) => {
-                        return (
-                          <div className="block ">
-                            <NavLink
-                              to={opel.link}
-                              key={index}
-                              className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${
-                                opel.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
-                              } ${
-                                opel.link == location.pathname
-                                  ? " bg-blue-700 text-white"
-                                  : " "
-                              }`}
-                            >
-                              {opel.label}
-                            </NavLink>
-                          </div>
-                        );
-                      })
-                      }
-                    </div>
-                  ) : (
-                    ""
-                  ) : null}
+                    element.id == navId ?
+                      element.option ? (
+                        <div className="fixed bg-white border shadow-2xl ml-8 py-4 z-[1000]">
+                          {element.option.map((opel, index) => {
+                            return (
+                              <div className="block ">
+                                <NavLink
+                                  to={opel.link}
+                                  onClick={() => {
+                                    setNavId(0);
+                                  }}
+                                  key={index}
+                                  className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${opel.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
+                                    } ${opel.link == location.pathname
+                                      ? " bg-blue-700 text-white"
+                                      : " "
+                                    }`}
+                                >
+                                  {opel.label}
+                                </NavLink>
+                              </div>
+                            );
+                          })
+                          }
+                        </div>
+                      ) : (
+                        ""
+                      ) : null}
                 </div>
               );
             } else if (Cookies.get("token") && element.user == "button") {
@@ -133,13 +127,11 @@ const NavMenu = () => {
                     logoutFunc();
                   }}
                   key={index}
-                  className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${
-                    element.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
-                  } ${
-                    element.link == location.pathname
+                  className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:bg-blue-700 hover:text-white mr-2 ${element.link == "signup" ? "lg:ml-auto" : "lg:ml-8"
+                    } ${element.link == location.pathname
                       ? " bg-blue-700 text-white"
                       : " "
-                  }`}
+                    }`}
                 >
                   {element.label}
                 </div>

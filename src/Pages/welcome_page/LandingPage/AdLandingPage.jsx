@@ -40,7 +40,7 @@ const AdLandingPage = () => {
       {/* TESTIMONIALS-END */}
 
       {/* LOGO-MAKER-START */}
-      <LogoMaker />
+      {/* <LogoMaker /> */}
       {/* LOGO-MAKER-END */}
 
       {/* SHOW-WORK-START */}

@@ -16,7 +16,7 @@ const navItem = [
     user: "user",
   },
   {
-    id: 2,
+    id: '2a',
     label: "Internship",
     link: "/nm-jobs",
     visibility: "login",

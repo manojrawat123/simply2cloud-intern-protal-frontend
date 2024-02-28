@@ -3,17 +3,12 @@ import Slider from "react-slick";
 import { IoSearch } from "react-icons/io5";
 
 
-import b1 from '../../Images/HeaderImages/2880x1360 1.png'
-import b2 from '../../Images/HeaderImages/2880x1360 2.png'
-import b4 from '../../Images/HeaderImages/2880x1360 4.png'
-import b5 from '../../Images/HeaderImages/2880x1360 5.png'
+import b1 from '../../Images/HeaderImages/banner1.jpg'
+import b2 from '../../Images/HeaderImages/banner2.jpg'
+import b4 from '../../Images/HeaderImages/banner3.jpg'
+import b5 from '../../Images/HeaderImages/banner4.jpg'
 
 import pimg from "../../Images/christina-2x.png"
-import ci1 from "../../Images/google.61e78c8.png"
-import ci2 from "../../Images/meta.12b5e5c.png"
-import ci3 from "../../Images/netflix.96c5e3f.png"
-import ci4 from "../../Images/pandg.0f4cfc2.png"
-import ci5 from "../../Images/paypal.305e264.png"
 
 import logo1 from "../../Images/LogoImages/CODING-LOGO.jpg"
 import logo2 from "../../Images/LogoImages/EDM-LOGO.jpg"
@@ -34,7 +29,6 @@ const banner_text = [
   { img: pimg, role: "Production Assistant", name: "@Rahul" },
   { img: pimg, role: "Production Assistant", name: "@Pankaj" },
   { img: pimg, role: "Production Assistant", name: "@Jenny" },
-
 ]
 
 const tabs = [
