@@ -3,7 +3,7 @@ import generateValidationSchema from '../../GenrateValidationSchema/genrateValid
 import genrateInitalValues from '../../genrateInitialValues/InitialValues';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
-import API_BASE_URL from '../../../config';
+import API_BASE_URL, { API_ROUTE_URL } from '../../../config';
 import { CircularProgress } from '@mui/material';
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,48 +11,54 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import companyRegisterInputArr from './CompanyRegister';
 
 const CompanyRegister = () => {
-
     const validationSchema = generateValidationSchema(companyRegisterInputArr);
     const initialValues = genrateInitalValues(companyRegisterInputArr);
     const [registerButton, setRegisterButton] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const registerStudentFunc = (values, {resetForm})=>{
+    const registerStudentFunc = (values, { resetForm }) => {
         setRegisterButton(true);
         values["user_type"] = "company"
-        axios.post(`${API_BASE_URL}/company_register/`, values).then((value)=>{
-              toast.success("You are registerd Successfully. Verify Link Send to your email", {
-                  position : "top-center"
-              });
+        values["url"] = API_ROUTE_URL
+        axios.post(`${API_BASE_URL}/company_register/`, values).then((value) => {
+            toast.success("You are registerd Successfully. Verify Link Send to your email", {
+                position: "top-center"
+            });
             resetForm();
-          }).catch((err)=>{
-            if (err.response.data.errors.email && err.response.data.errors.phone){
+        }).catch((err) => {
+            if (err.response.data.errors.email && err.response.data.errors.phone) {
                 toast.error("This Email and Phone Number is already in use", {
-                    position : "top-center"
+                    position: "top-center"
                 })
             }
-            else if (err.response.data.errors.email){
+            else if (err.response.data.errors.email) {
                 toast.error("This Email is already in use", {
-                    position : "top-center"
+                    position: "top-center"
                 })
             }
-            else if (err.response.data.errors.phone){
+            else if (err.response.data.errors.phone) {
                 toast.error("This Phone Number is already in use", {
-                    position : "top-center"
+                    position: "top-center"
                 })
             }
-            console.log(err);
-          }).finally(()=>{
+            else if (err.response.data.errors.company_name) {
+                toast.error("This Company already exist", {
+                    position: "top-center"
+                })
+            }
+            else {
+                toast.error("Some error Occured", {
+                    position: "top-center"
+                })
+            }
+        }).finally(() => {
             setRegisterButton(false);
-          })
+        })
     }
-    
     return (
         <div>
             <ToastContainer />
-
             <div className="w-[100%] py-10 bg-blue-50">
-
                 <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300 ">
                     <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">Company SignUp</h2>
                     <Formik
@@ -64,7 +70,6 @@ const CompanyRegister = () => {
                             <Form>
                                 <div className="mb-4 grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
                                     {companyRegisterInputArr.map((element, index) => {
-
                                         if (element.type == "checkbox") {
                                             return (
                                                 <div className='lg:col-span-3 sm:col-span-2 col-span-1' key={index}>
@@ -98,24 +103,23 @@ const CompanyRegister = () => {
                                         )
                                     })}
                                 </div>
-                                    <div className="mb-4 mx-5">
-                                        <button
-                                            type="submit"
-                                            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
-                                        >
-                                            {registerButton ? <CircularProgress size={19} color='inherit'/> : "Register"}
-                                        </button>
-                                    </div>
-                                    <div className="mb-4 mx-5">
-                                        <NavLink to={"/signup"}>
-
+                                <div className="mb-4 mx-5">
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
+                                    >
+                                        {registerButton ? <CircularProgress size={19} color='inherit' /> : "Register"}
+                                    </button>
+                                </div>
+                                <div className="mb-4 mx-5">
+                                    <NavLink to={"/signup"}>
                                         <button
                                             className={`underline inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold  uppercase leading-normal text-blue-500 shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
-                                            >
+                                        >
                                             Intern Register
                                         </button>
-                                            </NavLink>
-                                    </div>
+                                    </NavLink>
+                                </div>
                             </Form>
                         )}
                     </Formik>

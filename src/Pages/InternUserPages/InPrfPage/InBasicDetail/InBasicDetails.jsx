@@ -24,18 +24,16 @@ const InternBasicDetail = (props) => {
     const token = Cookies.get("token");
     const { profileFunc } = useContext(DataContext);
 
-
-
     const user_basic_data = {
         name: {
             "val": props.user_detail.name,
             icon: <PersonIcon />,
             "label": "name"
         },
-        email: {
-            "val": props.user_detail.email,
-            icon: <EmailIcon />,
-            label: "email"
+        address : {
+            "val": props.user_detail.address,
+            icon: <LocationOnIcon />,
+            label: "address"
         },
         phone: {
             "val": props.user_detail.phone,
@@ -67,7 +65,6 @@ const InternBasicDetail = (props) => {
 
     return (
         <div className=" col-span-1">
-
             {/* <ProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} currentEditValue={currentEditValue} /> */}
             <div className="text-blue-500 p-8 rounded-xl shadow-md text-left border-2">
                 <div className="mb-6  ">

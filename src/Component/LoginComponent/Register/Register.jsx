@@ -27,9 +27,9 @@ const Register = () => {
             address : values.location,
             password: values.password,
             password2 : values.password2,
-            url : API_ROUTE_URL
+            url : API_ROUTE_URL,
+            user_type : "user"
           }).then((value)=>{
-            console.log(value.data)
               toast.success(value.data.message, {
                   position : "top-center"
                 });

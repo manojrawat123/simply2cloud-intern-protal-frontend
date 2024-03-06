@@ -1,9 +1,3 @@
-// title = models.CharField(max_length = 100)
-//     desc = models.TextField()
-//     company = models.ForeignKey(on_delete = models.CASCADE)
-//     intern_user = models.ForeignKey(on_delete = models.CASCADE)
-
-
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
