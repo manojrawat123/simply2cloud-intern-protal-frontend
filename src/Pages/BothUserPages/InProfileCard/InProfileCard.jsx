@@ -38,13 +38,13 @@ export default function InternProfileCard({ profile, isCompany }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const fieldsArray = {
-    'Expected Salary': profile.expected_salary,
     'Year Of Experience': `${profile.experience_years} Year ++`,
   };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  console.log(profile)
 
   return (
 
@@ -69,7 +69,7 @@ export default function InternProfileCard({ profile, isCompany }) {
         title={<Typography variant="div" fontWeight="bold" className='text-lg'>
           {profile?.intern?.name}
         </Typography>}
-        subheader={`${`${profile.job_categoery.job_category} (${profile.title})`}`}
+        subheader={`${`${profile.job_categoery.job_category} (${profile.sub_categoery?.sub_category_name})`}`}
       />
       <CardContent>
         <table>

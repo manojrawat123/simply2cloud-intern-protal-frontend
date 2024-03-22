@@ -82,8 +82,7 @@ export default function RecipeReviewCard({ jobs }) {
     'Posted at': format(new Date(jobs.posted_at), "dd MMM yy h a"),
     'Application Deadline': format(new Date(jobs.application_deadline), "dd MMM yy"),
     'Education': jobs.education,
-    'Required Experience': jobs.experience,
-    'Salary': jobs.salary,
+    'Required Experience': jobs.experience
   };
 
 

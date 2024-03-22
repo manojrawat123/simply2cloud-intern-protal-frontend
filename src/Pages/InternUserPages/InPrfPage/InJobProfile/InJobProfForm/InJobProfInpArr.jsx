@@ -4,7 +4,6 @@ import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 
 const iconCss = `absolute top-2 border-r border-black peer-focus:text-violet-700`;
 
-
 const InternJobProfilieInputArr = [
   {
     type: "file",
@@ -31,23 +30,23 @@ const InternJobProfilieInputArr = [
     placeholder: "Select Job Sub Categoery",
     icon: <WorkIcon className={iconCss} />,
   },
-    {
-      type: "text",
-      id: "title",
-      name: "title",
-      required: true,
-      placeholder: "Enter Job Title",
-      helpingtext : "Example - MERN Devloper",
-      icon: <WorkIcon className={iconCss} />,
-    },
-    {
-      type: "number",
-      id: "expectedSalary",
-      name: "expected_salary",
-      required: true,
-      placeholder: "Enter Expected Salary",
-      icon: <AttachMoneyIcon className={iconCss} />,
-    },
+    // {
+    //   type: "text",
+    //   id: "title",
+    //   name: "title",
+    //   required: true,
+    //   placeholder: "Enter Job Title",
+    //   helpingtext : "Example - MERN Devloper",
+    //   icon: <WorkIcon className={iconCss} />,
+    // },
+    // {
+    //   type: "number",
+    //   id: "expectedSalary",
+    //   name: "expected_salary",
+    //   required: true,
+    //   placeholder: "Enter Expected Salary",
+    //   icon: <AttachMoneyIcon className={iconCss} />,
+    // },
     {
       type: "number",
       id: "experienceYears",
@@ -80,14 +79,14 @@ const InternJobProfilieInputArr = [
       placeholder: "Linkdin Profile Link",
       icon: <WorkIcon className={iconCss} />,
     },
-    {
-      type: "url",
-      id: "github_profile",
-      name: "github_profile",
-      required: true,
-      placeholder: "GitHub Profile Link",
-      icon: <WorkIcon className={iconCss} />,
-    },
+    // {
+    //   type: "url",
+    //   id: "github_profile",
+    //   name: "github_profile",
+    //   required: true,
+    //   placeholder: "GitHub Profile Link",
+    //   icon: <WorkIcon className={iconCss} />,
+    // },
 
   ];
 

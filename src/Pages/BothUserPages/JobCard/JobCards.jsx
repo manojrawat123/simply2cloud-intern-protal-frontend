@@ -99,7 +99,6 @@ export default function JobCard({ jobs }) {
     ),
     Education: jobs.education,
     "Required Experience": jobs.experience,
-    Salary: jobs.salary
   };
 
   const handleExpandClick = () => {

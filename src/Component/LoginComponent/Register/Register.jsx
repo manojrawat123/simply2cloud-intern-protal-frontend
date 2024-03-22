@@ -36,6 +36,7 @@ const Register = () => {
                 resetForm();
                 // navigate("/login");
           }).catch((err)=>{
+            console.log({"err" : err});
             if (err.response.data.errors.email && err.response.data.errors.phone){
                 toast.error("This Email and Phone Number is already in use", {
                     position : "top-center"
@@ -52,8 +53,14 @@ const Register = () => {
                     position : "top-center"
                 })
             }
-            console.log(err);
+            else{
+                toast.error("This Phone Number is already in use", {
+                position : "top-center"
+            })
+        }
+
           }).finally(()=>{
+            console.log("I run")
             setRegisterButton(false);
           })
     }

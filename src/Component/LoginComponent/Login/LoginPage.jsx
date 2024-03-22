@@ -22,32 +22,31 @@ const LoginPage = () => {
     axios.post(`${API_BASE_URL}/login/`, {
       email: e.target.username.value,
       password: e.target.password.value,
-      url : API_ROUTE_URL,
-    }).then((value)=>{
-        Cookies.set('token', value.data.token.access, { secure: true });
-        if(!Cookies.get("token")){
-          console.log("cookie not set");
-          Cookies.set('token', value.data.token.access);
-        }
-        Cookies.set('user_type', value.data.user_type);
-        profileFunc()
-        navigate("/");
-    }).then(()=>{
-    }).catch((err)=>{
+      url: API_ROUTE_URL,
+    }).then((value) => {
+      Cookies.set('token', value.data.token.access, { secure: true });
+      if (!Cookies.get("token")) {
+        Cookies.set('token', value.data.token.access);
+      }
+      Cookies.set('user_type', value.data.user_type);
+      profileFunc()
+      navigate("/");
+    }).then(() => {
+    }).catch((err) => {
       console.log(err);
-      if(err.response){
-        if(err.response.status == 400){
-          toast.error(err.response.data.error, {position : "top-center"})
+      if (err.response) {
+        if (err.response.status == 400) {
+          toast.error(err.response.data.error, { position: "top-center" })
         }
-        else if (err.response.status == 401){
-          toast.error(err.response.data.error, {position : "top-center"})
+        else if (err.response.status == 401) {
+          toast.error(err.response.data.error, { position: "top-center" })
         }
-        else{
-        toast.error(err.response.data.error, {position : "top-center"})
+        else {
+          toast.error(err.response.data.error, { position: "top-center" })
         }
       }
-        
-    }).finally(()=>{
+
+    }).finally(() => {
       setLoginButton(false);
     })
   }
@@ -55,7 +54,7 @@ const LoginPage = () => {
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <section className="gradient-form h-[100vh] bg-neutral-200  dark:bg-neutral-700">
         <div className=" h-full p-10">
           <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200 md:w-[55%] mx-auto">
@@ -99,7 +98,7 @@ const LoginPage = () => {
                             background: "green",
                           }}
                         >
-                        {loginButton ?  <CircularProgress size={19} color='inherit'/> : "Login"}
+                          {loginButton ? <CircularProgress size={19} color='inherit' /> : "Login"}
                         </button>
                       </div>
                       {/* End of Loading Button */}

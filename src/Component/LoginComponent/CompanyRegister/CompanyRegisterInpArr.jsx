@@ -47,7 +47,7 @@ const CompanyRegister = () => {
                 })
             }
             else {
-                toast.error("Some error Occured", {
+                toast.error("Internal Server Error", {
                     position: "top-center"
                 })
             }
