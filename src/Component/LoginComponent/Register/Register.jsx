@@ -36,25 +36,32 @@ const Register = () => {
                 resetForm();
                 // navigate("/login");
           }).catch((err)=>{
-            console.log({"err" : err});
-            if (err.response.data.errors.email && err.response.data.errors.phone){
-                toast.error("This Email and Phone Number is already in use", {
-                    position : "top-center"
-                })
+            console.log(err);
+            if(err.response){
+                if (err.response.data){
+                    if(err.response.data.errors){
+                        if (err.response.data.errors.email && err.response.data.errors.phone){
+                            toast.error("This Email and Phone Number is already in use", {
+                                position : "top-center"
+                            })
+                        }
+                        
+                        else if (err.response.data.errors.email){
+                            toast.error("This Email is already in use", {
+                                position : "top-center"
+                            })
+                        }
+                        else if (err.response.data.errors.phone){
+                            toast.error("This Phone Number is already in use", {
+                                position : "top-center"
+                            })
+                        }
+                    }
+                }
             }
             
-            else if (err.response.data.errors.email){
-                toast.error("This Email is already in use", {
-                    position : "top-center"
-                })
-            }
-            else if (err.response.data.errors.phone){
-                toast.error("This Phone Number is already in use", {
-                    position : "top-center"
-                })
-            }
             else{
-                toast.error("This Phone Number is already in use", {
+                toast.error("Internal Server Error", {
                 position : "top-center"
             })
         }
