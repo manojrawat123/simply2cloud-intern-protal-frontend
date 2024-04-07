@@ -79,7 +79,6 @@ function App() {
           <Route path="/job-application-approved" Component={ApprovedApplication} />
         </Route>
       </Routes>
-
       {/* <Footer /> */}
     </>
   );

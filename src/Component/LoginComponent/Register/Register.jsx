@@ -57,6 +57,15 @@ const Register = () => {
                             })
                         }
                     }
+                    else{
+                        try{
+                            Object.entries(err.response.data).map((element, key)=>{
+                                toast.error(element[1][0], {position :  "top-center"});
+                            });
+                        } catch (error){
+                            console.log(error);
+                        }
+                    }
                 }
             }
             
@@ -131,7 +140,7 @@ const Register = () => {
                                             {registerButton ? <CircularProgress size={19} color='inherit'/> : "Register"}
                                         </button>
                                     </div>
-                                    <div className="mb-4 mx-5">
+                                    {/* <div className="mb-4 mx-5">
                                         <NavLink to={"/company-register"}>
 
                                         <button
@@ -140,7 +149,7 @@ const Register = () => {
                                             Company Register
                                         </button>
                                             </NavLink>
-                                    </div>
+                                    </div> */}
                             </Form>
                         )}
                     </Formik>

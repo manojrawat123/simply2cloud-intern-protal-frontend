@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import API_BASE_URL from '../../../config';
@@ -11,6 +11,7 @@ const EmailVerify = () => {
     const { userid_encode, verify_token } = useParams();
     const [loadingButton , setLoadingButton] = useState(false);
     const [isVerify, setIsVerify] = useState(false);
+    const [isExpire, setIsExpire] = useState(false); 
     const navigate = useNavigate();
 
     const verifyFunc = () => {
@@ -18,7 +19,6 @@ const EmailVerify = () => {
         axios
             .post(`${API_BASE_URL}/accounts/activate/${userid_encode}/${verify_token}/`,{activate : true})
             .then((value) => {
-
                 console.log(value.data);
                 setIsVerify(true);
                 toast.success("Verified Successfully", { position: "top-center" });
@@ -27,11 +27,17 @@ const EmailVerify = () => {
                 }, 3000);
             }).catch((err) => {
                 console.log(err);
+                setIsExpire(true);
                 toast.error("Token Expired", { position: "top-center" });
             }).finally(()=>{
                 setLoadingButton(false);
             })
     }
+
+    useEffect(()=>{
+        verifyFunc();
+    },[])
+
     return (
         <div>
             <ToastContainer />
@@ -49,8 +55,8 @@ const EmailVerify = () => {
                     onClick={() => {
                         verifyFunc();
                     }}
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300">
-                   {loadingButton ? <>&nbsp;&nbsp;<CircularProgress size={19} color='inherit'/>&nbsp;&nbsp; </>:"Click to Verify Email"}
+                    className={`bg-gradient-to-r  hover:to-blue-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300  ${isExpire ?  'from-red-500 to-orange-500 hover:from-red-500' : ' from-blue-500 to-purple-500 hover:from-purple-500'}` }>
+                   {isExpire ? "Token Is Expired" : "Please Wait...."}
                 </button>
             </div> 
             }

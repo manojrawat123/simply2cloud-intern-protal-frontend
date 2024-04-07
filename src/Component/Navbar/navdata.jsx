@@ -82,8 +82,15 @@ const navItem = [
   },
   {
     id: 12,
-    label: "Sign Up",
+    label: "Intern SignUp",
     link: "/signup",
+    visibility: "logout",
+    user: "any",
+  },
+  {
+    id: 15,
+    label: "Company Signup",
+    link: "/company-register",
     visibility: "logout",
     user: "any",
   },

@@ -111,7 +111,7 @@ const CompanyRegister = () => {
                                         {registerButton ? <CircularProgress size={19} color='inherit' /> : "Register"}
                                     </button>
                                 </div>
-                                <div className="mb-4 mx-5">
+                                {/* <div className="mb-4 mx-5">
                                     <NavLink to={"/signup"}>
                                         <button
                                             className={`underline inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold  uppercase leading-normal text-blue-500 shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
@@ -119,7 +119,7 @@ const CompanyRegister = () => {
                                             Intern Register
                                         </button>
                                     </NavLink>
-                                </div>
+                                </div> */}
                             </Form>
                         )}
                     </Formik>
