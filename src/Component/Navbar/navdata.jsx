@@ -10,14 +10,14 @@ const navItem = [
   },
   {
     id: 2,
-    label: "Internship",
+    label: "Find Internship",
     link: "/nm-jobs",
     visibility: "logout",
     user: "user",
   },
   {
     id: '2a',
-    label: "Internship",
+    label: "Find Internship",
     link: "/nm-jobs",
     visibility: "login",
     user: "user",
@@ -82,7 +82,7 @@ const navItem = [
   },
   {
     id: 12,
-    label: "Intern SignUp",
+    label: "Intern Signup",
     link: "/signup",
     visibility: "logout",
     user: "any",
