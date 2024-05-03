@@ -83,7 +83,7 @@ const InternBasicDetail = (props) => {
                                         <input
                                             type="text"
                                             value={currentValue}
-                                            onChange={(e) => {
+                                             onChange={(e) => {
                                                 setCurrentValue(e.target.value);
                                             }}
                                             className=" border-green-500 border p-2  focus:outline-none focus:border-green-600 rounded"
@@ -105,6 +105,8 @@ const InternBasicDetail = (props) => {
                             </span>
                         </div>
                     ))}
+
+                
                 </div>
             </div>
         </div>

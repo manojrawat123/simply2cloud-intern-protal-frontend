@@ -23,12 +23,12 @@ const EmailVerify = () => {
                 setIsVerify(true);
                 toast.success("Verified Successfully", { position: "top-center" });
                 setTimeout(() => {
-                    navigate("/login")
+                    navigate("/login");
                 }, 3000);
             }).catch((err) => {
                 console.log(err);
                 setIsExpire(true);
-                toast.error("Token Expired", { position: "top-center" });
+                toast.error("Token Expired", { position : "top-center" });
             }).finally(()=>{
                 setLoadingButton(false);
             })

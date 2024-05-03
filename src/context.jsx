@@ -23,7 +23,8 @@ const DataProviderFuncComp = ({ children }) => {
   const [rejectedApplication, setRejectedApplication] = useState();
   const [internProfileFullDetails, setInternProfileFullDetail] = useState();
   const [tempFilterJobs , setTempFilterJobs] = useState();
-
+  const [filteredJobs, setFilteredJobs] = useState();
+  
   var token = Cookies.get("token");
 
   const navigate = useNavigate();
@@ -172,7 +173,7 @@ const DataProviderFuncComp = ({ children }) => {
     job_title = null,
     location = null,
     sub_categoery = null,
-    setFilteredJobs
+    setFilteredJobsParams
   ) => {
     axios
       .get(`${API_BASE_URL}/job-search/`, {
@@ -184,8 +185,9 @@ const DataProviderFuncComp = ({ children }) => {
         },
       })
       .then((value) => {
-        setFilteredJobs(value.data);
+        setFilteredJobsParams(value.data);
         setTempFilterJobs(value.data);
+        console.log(value.data);
       })
       .catch((err) => {
         console.log(err);
@@ -231,6 +233,7 @@ const DataProviderFuncComp = ({ children }) => {
 
 
   const unAuthInternSerchFunc = (ct_id, search)=>{
+    setUnAuthUserDetail(null);
     let url;
     let queryParams;
     token = Cookies.get('token');
@@ -325,7 +328,10 @@ else{
         approvedApplication,
         rejectedApplication,
         internProfileFullDetails,
-        tempFilterJobs
+        tempFilterJobs,
+        setFilteredJobs,
+        setTempFilterJobs,
+        filteredJobs
       }}
     >
       {children}

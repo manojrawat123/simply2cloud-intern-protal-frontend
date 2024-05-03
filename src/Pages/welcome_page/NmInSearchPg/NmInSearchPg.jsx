@@ -24,7 +24,7 @@ const NmInSearchPg = () => {
     else if(search_skills){
       unAuthInternSerchFunc(ct_id, 'skills');
     }
-  }, []);
+  }, [ct_id]);
   
 
   if (!unAuthUserDetail) {
@@ -40,7 +40,7 @@ const NmInSearchPg = () => {
         </div>
       ) : (
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 m-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 m-8">
             {unAuthUserDetail?.map((element, index) => {
               return (
                 <InternProfileCard

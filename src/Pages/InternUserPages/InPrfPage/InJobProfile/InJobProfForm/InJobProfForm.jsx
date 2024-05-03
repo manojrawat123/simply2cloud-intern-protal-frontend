@@ -21,12 +21,14 @@ const InternJobProfileForm = () => {
   const { userDetails, profileFunc } = useContext(DataContext);
   const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
   const [profilePhoto, setProfilePhoto] = useState();
+  const [thumbnailPhoto, setThumbnailPhoto] = useState();
 
   useEffect(() => {
     profileFunc();
   }, [])
 
   const myCompleateJobProfileFunc = (values, { resetForm, setFieldValue }) => {
+    try {
     setAddButton(true);
     let data = values;
     Object.entries(data).map(([key, item]) => {
@@ -53,13 +55,19 @@ const InternJobProfileForm = () => {
     }
     const token = Cookies.get("token");
     data["user_image"] = profilePhoto;
-    const formData = new FormData();
+    data["thumbnail_image"] = thumbnailPhoto;
 
+    const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
       if (key === 'user_image') {
         // Check if the value is a File object
         if (value instanceof File) {
           formData.append(key, profilePhoto);
+        }
+      }
+      else if (key === "thumbnail_image"){
+        if (value instanceof File) {
+          formData.append(key, thumbnailPhoto);
         }
       }
       else {
@@ -89,8 +97,11 @@ const InternJobProfileForm = () => {
       .finally(() => {
         setAddButton(false);
         resetForm();
-        setFieldValue("desc", []);
       });
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -116,14 +127,13 @@ const InternJobProfileForm = () => {
               <Form encType="multipart/form-data">
                 <div className="mb-4 grid md:grid-cols-2 grid-cols-1 gap-4 p-4">
                   {InternJobProfilieInputArr.map((element, index) => {
-
-
                     if (element.type == "file") {
                       return (
                         <div className="" key={index}>
                           <h4 className="text-blue-600 mb-2">
                             {element.placeholder}{" "}
                             <span className="text-red-500">*</span>
+                           {/* { <span className="text-xs">{element.helping_text}</span>} */}
                           </h4>
                           <div className={"w-full relative col-span-1 "}>
                             {element.icon}
@@ -133,7 +143,12 @@ const InternJobProfileForm = () => {
                               placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
                               onChange={(e) => {
                                 const uploadedFile = e.target.files[0];
-                                setProfilePhoto(uploadedFile)
+                                if(element.name == "user_image"){
+                                  setProfilePhoto(uploadedFile);
+                                }
+                                if(element.name == "thumbnail_image"){
+                                  setThumbnailPhoto(uploadedFile)
+                                }
                               }}
                               required
                               className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
@@ -146,6 +161,35 @@ const InternJobProfileForm = () => {
                           />
                         </div>
                       )
+                    }
+                    
+                    if (element.type == "textarea"){
+                      return  <div className="" key={index}>
+                      <h4 className="text-blue-600 mb-2">
+                        {element.placeholder}{" "}
+                        <span className="text-red-500">*</span>
+                      </h4>
+                 
+                        <textarea
+                          type={element.type}
+                          name={element.name}
+                          onChange={(e)=>{
+                            setFieldValue("desc" , e.target.value);
+                          }}
+                          placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
+                          required
+                          className={" w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600 h-[6rem]"}
+                        />
+
+<ErrorMessage
+                            name={element.name}
+                            component="div"
+                            className="text-red-500"
+                          />
+                      </div>
+                      
+
+
                     }
                     if (element.type == "array") {
                       return (
@@ -267,7 +311,8 @@ const InternJobProfileForm = () => {
                   <button
                     type="submit"
                     className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
-                  >
+                 
+                 >
                     {addButton ? (
                       <CircularProgress size={19} color="inherit" />
                     ) : (

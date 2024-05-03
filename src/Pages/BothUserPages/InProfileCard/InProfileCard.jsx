@@ -16,11 +16,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { format } from "date-fns";
 import Heading from '../../../RepeatedCode/tags/Heading';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../../../config';
 import Cookies from 'js-cookie';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import LanguageIcon from '@mui/icons-material/Language';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,9 +38,7 @@ export default function InternProfileCard({ profile, isCompany }) {
 
   const [expanded, setExpanded] = React.useState(false);
 
-  const fieldsArray = {
-    'Year Of Experience': `${profile.experience_years} Year ++`,
-  };
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -47,68 +46,33 @@ export default function InternProfileCard({ profile, isCompany }) {
   console.log(profile)
 
   return (
-
-    <Card sx={{ maxWidth: 345 }} className='border-2 rounded-2xl'>
-      <CardHeader
-        avatar={
-          profile?.user_image != null ? <img src={`${API_BASE_URL}/${profile.user_image}/`} className='w-[3rem] h-[3rem] rounded-full' /> :
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              {/* {jobs.company.company_name.substring(0, 1)} */}
-            </Avatar>
-
-        }
-        action={
-          <IconButton aria-label="settings">
-            {
-              profile.intern.id == Cookies.get("user") ? <NavLink to={`/update-profile/${profile?.id}/`}> <ModeEditIcon /> </NavLink> : null
-            }
-            {console.log(profile.intern)}
-          </IconButton>
-        }
-
-        title={<Typography variant="div" fontWeight="bold" className='text-lg'>
-          {profile?.intern?.name}
-        </Typography>}
-        subheader={`${`${profile.job_categoery.job_category} (${profile.sub_categoery?.sub_category_name})`}`}
-      />
-      <CardContent>
-        <table>
-          {Object.entries(fieldsArray).map(([key, value]) => {
-            return (
-
-
-              <tr key={key} variant='tr'>
-                <td key={key} variant='th' fontSize={"1rem"} className='font-bold' >
-                  {key}&nbsp;&nbsp;
-
-                </td>
-                <td variant='td' fontSize={"1rem"} fontWeight="400">
-                  {value}
-                </td><br />
-              </tr>
-            )
-          }
-          )}
-
-
-        </table>
-        <div>
-          <h1 className='font-bold underline text-center mt-4'>Details</h1>
-          {profile.desc.split('\n').map((element, index) => {
-            return <div key={index}>{index + 1}. {element}</div>
-          })}
+    <div className="rounded-lg overflow-hidden mx-auto">
+      <div className='hover:underline cursor-pointer' onClick={() => {
+        navigate(`/intern-details/${profile.id}`)
+      }}>
+        <div className='h-[8rem]'>
+          <img src={`${API_BASE_URL}/${profile.thumbnail_image}/`} className='h-[100%] w-full' alt="" />
         </div>
-        <div className="text-center mx-auto w-[100%] mt-4">
-          <NavLink to={`/intern-details/${profile.id}`}>
-            <button className="border mx-auto font-semibold border-blue-500 text-blue-500 px-2 py-1 flex items-center space-x-2 rounded-md hover:bg-blue-500 hover:text-white focus:outline-none focus:ring focus:border-blue-300">
-              <span>View</span>
-              <RemoveRedEyeIcon className="" />
-            </button>
-          </NavLink>
-
+        {/* User Details */}
+        <div className='flex mt-4'>
+          <img src={`${API_BASE_URL}/${profile.user_image}/`} alt="" className=' h-[2rem] w-[2rem] rounded-full' />
+          <h1 className='text-gray-700 font-bold text-base ml-5 mt-1'>{profile?.intern?.name}</h1>
+          <h1 className='text-gray-700 font-semibold text-base ml-auto mt-1 mr-4 underline'>({profile.job_categoery.job_category})</h1>
         </div>
-      </CardContent>
-    </Card>
+        <div className='font-semibold text-base'>
+          Passionate <span className='font-bold'>{profile.sub_categoery?.sub_category_name}</span> with a flair for creating memorable visual identities
+        </div>
+      </div>
+      <div className='flex mt-2'>
+        <span className='text-base font-bold '>
+          {profile?.experience_years} Year Exerience
+        </span>
+        {/* <NavLink to={``} className="text-blue-500 font-semibold border border-solid border-blue-500 rounded hover:bg-blue-500 hover:text-white py-1 mx-auto px-2">
+        <button >Show Profile</button>
+      </NavLink> */}
+        <a href={profile?.portfolio_link} target='_blank' className='text-blue-500 cursor-pointer  ml-auto'><LanguageIcon /> </a>
+      </div>
+    </div>
   );
 }
 

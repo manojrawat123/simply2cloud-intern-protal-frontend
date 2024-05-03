@@ -12,6 +12,7 @@ const CompanyJobs = () => {
   const { getJobsPostedByCompanyFunc, jobPostedByCompany } = useContext(DataContext);
 
   useEffect(() => {
+    console.log(jobPostedByCompany);
     getJobsPostedByCompanyFunc();
   }, [])
 

@@ -133,14 +133,6 @@ const jobFields = [
     icon: <WorkIcon className={iconCss} />,
   },
   {
-    type: "array",
-    id: "benefits",
-    name: "benefits",
-    required: false,
-    placeholder: "Enter Benefits",
-    icon: <WorkIcon className={iconCss} />,
-  },
-  {
     type: "date",
     id: "application_deadline",
     name: "application_deadline",
@@ -150,7 +142,15 @@ const jobFields = [
     icon: <EventIcon className={iconCss} />,
   },
   {
-    type: "array",
+    type: "textarea",
+    id: "benefits",
+    name: "benefits",
+    required: false,
+    placeholder: "Enter Benefits",
+    icon: <WorkIcon className={iconCss} />,
+  },
+  {
+    type: "textarea",
     id: "responsibilities",
     name: "responsibilities",
     required: false,

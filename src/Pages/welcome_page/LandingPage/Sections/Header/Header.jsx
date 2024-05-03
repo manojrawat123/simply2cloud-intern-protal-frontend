@@ -37,11 +37,11 @@ const tabs = [
     url : `/search?search_categoery=Graphic Design&search_id=3`
 },
   {
-    label :  "Photo Editor",
+    label :  "Video Editor",
     url : `/search?search_categoery=Video Editing&search_id=2`
  },
   {
-    label : "Video Editor",
+    label : "Photo Editor",
     url : `/search?search_categoery=Photo Editing&search_id=1`
   }
 ]

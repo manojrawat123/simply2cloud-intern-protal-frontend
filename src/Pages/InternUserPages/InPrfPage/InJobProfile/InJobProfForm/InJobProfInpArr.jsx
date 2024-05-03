@@ -14,6 +14,15 @@ const InternJobProfilieInputArr = [
     icon: <WorkIcon className={iconCss} />,
   },
   {
+    type: "file",
+    id: "thumbnail_image",
+    name: "thumbnail_image",
+    required: false,
+    helping_text : "(It should a Image which Describe you)",
+    placeholder: "Upload Your Thumbnail Image",
+    icon: <WorkIcon className={iconCss} />,
+  },
+  {
     type: "dynamic",
     id: "job_categoery",
     name: "job_categoery",
@@ -55,14 +64,14 @@ const InternJobProfilieInputArr = [
       placeholder: "Enter Years of Experience",
       icon: <WorkHistoryIcon className={iconCss} />,
     },
-    {
-      type: "array",
-      id: "desc",
-      name: "desc",
-      required: true,
-      placeholder: "Describe Your Experience",
-      icon: <WorkIcon className={iconCss} />,
-    },
+    // {
+    //   type: "textarea",
+    //   id: "short_desc",
+    //   name: "short_desc",
+    //   required: true,
+    //   placeholder: "Short Desc",
+    //   icon: <WorkIcon className={iconCss} />,
+    // },
     {
       type: "url",
       id: "portfolio_link",
@@ -77,6 +86,14 @@ const InternJobProfilieInputArr = [
       name: "linkedin_profile",
       required: true,
       placeholder: "Linkdin Profile Link",
+      icon: <WorkIcon className={iconCss} />,
+    },
+    {
+      type: "textarea",
+      id: "desc",
+      name: "desc",
+      required: true,
+      placeholder: "Describe Your Experience",
       icon: <WorkIcon className={iconCss} />,
     },
     // {

@@ -65,10 +65,11 @@ const JobExperienceInputArr = [
     icon: <CheckBoxIcon className={iconCss} />,
   },
   {
-    type: "array",
+    type: "textarea",
     id: "desc",
     name: "desc",
     required: true,
+    helpingText : "Describe your experience like what you learn", 
     placeholder: "Describe Your Experience",
     icon: <WorkHistoryIcon className={iconCss} />,
   },

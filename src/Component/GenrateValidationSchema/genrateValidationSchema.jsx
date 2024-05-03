@@ -14,7 +14,7 @@ const generateValidationSchema = (inputFields) => {
     }
 
     if (field.type === 'checkbox') {
-      validationObject[field.name] = Yup.boolean().oneOf([true], `You must be ${field.label || field.name}`);
+      validationObject[field.name] = Yup.boolean().oneOf([true, false], `You must be ${field.label || field.name}`);
     }
 
     if (field.name == "password2"){

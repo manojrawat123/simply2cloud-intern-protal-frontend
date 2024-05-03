@@ -18,11 +18,12 @@ const NmUnAuthJobsPage = () => {
     searchLocationSlugObj,
     jobCategoeryOpt,
     jobSubCategoeryOpt,
-    getJobsForStudentFunc
+    getJobsForStudentFunc,
+    filteredJobs,
+    setFilteredJobs
   } = useContext(DataContext);
 
 
-  const [filteredJobs, setFilteredJobs] = useState();
   const [isFilter, setIsFilter] = useState(false);
   const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState();
@@ -32,21 +33,21 @@ const NmUnAuthJobsPage = () => {
 
   useEffect(() => {
     if (Cookies.get("token") && Cookies.get("user_type") == "user") {
-      getJobsForStudentFunc()
+      getJobsForStudentFunc();
     }
     else {
       getUnAuthJobsFunc();
     }
   }, []);
 
-  if (!studentJobsObj) {
+  if (!studentJobsObj && !filteredJobs) {
+    console.log(filteredJobs)
     return <LoadingPage />;
   }
-  console.log(studentJobsObj);
-
 
   return (
     <>
+    {console.log(filteredJobs)}
       <ToastContainer />
       <div className="flex items-center justify-center mt-10 space-x-10">
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
@@ -68,7 +69,6 @@ const NmUnAuthJobsPage = () => {
             jobSubCategoeryOpt={jobSubCategoeryOpt}
             unAuthJobs={studentJobsObj}
             setIsFilter={setIsFilter}
-            
             setFilteredJobs={setFilteredJobs}
             selectedLocation={selectedLocation}
             selectedTitle={selectedTitle}

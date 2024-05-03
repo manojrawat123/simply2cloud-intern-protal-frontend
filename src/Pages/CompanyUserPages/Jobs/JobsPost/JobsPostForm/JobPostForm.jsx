@@ -15,12 +15,12 @@ import API_BASE_URL from "../../../../../config";
 const JobPostForm = (props) => {
   const validationSchema = generateValidationSchema(JobsPostFormArr);
   const initialValues = genrateInitalValues(JobsPostFormArr);
-  const [filterSubCategoery,setFilterSubCategoery] = useState([]);
+  const [filterSubCategoery, setFilterSubCategoery] = useState([]);
   const [addButton, setAddButton] = useState(false);
 
   const {
     jobSubCategoeryOpt,
-        companyJobPageFunc,
+    companyJobPageFunc,
     avaibleSkills,
     getJobsPostedByCompanyFunc,
     jobCategoeryOpt,
@@ -29,12 +29,12 @@ const JobPostForm = (props) => {
   } = useContext(DataContext);
   const token = Cookies.get("token");
 
-  console.log("jobCategoery",jobCategoeryOpt);
+  console.log("jobCategoery", jobCategoeryOpt);
   console.log("Job Sub Categoery Opt", jobSubCategoeryOpt)
 
   useEffect(() => {
     companyJobPageFunc();
-    if(!Cookies.get("company")){
+    if (!Cookies.get("company")) {
       companyProfileFunc();
     }
   }, []);
@@ -51,7 +51,7 @@ const JobPostForm = (props) => {
         }
       }
     });
-    
+
     data["company"] = Cookies.get("company");
     data["company_user"] = Cookies.get("user");
     data["job_categoery"] = data["job_categoery"].value;
@@ -70,7 +70,7 @@ const JobPostForm = (props) => {
         getJobsPostedByCompanyFunc();
         try {
           props.setIsModalOpen(false);
-        } catch (error) {}
+        } catch (error) { }
       })
       .catch((err) => {
         console.log(err);
@@ -78,7 +78,6 @@ const JobPostForm = (props) => {
         toast.error("Internal Server Error", { position: "top-center" });
       })
       .finally(() => {
-
         setAddButton(false);
         try {
           setFieldValue("responsibilities", []);
@@ -87,7 +86,7 @@ const JobPostForm = (props) => {
           setFieldValue("skills_preferred", []);
           setFieldValue("sub_categoery", []);
           setFilterSubCategoery([]);
-        } catch (error) {}
+        } catch (error) { }
       });
   };
 
@@ -114,6 +113,22 @@ const JobPostForm = (props) => {
               <Form>
                 <div className="mb-4 grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
                   {JobsPostFormArr.map((element, index) => {
+
+                    if (element.type == "textarea") {
+                      return <div className="" key={index}>
+                        <h4 className="text-blue-600 mb-2">
+                          {element.placeholder}{" "}
+                          <span className="text-red-500">*</span>
+                        </h4>
+                        <textarea
+                          type={element.type}
+                          name={element.name}
+                          placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
+                          required
+                          className={" w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600 h-[6rem]"}
+                        />
+                      </div>
+                    }
                     if (element.type == "array") {
                       return (
                         <div className="" key={index}>
@@ -154,8 +169,10 @@ const JobPostForm = (props) => {
                       );
                     }
 
+
+
                     if (element.type == "dynamic") {
-                      if (element.name == "job_categoery"  || element.name == "sub_categoery") {
+                      if (element.name == "job_categoery" || element.name == "sub_categoery") {
                         return (
                           <div className="" key={index}>
                             <h4 className="text-blue-600 mb-2">
@@ -165,17 +182,17 @@ const JobPostForm = (props) => {
                             <div className={"w-full relative col-span-1 "}>
                               {element.icon}
                               <Select
-                                 name={element.name}
-                                
-                                 value={values[element.name]}
-                                 options={element.name == "sub_categoery" ? filterSubCategoery?.map(
+                                name={element.name}
+
+                                value={values[element.name]}
+                                options={element.name == "sub_categoery" ? filterSubCategoery?.map(
                                   (subcatel, index) => {
                                     return {
                                       value: subcatel.id,
                                       label: subcatel.sub_category_name,
                                     };
                                   }
-                                ): jobCategoeryOpt?.map(
+                                ) : jobCategoeryOpt?.map(
                                   (skillElement, index) => {
                                     return {
                                       value: skillElement.id,
@@ -183,27 +200,27 @@ const JobPostForm = (props) => {
                                     };
                                   }
                                 )}
-                                onFocus={()=>{
-                                  if((!values.job_categoery || values.job_categoery == []) & element.name == "sub_categoery"){
-                                    toast.error("Please Select Job Categoery First", {position: "top-center"});
-                                   }
-                                   console.log(values.job_categoery)
+                                onFocus={() => {
+                                  if ((!values.job_categoery || values.job_categoery == []) & element.name == "sub_categoery") {
+                                    toast.error("Please Select Job Categoery First", { position: "top-center" });
+                                  }
+                                  console.log(values.job_categoery)
                                 }}
-                                 onChange={(selectedOptions) => {
-                                   
-                                  if(element.name == "job_categoery"){
-                                    let fl = jobSubCategoeryOpt.filter((element, index)=>{
+                                onChange={(selectedOptions) => {
+
+                                  if (element.name == "job_categoery") {
+                                    let fl = jobSubCategoeryOpt.filter((element, index) => {
                                       return element.category == selectedOptions.value
                                     })
                                     setFilterSubCategoery(fl);
                                     setFieldValue("sub_categoery", "")
                                   }
                                   setFieldValue(element.name, selectedOptions);
-                                   
-                                 }}
-                                 placeholder={element.placeholder}
-                                 required
-                                 className=""
+
+                                }}
+                                placeholder={element.placeholder}
+                                required
+                                className=""
                               />
                             </div>
                             <ErrorMessage
