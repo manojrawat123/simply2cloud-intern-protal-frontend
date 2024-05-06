@@ -10,6 +10,7 @@ import SignUpMd from "./SignUpOpMd/SignUpMd";
 import axios from "axios";
 import API_BASE_URL from "../../config";
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import NavBarIc from "../../image/icons/NavBarIc";
 
 const NavMenu = () => {
   const [mobMenuVis, setMobileVis] = useState(false);
@@ -24,10 +25,40 @@ const NavMenu = () => {
       {open ? <SignUpMd open={open} setOpen={setOpen} /> : null}
       <nav className="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-green-700">
         <div className="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0">
-          <div className="flex items-center flex-shrink-0 text-gray-800 mr-16">
+          <div className="block lg:hidden">
+            <button
+              id="nav"
+              className="flex items-center px-3 py-2 rounded text-gray-800  hover:text-gray-700 "
+            >
+              {mobMenuVis ? (
+                null
+              ) : (
+                <button onClick={() => {
+                  setMobileVis(true);
+                  document.body.style.overflow = 'hidden';
+                }}>
+                  <NavBarIc
+                  />
+                </button>
+              )}
+            </button>
+          </div>
+          <div className="flex items-center flex-shrink-0 text-gray-800 md:mr-16 mx-auto md:mx-0">
             <span className="font-semibold text-xl tracking-tight">
               <img src={logo} className="h-[3rem]" />
             </span>
+          </div>
+          <div className="md:hidden">
+            <button
+              onClick={() => {
+                setOpen(true);
+                setMobileVis(false);
+              }}
+              className={`block  lg:inline-block lg:mt-0 w-full md:w-auto px-4 py-2 rounded border  border-green-600  mr-2 
+                }  bg-green-600 text-white`}
+            >
+              {"Join"}
+            </button>
           </div>
           {location.pathname != "/" ?
             <>
@@ -80,35 +111,27 @@ const NavMenu = () => {
               </button> </>
             :
             null}
-          <div className="block lg:hidden">
-            <button
-              id="nav"
-              className="flex items-center px-3 py-2 border-2 rounded text-blue-700 border-blue-700 hover:text-blue-700 hover:border-blue-700"
-            >
-              {mobMenuVis ? (
-                <CloseOutlined
-                  onClick={() => {
-                    setMobileVis(false);
-                  }}
-                />
-              ) : (
-                <TableRowsIcon
-                  onClick={() => {
-                    setMobileVis(true);
-                  }}
-                />
-              )}
+
+        </div>
+        <div className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-[15%] md:static absolute top-0 bg-white z-50  md:py-0 py-10 
+  ${mobMenuVis ? " h-[100%] flex-grow transition-all duration-1000 ease-in-out -left-[10%]" : "transition-all duration-300 ease-in-out -left-full"
+          }`}>
+          <div className="absolute top-4 left-[90%] md:hidden">
+            <button>
+              <CloseOutlined
+                onClick={() => {
+                  setMobileVis(false);
+                  document.body.style.overflow = 'auto';
+                }}
+              />
             </button>
           </div>
-        </div>
-        <div
-          className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-8  ${mobMenuVis ? "flex-grow" : " hidden"
-            }`}>
-          <div className="text-md font-bold text-gray-500 lg:flex text-center">
+
+          <div className="text-md font-bold text-gray-500 lg:flex md:text-center">
             {navItem?.map((element, index) => {
               if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" && (Cookies.get('user_type') != "company" || element.label == "Home"))) {
                 return (
-                  element.label == "Join" ? <>
+                  element.label == "Signup" ? <>
                     <button
                       key={index}
                       onClick={() => {
@@ -176,7 +199,6 @@ const NavMenu = () => {
                         element.option ? (
                           <div className="fixed bg-white border shadow-2xl ml-2 py-4 z-[1000]">
                             {element.option.map((opel, index) => {
-
                               if (opel.label == "Logout") {
                                 return <div className="mx-6">
                                   <button

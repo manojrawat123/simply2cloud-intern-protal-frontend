@@ -96,14 +96,14 @@ const navItem = [
   // },
   {
     id: 13,
-    label: "Login",
+    label: "Signin",
     link: "/login",
     visibility: "logout",
     user: "any",
   },
   {
     id: 12,
-    label: "Join",
+    label: "Signup",
     link: "/signup",
     visibility: "logout",
     user: "any",
