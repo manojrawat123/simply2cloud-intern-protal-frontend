@@ -23,6 +23,7 @@ import ApprovedApplication from "./Pages/CompanyUserPages/JobApplication/Approve
 import InternJobProfileUpdate from "./Pages/InternUserPages/InPrfPage/InJobProfile/InJobProfForm/InJobProfUpForm";
 import EmailVerify from "./Component/LoginComponent/EmailVerify/EmailVerify";
 import MyApplicationPg from "./Pages/InternUserPages/MyApplicationPg/MyApplicationPg";
+import SocketTest from "./Pages/welcome_page/StudentDetails/Sections/ContactTab/ChatSocket/ChatSocket";
 
 
 function App() {
@@ -78,6 +79,12 @@ function App() {
         <Route path="" Component={CompanyProtectedRoutes}>
           <Route path="/job-application-approved" Component={ApprovedApplication} />
         </Route>
+
+        {/* <Route path="" Component={CompanyProtectedRoutes}> */}
+          <Route path="/chat-socket" Component={SocketTest} />
+        {/* </Route> */}
+
+      
       </Routes>
       {/* <Footer /> */}
     </>

@@ -11,6 +11,7 @@ import axios from "axios";
 import API_BASE_URL from "../../config";
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import NavBarIc from "../../image/icons/NavBarIc";
+import { useEffect } from "react";
 
 const NavMenu = () => {
   const [mobMenuVis, setMobileVis] = useState(false);
@@ -19,6 +20,15 @@ const NavMenu = () => {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!mobMenuVis){
+      document.body.style.overflow = 'auto';
+    }
+    else{
+      document.body.style.overflow = 'hidden';
+    }
+  }, [mobMenuVis]);
 
   return (
     <>
@@ -35,7 +45,7 @@ const NavMenu = () => {
               ) : (
                 <button onClick={() => {
                   setMobileVis(true);
-                  document.body.style.overflow = 'hidden';
+                  // document.body.style.overflow = 'hidden';
                 }}>
                   <NavBarIc
                   />
@@ -113,7 +123,7 @@ const NavMenu = () => {
             null}
 
         </div>
-        <div className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-[15%] md:static absolute top-0 bg-white z-50  md:py-0 py-10 
+        <div className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-[15%] md:static absolute top-0 bg-white md:z-0 z-50  md:py-0 py-10 
   ${mobMenuVis ? " h-[100%] flex-grow transition-all duration-1000 ease-in-out -left-[10%]" : "transition-all duration-300 ease-in-out -left-full"
           }`}>
           <div className="absolute top-4 left-[90%] md:hidden">
@@ -121,7 +131,7 @@ const NavMenu = () => {
               <CloseOutlined
                 onClick={() => {
                   setMobileVis(false);
-                  document.body.style.overflow = 'auto';
+                  // document.body.style.overflow = 'auto';
                 }}
               />
             </button>
@@ -131,7 +141,7 @@ const NavMenu = () => {
             {navItem?.map((element, index) => {
               if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" && (Cookies.get('user_type') != "company" || element.label == "Home"))) {
                 return (
-                  element.label == "Signup" ? <>
+                  element.label == "Sign up" ? <>
                     <button
                       key={index}
                       onClick={() => {
@@ -197,7 +207,7 @@ const NavMenu = () => {
                     {
                       element.id == navId ?
                         element.option ? (
-                          <div className="fixed bg-white border shadow-2xl ml-2 py-4 z-[1000]">
+                          <div className="fixed bg-white border shadow-2xl ml-2 py-4 md:z-0  z-50">
                             {element.option.map((opel, index) => {
                               if (opel.label == "Logout") {
                                 return <div className="mx-6">

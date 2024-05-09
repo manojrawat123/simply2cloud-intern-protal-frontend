@@ -48,8 +48,7 @@ function TestimonialSlides({ internProfileFullDetails }) {
                     slidesToScroll={1}
                     initialSlide={0}
                     nextArrow={<SampleNextArrow />}
-                    prevArrow={<SamplePrevArrow />}
-                >
+                    prevArrow={<SamplePrevArrow />}>
                     {skills.map((element, index) => (
                         <TestimonialSlide key={index} {...element} />
                     ))}

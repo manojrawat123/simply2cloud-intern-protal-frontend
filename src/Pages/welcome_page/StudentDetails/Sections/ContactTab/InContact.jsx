@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const InContact = ({ internProfileFullDetails }) => {
   const navigate = useNavigate();
-
+console.log(API_BASE_URL);
   const registeredCompanyError = ()=>{
     toast.error("Only Registered Company can contact Intern")
   }
