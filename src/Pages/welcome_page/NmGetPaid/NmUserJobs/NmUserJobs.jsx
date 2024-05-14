@@ -109,7 +109,7 @@ const NmUnAuthJobsPage = () => {
             <NoDataPage domain={"No Job Posted"} />
           </div>
         ) : (
-          <div className="mx-[2rem] my-[2rem] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
+          <div className="md:mx-[2rem] my-[2rem] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
             {studentJobsObj?.map((element, index) => {
               return <JobCard key={index} jobs={element} />;
             })}
