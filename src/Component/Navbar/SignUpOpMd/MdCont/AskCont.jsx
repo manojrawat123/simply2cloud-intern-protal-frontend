@@ -18,7 +18,7 @@ const AskCont = ({setOpen}) => {
               style={{
                 background: "black",
               }}
-            >Join As Company</button>
+            >Join as a company</button>
     </div>
     <div className='flex'>
       <button
@@ -33,7 +33,7 @@ const AskCont = ({setOpen}) => {
               style={{
                 background: "black",
               }}
-            >Join As A Student</button>
+            >Join as an intern</button>
     </div>
     </>
   )
