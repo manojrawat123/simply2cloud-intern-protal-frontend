@@ -4,7 +4,7 @@
 
 const API_BASE_URL = 'https://munnahacker.pythonanywhere.com'; 
 const API_ROUTE_URL = 'https://simply2cloud-intern-protal-frontend.vercel.app'; 
-const API_SOCKET_URL = 'http://localhost:3000';
+const API_SOCKET_URL = 'https://chat-socket-node-production.up.railway.app';
 
 export { API_ROUTE_URL };
 
