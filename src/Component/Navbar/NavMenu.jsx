@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { CloseOutlined, Cookie, Lens, Search } from "@mui/icons-material";
+import { ArrowDropDownCircleOutlined, ChatOutlined, CloseOutlined, Cookie, Lens, Notifications, Search } from "@mui/icons-material";
 import TableRowsIcon from "@mui/icons-material/TableRows";
 import Cookies from "js-cookie";
 import navItem from "./navdata";
@@ -12,20 +12,22 @@ import API_BASE_URL from "../../config";
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import NavBarIc from "../../image/icons/NavBarIc";
 import { useEffect } from "react";
+import UpArrowIcon from "../../image/icons/UpArrow";
+import UserNotifications from "../../Pages/BothUserPages/Notifications/Notifications";
 
 const NavMenu = () => {
   const [mobMenuVis, setMobileVis] = useState(false);
-  const { logoutFunc, jobSearchFilterFunc, setFilteredJobs, setTempFilterJobs } = useContext(DataContext);
+  const { logoutFunc, jobSearchFilterFunc, setFilteredJobs, setTempFilterJobs, setIsFilter } = useContext(DataContext);
   const [navId, setNavId] = useState(0);
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!mobMenuVis){
+  useEffect(() => {
+    if (!mobMenuVis) {
       document.body.style.overflow = 'auto';
     }
-    else{
+    else {
       document.body.style.overflow = 'hidden';
     }
   }, [mobMenuVis]);
@@ -47,8 +49,7 @@ const NavMenu = () => {
                   setMobileVis(true);
                   // document.body.style.overflow = 'hidden';
                 }}>
-                  <NavBarIc
-                  />
+                  <NavBarIc />
                 </button>
               )}
             </button>
@@ -58,17 +59,33 @@ const NavMenu = () => {
               <img src={logo} className="h-[3rem]" />
             </span>
           </div>
-          <div className="md:hidden">
-            <button
-              onClick={() => {
-                setOpen(true);
-                setMobileVis(false);
-              }}
-              className={`block  lg:inline-block lg:mt-0 w-full md:w-auto px-4 py-2 rounded border  border-green-600  mr-2 
-                }  bg-green-600 text-white`}
-            >
-              {"Join"}
-            </button>
+          <div className="md:hidden flex space-x-10 ">
+            {Cookies.get('token') ?
+              <>
+                <button className="text-gray-700 w-full md:w-auto px-4 py-2 font-bold"
+                  onClick={() => {
+                    navigate("/notifications")
+                  }}>
+                  <Notifications />
+                </button>
+                <button className="text-gray-700 w-full md:w-auto px-4 py-2 font-bold"
+                  onClick={() => {
+                    navigate("/chat")
+                  }}>
+                  <ChatOutlined />
+                </button>
+              </>
+
+              : <button
+                onClick={() => {
+                  setOpen(true);
+                  setMobileVis(false);
+                }}
+                className={`block  lg:inline-block rounded border  border-green-600  mr-2 
+                }  bg-green-600 text-white lg:mt-0 w-full md:w-auto px-4 py-2 `}
+              >
+                {"Join"}
+              </button>}
           </div>
           {location.pathname != "/" ?
             <>
@@ -79,20 +96,9 @@ const NavMenu = () => {
                       return;
                     }
                     if (Cookies.get("user_type") == "user") {
-                      axios
-                        .get(`${API_BASE_URL}/job-search/`, {
-                          params: {
-                            job_categoery: e.target.value
-                          },
-                        })
-                        .then((value) => {
-                          setFilteredJobs(value.data);
-                          setTempFilterJobs(value.data);
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
-                      navigate("/nm-jobs");
+                      jobSearchFilterFunc(e.target.value, null, null, null, setFilteredJobs);
+                      setIsFilter(true);
+                      navigate("/");
                     }
                   }}
                 >
@@ -121,9 +127,8 @@ const NavMenu = () => {
               </button> </>
             :
             null}
-
         </div>
-        <div className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-[15%] md:static absolute top-0 bg-white md:z-0 z-50  md:py-0 py-10 
+        <div className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-[15%] md:static absolute top-0 bg-white md:z-50 z-50  md:py-0 py-10 
   ${mobMenuVis ? " h-[100%] flex-grow transition-all duration-1000 ease-in-out -left-[10%]" : "transition-all duration-300 ease-in-out -left-full"
           }`}>
           <div className="absolute top-4 left-[90%] md:hidden">
@@ -136,7 +141,6 @@ const NavMenu = () => {
               />
             </button>
           </div>
-
           <div className="text-md font-bold text-gray-500 lg:flex md:text-center">
             {navItem?.map((element, index) => {
               if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" && (Cookies.get('user_type') != "company" || element.label == "Home"))) {
@@ -171,7 +175,7 @@ const NavMenu = () => {
                           : " "
                         }`}
                     >
-                      {element.label}
+                      {element.icon ? <div> <span className="md:block hidden">  {element.icon}</span> <span className="md:hidden "> {element.label}</span> </div> : element.label}
                     </NavLink>
                 );
               }
@@ -181,20 +185,40 @@ const NavMenu = () => {
                 (element.user == Cookies.get("user_type") || element.user == "both")
               ) {
                 return (
-                  <div
+                  <div className="relative"
+                    onClick={() => {
+                      if (window.innerWidth >= 768) {
+                        return;
+                      }
+                      if (navId == 0) {
+                        setNavId(element.id);
+                      }
+                      else {
+                        setNavId(0);
+                      }
+                    }}
                     onMouseEnter={() => {
+                      if (window.innerWidth < 768) {
+                        return;
+                      }
                       setNavId(element.id);
                     }}
                     onMouseLeave={() => {
+                      if (window.innerWidth < 768) {
+                        return
+                      }
                       setNavId(0);
                     }}
                     key={index}
                   >
                     <NavLink
                       onClick={() => {
+                        if (element.option) {
+                          return;
+                        }
                         setMobileVis(false);
                       }}
-                      to={element.link == "/my-profile" ? `intern-details/${Cookies.get("profile_id")}` : element.link}
+                      to={element.link == "/my-profile" ? `/intern-details/${Cookies.get("profile_id")}` : element.link}
                       key={index}
                       className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:text-green-600  mr-2 ${element.link == "signup" ? "lg:ml-auto" : "lg:ml-2"
                         } ${element.link == location.pathname
@@ -202,51 +226,80 @@ const NavMenu = () => {
                           : " "
                         }`}
                     >
-                      {element.label}
+                      {element.icon ? <div>
+                        <span className="md:inline-block hidden">  {element.icon}</span>
+                        <div className="flex md:hidden ">
+                          <span className=""> {element.label}</span>
+                          <div className="ml-auto ">{element.option ? <div className={element.id == navId ? "transform rotate-[180deg]" : ""}>
+                            <UpArrowIcon />
+                          </div>
+                            : null}</div>
+                        </div>
+                      </div> :
+                        element.option ?
+                        <>
+                        <div className="hidden md:block">{element.label}</div>
+                        <div className="flex md:hidden ">
+                        <span className=""> {element.label}</span>
+                        <div className="ml-auto ">{element.option ? <div className={element.id == navId ? "transform rotate-[180deg]" : ""}>
+                          <UpArrowIcon />
+                        </div>
+                          : null}</div>
+                      </div>
+                          </>
+                          : element.label
+                      }
                     </NavLink>
                     {
                       element.id == navId ?
                         element.option ? (
-                          <div className="fixed bg-white border shadow-2xl ml-2 py-4 md:z-0  z-50">
-                            {element.option.map((opel, index) => {
-                              if (opel.label == "Logout") {
-                                return <div className="mx-6">
-                                  <button
-                                    onClick={() => {
-                                      logoutFunc();
-                                      setNavId(0);
-                                    }}
-                                    className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
-                                    type="button"
-                                    data-te-ripple-init
-                                    data-te-ripple-color="light"
-                                    style={{
-                                      background: "#FF0000",
-                                    }}> <PowerSettingsNewIcon /> Logout</button>
-                                </div>
-                              }
-                              return (
-                                <div className="block ">
-                                  <NavLink
-                                    to={opel.link}
-                                    onClick={() => {
-                                      setNavId(0);
-                                      setMobileVis(false);
-                                    }}
-                                    key={index}
-                                    className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:text-green-600  mr-2 ${opel.link == "signup" ? "lg:ml-auto" : "lg:ml-2"
-                                      } ${opel.link == location.pathname
-                                        ? " underline text-green-600"
-                                        : " "
-                                      }`}
-                                  >
-                                    {opel.label}
-                                  </NavLink>
-                                </div>
-                              );
-                            })
-                            }
-                          </div>
+                          <>
+                            <div className="hidden md:block absolute right-7 top-8 z-[100] transform rotate-[180deg] bg-white">
+                              <UpArrowIcon />
+                            </div>
+                            <div className="md:absolute right-[21rem] top-11 bg-white ml-4 md:ml-0">
+                              <div className="md:fixed bg-white border rounded shadow-2xl py-4 w-full md:w-[20rem] z-50">
+                                {element.option.map((opel, index) => {
+                                  if (opel.label == "Logout") {
+                                    return <div className="mx-6 hidden md:block">
+                                      <button
+                                        onClick={() => {
+                                          logoutFunc();
+                                          setNavId(0);
+                                        }}
+                                        className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                                        type="button"
+                                        data-te-ripple-init
+                                        data-te-ripple-color="light"
+                                        style={{
+                                          background: "#FF0000",
+                                        }}> <PowerSettingsNewIcon /> Logout</button>
+                                    </div>
+                                  }
+                                  return (
+                                    <div className="block">
+                                      <NavLink
+                                        to={opel.link}
+                                        onClick={() => {
+                                          setNavId(0);
+                                          setMobileVis(false);
+                                        }}
+                                        key={index}
+                                        className={`block mt-4 lg:inline-block lg:mt-0  px-4 py-2 rounded hover:text-green-600  mr-2 ${opel.link == "signup" ? "lg:ml-auto" : "lg:ml-2"
+                                          } ${opel.link == location.pathname
+                                            ? " underline text-green-600"
+                                            : " "
+                                          }`}
+                                      >
+                                        {opel.label}
+                                      </NavLink>
+                                    </div>
+                                  );
+                                })
+                                }
+                              </div>
+                            </div>
+                          </>
                         ) : (
                           ""
                         ) : null}
@@ -271,10 +324,26 @@ const NavMenu = () => {
               }
             })}
           </div>
+        { Cookies.get("token") ?  <div className="mx-6 md:hidden">
+            <button
+              onClick={() => {
+                logoutFunc();
+                setNavId(0);
+              }}
+              className={` mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+              type="button"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              style={{
+                background: "#FF0000",
+              }}> <PowerSettingsNewIcon /> Logout</button>
+          </div> : null}
         </div>
+
       </nav>
     </>
   );
 };
 
 export default NavMenu;
+

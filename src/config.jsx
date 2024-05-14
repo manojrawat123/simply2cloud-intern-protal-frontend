@@ -4,6 +4,7 @@
 
 const API_BASE_URL = 'http://localhost:8000'; 
 const API_ROUTE_URL = 'https://simply2cloud-intern-protal-frontend.vercel.app'; 
+const API_SOCKET_URL = 'http://localhost:3000';
 
 export { API_ROUTE_URL };
 

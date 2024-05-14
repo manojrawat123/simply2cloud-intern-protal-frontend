@@ -25,12 +25,9 @@ const JobPostForm = (props) => {
     getJobsPostedByCompanyFunc,
     jobCategoeryOpt,
     companyProfileFunc
-
   } = useContext(DataContext);
   const token = Cookies.get("token");
 
-  console.log("jobCategoery", jobCategoeryOpt);
-  console.log("Job Sub Categoery Opt", jobSubCategoeryOpt)
 
   useEffect(() => {
     companyJobPageFunc();
@@ -44,11 +41,7 @@ const JobPostForm = (props) => {
     const data = values;
     Object.entries(data).map(([key, item]) => {
       if (Array.isArray(item)) {
-        if (key == "benefits" || key == "responsibilities") {
-          data[key] = item.map((element) => element.value).join("\n");
-        } else {
           data[key] = item.map((element) => element.value);
-        }
       }
     });
 
@@ -80,19 +73,20 @@ const JobPostForm = (props) => {
       .finally(() => {
         setAddButton(false);
         try {
-          setFieldValue("responsibilities", []);
-          setFieldValue("benifits", []);
+          setFieldValue("responsibilities","");
+          setFieldValue("benifits", "");
           setFieldValue("skills_required", []);
           setFieldValue("skills_preferred", []);
           setFieldValue("sub_categoery", []);
           setFilterSubCategoery([]);
-        } catch (error) { }
+        } catch (error) { 
+          console.log(error);
+        }
       });
   };
 
   return (
     <div>
-      <ToastContainer />
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">
           <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">
@@ -120,7 +114,8 @@ const JobPostForm = (props) => {
                           {element.placeholder}{" "}
                           <span className="text-red-500">*</span>
                         </h4>
-                        <textarea
+                        <Field
+                        as="textarea"
                           type={element.type}
                           name={element.name}
                           placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
@@ -168,9 +163,6 @@ const JobPostForm = (props) => {
                         </div>
                       );
                     }
-
-
-
                     if (element.type == "dynamic") {
                       if (element.name == "job_categoery" || element.name == "sub_categoery") {
                         return (
@@ -183,7 +175,6 @@ const JobPostForm = (props) => {
                               {element.icon}
                               <Select
                                 name={element.name}
-
                                 value={values[element.name]}
                                 options={element.name == "sub_categoery" ? filterSubCategoery?.map(
                                   (subcatel, index) => {

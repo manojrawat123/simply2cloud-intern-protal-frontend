@@ -3,7 +3,6 @@ import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
 import JobPostModal from './JobsPost/JobsPostModal/JobPostModal';
 import { DataContext } from '../../../context';
 import JobCard from './JobDisplay/DisplayJobsCard';
-import { ToastContainer } from 'react-toastify';
 import LoadingPage from '../../../Component/LoadingPage/LodingPage';
 
 const CompanyJobs = () => {
@@ -21,7 +20,6 @@ const CompanyJobs = () => {
   }
   return (
     <>
-      <ToastContainer />
       <JobPostModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
       {
         jobPostedByCompany?.length == 0 ?

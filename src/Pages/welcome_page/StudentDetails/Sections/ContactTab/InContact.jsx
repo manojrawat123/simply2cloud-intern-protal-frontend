@@ -11,16 +11,18 @@ import PortfolioLink from "../../../../../image/icons/PortfolioLink";
 import Email from "../../../../../image/icons/Email";
 import WhatsappIc from "../../../../../image/icons/WhatsappIc";
 import { ToastContainer, toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const InContact = ({ internProfileFullDetails }) => {
+
   const navigate = useNavigate();
-console.log(API_BASE_URL);
-  const registeredCompanyError = ()=>{
-    toast.error("Only Registered Company can contact Intern")
+
+  const registeredCompanyError = () => {
+    toast.error("Only Registered Company can contact Intern");
   }
   return (
     <>
-<ToastContainer />
+      <ToastContainer />
       <div className="flex space-x-4 ">
         <div id="imageDiv">
           <img
@@ -56,22 +58,21 @@ console.log(API_BASE_URL);
       {/* Contact Button */}
       <div className=" pb-1 pt-1 text-center">
         <button
-          className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+          className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal ${Cookies.get("user") == internProfileFullDetails?.profile_details?.intern?.id ? 'bg-gray-400 cursor-not-allowed' : 'bg-black'} text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
           type="button"
+          disabled={Cookies.get("user") == internProfileFullDetails?.profile_details?.intern?.id}
           onClick={() => {
-            if(internProfileFullDetails?.profile_details?.intern?.phone){
-              window.open(`https://wa.me/${internProfileFullDetails?.profile_details?.intern?.phone}`, '_blank');
+            if (internProfileFullDetails?.profile_details?.intern?.phone) {
+              navigate(`/chat/${internProfileFullDetails?.profile_details?.intern?.id}`);
             }
-            else{
-              registeredCompanyError()
+            else {
+              navigate(`/chat/${internProfileFullDetails?.profile_details?.intern?.id}`);
+              // registeredCompanyError()
             }
-            
           }}
           data-te-ripple-init
-          disabled={internProfileFullDetails?.profile_details?.intern?.phone}
           data-te-ripple-color="light"
           style={{
-            background: "black",
           }}
         >
           <ContactIc />{" Contact Me"}
@@ -84,48 +85,48 @@ console.log(API_BASE_URL);
 
       <div className="flex ">
 
-        <button className="ml-auto mr-4" onClick={()=>{
-          if(internProfileFullDetails?.profile_details?.linkedin_profile){
+        <button className="ml-auto mr-4" onClick={() => {
+          if (internProfileFullDetails?.profile_details?.linkedin_profile) {
             window.open(internProfileFullDetails?.profile_details?.linkedin_profile, "_blank");
           }
-          else{
+          else {
             registeredCompanyError()
           }
         }}>
           <LinkdinIc />
         </button>
         {/* <SocialIcon url={ ? internProfileFullDetails?.profile_details?.linkedin_profile : "https://linkdin.com"} target="_blank"/> */}
-        <button className="mr-4 ml-4" onClick={()=>{
-          if(internProfileFullDetails?.profile_details?.intern?.phone){
+        <button className="mr-4 ml-4" onClick={() => {
+          if (internProfileFullDetails?.profile_details?.intern?.phone) {
             window.open(`https://wa.me/${internProfileFullDetails?.profile_details?.intern?.phone}`, "_blank")
           }
-          else{
+          else {
             registeredCompanyError()
           }
         }}>
           <WhatsappIc />
         </button>
         {/* <a href={``} target="_blank">  <img src={whatsapp} className="h-[3rem] w-[3rem] rounded-full"/></a> */}
-        <button className="mr-4 ml-4" 
-        
-        onClick={()=>{
-          if(internProfileFullDetails?.profile_details?.portfolio_link){
-            window.open(internProfileFullDetails?.profile_details?.portfolio_link, "_blank")
-          }
-          else{
-            registeredCompanyError()
-          }
-        }}>
+        <button className="mr-4 ml-4"
+
+          onClick={() => {
+            if (internProfileFullDetails?.profile_details?.portfolio_link) {
+              window.open(internProfileFullDetails?.profile_details?.portfolio_link, "_blank")
+            }
+            else {
+              registeredCompanyError()
+            }
+          }}>
           <PortfolioLink />
         </button>
         {/* <SocialIcon url={internProfileFullDetails?.profile_details?.portfolio_link} target="_blank"/> */}
-        <button className="mr-auto ml-4" onClick={()=>{
-          if(internProfileFullDetails?.profile_details?.intern?.email){
+        <button className="mr-auto ml-4" onClick={() => {
+          if (internProfileFullDetails?.profile_details?.intern?.email) {
             window.open(`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(internProfileFullDetails?.profile_details?.intern?.email)}`);
           }
-         else{
-          registeredCompanyError()
-        }
+          else {
+            registeredCompanyError();
+          }
         }}>
           <Email />
         </button>

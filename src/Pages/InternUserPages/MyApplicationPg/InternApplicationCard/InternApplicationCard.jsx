@@ -10,6 +10,8 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import { Table, TableHead, TableRow, TableCell, TableBody, Typography, Button, CircularProgress } from '@mui/material';
 import { red } from '@mui/material/colors';
+import CommonJobCard from '../../../BothUserPages/CommonJbCard/CommonJobCard';
+import LoadingPage from '../../../../Component/LoadingPage/LodingPage';
 
 
 const ExpandMore = styled((props) => {
@@ -29,57 +31,38 @@ export default function InternApplicationCard({ jobApplication }) {
   const [expanded, setExpanded] = React.useState(false);
 
 
+console.log(jobApplication);
 
-
-  const fieldsArray = {
-    'User Phone': jobApplication.user.phone,
-    'Email': jobApplication.user.email,
-    'Status' : jobApplication.status
-  };
+  // const fieldsArray = {
+  //   'User Phone': jobApplication.user.phone,
+  //   'Email': jobApplication.user.email,
+  //   'Status' : 
+  // };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  if(!jobApplication){
+    return <LoadingPage />
+  }
 
   return (
-    <Card sx={{ maxWidth: 345 }} className='border-2 rounded-2xl'>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {/* {jobs.company.company_name.substring(0, 1)} */}
-          </Avatar>
-        }
-       
-        title={<Typography variant="div" fontWeight="bold" className='text-lg'>
-          {jobApplication?.user?.name}
-        </Typography>}
-        subheader={`Applied For - ${jobApplication.job.job_categoery.job_category}`}
-      />
-      <CardContent>
+   <>
+   <div className='border rounded-xl p-4 mx-4' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+  <div>
+    <CommonJobCard jobs={jobApplication.job}/>
+  </div>
+  <div className='mt-4'>
+    <button className={`py-2 px-4 text-white font-semibold ${jobApplication.status == "Rejected" ? "bg-red-700" : jobApplication.status == "Accepted" ? "bg-green-600" : "bg-yellow-500" }`}>
+      {jobApplication.status}
+    </button>
+  </div>
+</div>
 
-        <h1 className='font-bold'>Job Subtitle - <span className='font-normal'> {jobApplication.job.job_title}</span> </h1>
-        <table>
-          {Object.entries(fieldsArray).map(([key, value]) => {
-            return (
-              <tr key={key} variant='tr'>
-                <td key={key} variant='th' fontSize={"1rem"} className='font-bold' >
-                  {key}&nbsp;&nbsp;
 
-                </td>
-                <td variant='td' fontSize={"1rem"} fontWeight="400">
-                  {value}
-                </td><br />
-              </tr>
-            )
-          }
-          )}
-        </table>
-      </CardContent>
-      <CardActions disableSpacing>
-      
-      </CardActions>
-    </Card>
+ 
+   </>
   );
 }
 

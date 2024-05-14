@@ -10,7 +10,7 @@ const InternJobProfileDisplay = (props) => {
   const { userDetails, logoutFunc } = useContext(DataContext);
 
   return (
-    <div className="col-span-1 mx-10">
+    <div className="col-span-1 h-full">
       {props?.internJobProfileObj.length == 0 ? (
         <div className="text-blue-500 p-8 rounded-xl shadow-md text-left border-2">
           <div className="mb-6  ">
@@ -21,7 +21,7 @@ const InternJobProfileDisplay = (props) => {
         <div>  {props?.internJobProfileObj?.map((element, index)=>{
             return <InternProfileCard profile={element} isCompany={false} key={index}/>
         }) }
-            <div>
+            {/* <div>
                         <button
                         onClick={()=>{
                           logoutFunc();
@@ -33,7 +33,7 @@ const InternJobProfileDisplay = (props) => {
           style={{
             background: "#FF0000",
           }}> <PowerSettingsNewIcon /> Logout</button>
-                    </div>
+                    </div> */}
         </div>
       
         

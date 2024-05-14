@@ -20,11 +20,12 @@ const NmUnAuthJobsPage = () => {
     jobSubCategoeryOpt,
     getJobsForStudentFunc,
     filteredJobs,
-    setFilteredJobs
+    setFilteredJobs,
+  isFilter,
+  setIsFilter
   } = useContext(DataContext);
 
 
-  const [isFilter, setIsFilter] = useState(false);
   const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState();
   const [selectedTitle, setSelectedTitle] = useState();
@@ -41,14 +42,13 @@ const NmUnAuthJobsPage = () => {
   }, []);
 
   if (!studentJobsObj && !filteredJobs) {
-    console.log(filteredJobs)
     return <LoadingPage />;
   }
 
   return (
     <>
-    {console.log(filteredJobs)}
-      <ToastContainer />
+    {console.log(studentJobsObj)}
+      {/* <ToastContainer /> */}
       <div className="flex items-center justify-center mt-10 space-x-10">
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
           <InternJobSearchByCategoery

@@ -273,13 +273,12 @@ const AddExperienceForm = ({ setOpen }) => {
                       )
                     }
 
-                    if (element.type == "textarea"){
-                      return  <div className="" key={index}>
-                      <h4 className="text-blue-600 mb-2">
-                        {element.placeholder}{" "}
-                        <span className="text-red-500">*</span>
-                      </h4>
-                 
+                    if (element.type == "textarea") {
+                      return <div className="" key={index}>
+                        <h4 className="text-blue-600 mb-2">
+                          {element.placeholder}{" "}
+                          <span className="text-red-500">*</span>
+                        </h4>
                         <textarea
                           type={element.type}
                           name={element.name}

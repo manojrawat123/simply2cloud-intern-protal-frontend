@@ -33,13 +33,8 @@ const StudentFullDetails = () => {
     internProfileFullDetailsFunc(id);
   }, []);
 
-
-
-
-
   if (!internProfileFullDetails?.profile_details) {
-    return <LoadingPage />;
-  }
+    return <LoadingPage />;  }
 
 
   return (

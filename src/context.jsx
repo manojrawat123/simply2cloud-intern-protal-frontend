@@ -1,8 +1,9 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import API_BASE_URL from "./config";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const DataContext = createContext();
 
@@ -24,10 +25,32 @@ const DataProviderFuncComp = ({ children }) => {
   const [internProfileFullDetails, setInternProfileFullDetail] = useState();
   const [tempFilterJobs , setTempFilterJobs] = useState();
   const [filteredJobs, setFilteredJobs] = useState();
+  const [userConversation, setUserConveration] = useState();
+  const [userChats, setUserChats] = useState();
+  const [chatSocket , setSocket] = useState();
+  const [isFilter, setIsFilter] = useState(false);
   
   var token = Cookies.get("token");
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const socketFunction = ()=>{
+    const socket = io('http://localhost:3000');
+        socket.on('connect', () => {
+          setSocket(socket);
+        });
+
+        socket.on('newMessage', (data) => {
+          console.log(data);
+          if (data?.receiverId === Cookies.get('user')) {
+            getUserConversationFunc();
+            getMessageOfUserFunc(data?.senderId);
+          }
+        });
+  }
+
+
 
   const profileFunc = () => {
     token = Cookies.get('token');
@@ -175,8 +198,14 @@ const DataProviderFuncComp = ({ children }) => {
     sub_categoery = null,
     setFilteredJobsParams
   ) => {
+const back_url = Cookies.get("token") ? "job-search-auth" : 'job-search';
+const c_headers = Cookies.get("token") ? 
+   {
+    "Authorization" : `Bearer ${token}`
+} : undefined
     axios
-      .get(`${API_BASE_URL}/job-search/`, {
+      .get(`${API_BASE_URL}/${back_url}/`, {
+      headers : c_headers,
         params: {
           job_categoery : categoery,
           job_title: job_title,
@@ -187,7 +216,6 @@ const DataProviderFuncComp = ({ children }) => {
       .then((value) => {
         setFilteredJobsParams(value.data);
         setTempFilterJobs(value.data);
-        console.log(value.data);
       })
       .catch((err) => {
         console.log(err);
@@ -295,6 +323,31 @@ else{
       });
   }
 
+const getUserConversationFunc = ()=>{
+  // setUserConveration();
+  axios.get(`${API_BASE_URL}/conversiation/`, {
+    headers : {
+      Authorization : `Bearer ${token}`
+    }
+  }).then((value)=>{
+    setUserConveration(value.data);
+  }).catch((err)=>{
+    console.log(err);
+  });
+}
+
+const getMessageOfUserFunc = (user1)=>{
+  axios.get(`${API_BASE_URL}/chat/${user1}/`, 
+  {
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  }).then((value)=>{
+    setUserChats(value.data);
+    getUserConversationFunc();
+  })
+}
+
   return (
     <DataContext.Provider
       value={{
@@ -331,7 +384,15 @@ else{
         tempFilterJobs,
         setFilteredJobs,
         setTempFilterJobs,
-        filteredJobs
+        filteredJobs,
+        getUserConversationFunc,
+        userConversation,
+        getMessageOfUserFunc,
+        userChats,
+        chatSocket,
+        socketFunction,
+        isFilter,
+        setIsFilter
       }}
     >
       {children}

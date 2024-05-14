@@ -1,4 +1,7 @@
+import { Chat, ChatBubble, ChatOutlined, Message, MessageTwoTone, NotificationAdd, Notifications } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Cookies from "js-cookie";
+import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
 
 const navItem = [
   {
@@ -8,13 +11,13 @@ const navItem = [
     visibility: "both",
     user: "any",
   },
-  {
-    id: 9,
-    label: "My Profile",
-    link: "/my-profile",
-    visibility: "login",
-    user: "user",
-  },
+  // {
+  //   id: 9,
+  //   label: "My Profile",
+  //   link: "/my-profile",
+  //   visibility: "login",
+  //   user: "user",
+  // },
   {
     id: 2,
     label: "Find Internship",
@@ -31,18 +34,44 @@ const navItem = [
   // },
   {
     id: 3,
-    label: "Manage Jobs",
-    link: "/post-jobs",
+    label: " Jobs",
+    link: "#",
     visibility: "login",
     user: "company",
+    option : [
+      {
+        id: 4,
+        label: "Post New Jobs",
+        link: "/post-new-jobs",
+        visibility: "login",
+        user: "company",
+      },
+      {
+        id: 3,
+        label: "Manage Jobs",
+        link: "/post-jobs",
+        visibility: "login",
+        user: "company",
+      }
+    ]
   },
   {
-    id: 4,
-    label: "Post New Jobs",
-    link: "/post-new-jobs",
+    id: 17,
+    icon : <Notifications />,
+    label: "Notifications",
+    link: "/notifications",
     visibility: "login",
-    user: "company",
+    user: "company"
   },
+  {
+    id: 18,
+    label: "Inbox",
+    icon : <ChatOutlined />,
+    link: "/chat",
+    visibility: "login",
+    user: "company"    
+  },
+  
   {
     id: 5,
     label: "Job Application",
@@ -87,13 +116,6 @@ const navItem = [
     visibility: "login",
     user: "user",
   },
-  // {
-  //   id: 11,
-  //   label: "Logout",
-  //   link: "/logout",
-  //   visibility: "login",
-  //   user: "button",
-  // },
   {
     id: 13,
     label: "Sign in",
@@ -107,22 +129,61 @@ const navItem = [
     link: "/signup",
     visibility: "logout",
     user: "any",
-  },
-  // {
-  //   id: 15,
-  //   label: "Company Signup",
-  //   link: "/company-register",
-  //   visibility: "logout",
-  //   user: "any",
-  // },
+  }, 
   {
     id: 14,
-    label: <AccountCircleIcon />,
-    link: "/profile",
+    icon : <Notifications />,
+    label: "Notifications",
+    link: "/notifications",
+    visibility: "login",
+    user: "user"
+  },
+  {
+    id: 15,
+    label: "Inbox",
+    icon : <ChatOutlined />,
+    link: "/chat",
+    visibility: "login",
+    user: "user"    
+  },
+  {
+    id: 16,
+    label : "Accounts",
+    icon :  <AccountCircleIcon />,
+    link: "#",
     visibility: "login",
     user: "user",
-  },
-  
+    option: [
+      {
+        id: "16b",
+        label: "Preview Profile",
+    link: `intern-details/${Cookies.get("profile_id")}`,
+        visibility: "login",
+        user: "company",
+      },
+      {
+        id:  "16c",
+        label: "Settings",
+        link: "/profile",
+        visibility: "login",
+        user: "company",
+      },
+      {
+        id: "16a",
+        label: "My Application",
+        link: "/my-application",
+        visibility: "login",
+        user: "company",
+      },
+      {
+        id: "16c",
+        label: "Logout",
+        link: "/logout",
+        visibility: "login",
+        user: "company",
+      },
+    ],
+  }  
 ];
 
 export default navItem;

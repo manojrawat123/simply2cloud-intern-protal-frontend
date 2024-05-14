@@ -31,7 +31,9 @@ import { ToastContainer, toast } from "react-toastify";
 import InternJobProfileModal from "../../InternUserPages/InPrfPage/InJobProfile/InJobProfileDis/InJobProfModl/InJobProfModal";
 import { DataContext } from "../../../context";
 import { useNavigate } from "react-router-dom";
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WorkIcon from '@mui/icons-material/Work';
+import CommonJobCard from "../CommonJbCard/CommonJobCard";
 
 
 const ExpandMore = styled((props) => {
@@ -53,12 +55,10 @@ export default function JobCard({ jobs }) {
   const { getJobsForStudentFunc } = React.useContext(DataContext);
 
   const applyJobFunc = () => {
-    console.log("Debug");
-    
+
     setApplyButton(true);
     const user_id = Cookies.get("user");
     const token = Cookies.get("token");
-    console.log("Debug");
 
     axios
       .post(
@@ -108,51 +108,11 @@ export default function JobCard({ jobs }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {jobs.company.company_name.substring(0, 1)}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            {Cookies.get("user_type") == "company" ? <MoreVertIcon /> : null}
-          </IconButton>
-        }
-        title={
-          <Typography variant="div" fontWeight="bold" className="text-lg">
-            {jobs.job_title}
-          </Typography>
-        }
-        subheader={`Posted On ${format(
-          new Date(jobs.updated_at),
-          "dd MMM yy h a"
-        )}`}
-      />
-      <CardContent>
-        <table>
-          {Object.entries(fieldsArray).map(([key, value]) => {
-            return (
-              <tr key={key} variant="tr">
-                <td
-                  key={key}
-                  variant="th"
-                  fontSize={"1rem"}
-                  className="font-bold"
-                >
-                  {key}&nbsp;&nbsp;
-                </td>
-                <td variant="td" fontSize={"1rem"} fontWeight="400">
-                  {value}
-                </td>
-                <br />
-              </tr>
-            );
-          })}
-        </table>
-      </CardContent>
-      <CardActions disableSpacing>
+    <>
+      <div className="border-2 rounded p-4 mx-4"  style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+        <CommonJobCard jobs={jobs} />
+{/*  Apply Button Logic */}
+        <div>
         {!Cookies.get("token") ? (
           <div className="text-center mx-auto">
             <button
@@ -194,12 +154,61 @@ export default function JobCard({ jobs }) {
         ) : (
           ""
         )}
-        {/* <IconButton aria-label="add to favorites">
-          <TurnedInNotIcon />
-        </IconButton> */}
-      </CardActions>
-      
-    </Card>
+        </div>
+      </div>
+    </>
+    // <Card sx={{ maxWidth: 345 }}>
+    //   <CardHeader
+    //     avatar={
+    //       <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+    //         {jobs.company.company_name.substring(0, 1)}
+    //       </Avatar>
+    //     }
+    //     action={
+    //       <IconButton aria-label="settings">
+    //         {Cookies.get("user_type") == "company" ? <MoreVertIcon /> : null}
+    //       </IconButton>
+    //     }
+    //     title={
+    //       <Typography variant="div" fontWeight="bold" className="text-lg">
+    //         {jobs.job_title}
+    //       </Typography>
+    //     }
+    //     subheader={`Posted On ${format(
+    //       new Date(jobs.updated_at),
+    //       "dd MMM yy h a"
+    //     )}`}
+    //   />
+    //   <CardContent>
+    //     <table>
+    //       {Object.entries(fieldsArray).map(([key, value]) => {
+    //         return (
+    //           <tr key={key} variant="tr">
+    //             <td
+    //               key={key}
+    //               variant="th"
+    //               fontSize={"1rem"}
+    //               className="font-bold"
+    //             >
+    //               {key}&nbsp;&nbsp;
+    //             </td>
+    //             <td variant="td" fontSize={"1rem"} fontWeight="400">
+    //               {value}
+    //             </td>
+    //             <br />
+    //           </tr>
+    //         );
+    //       })}
+    //     </table>
+    //   </CardContent>
+    //   <CardActions disableSpacing>
+       
+    //     {/* <IconButton aria-label="add to favorites">
+    //       <TurnedInNotIcon />
+    //     </IconButton> */}
+    //   </CardActions>
+
+    // </Card>
   );
 }
 

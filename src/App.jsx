@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "./index.css";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./Component/LoginComponent/Login/LoginPage";
@@ -24,9 +24,17 @@ import InternJobProfileUpdate from "./Pages/InternUserPages/InPrfPage/InJobProfi
 import EmailVerify from "./Component/LoginComponent/EmailVerify/EmailVerify";
 import MyApplicationPg from "./Pages/InternUserPages/MyApplicationPg/MyApplicationPg";
 import SocketTest from "./Pages/welcome_page/StudentDetails/Sections/ContactTab/ChatSocket/ChatSocket";
+import { DataContext } from "./context";
+import UserNotifications from "./Pages/BothUserPages/Notifications/Notifications";
 
 
 function App() {
+
+  const { socketFunction } = useContext(DataContext);
+
+  useEffect(()=>{
+    socketFunction();
+  },[])
   return (
     <>
       <ToastContainer />
@@ -61,7 +69,15 @@ function App() {
         <Route path="" Component={ProtectedRoutes}>
           <Route path="/my-application" Component={MyApplicationPg} />
         </Route>
-
+        <Route path="" Component={ProtectedRoutes}>
+          <Route path="/chat" Component={SocketTest} />
+        </Route>
+        <Route path="" Component={ProtectedRoutes}>
+          <Route path="/chat/:id" Component={SocketTest} />
+        </Route>
+        <Route path="" Component={ProtectedRoutes}>
+        <Route path="/notifications" Component={UserNotifications} />
+        </Route>
 
         {/* Company Routes */}
         <Route path="" Component={CompanyProtectedRoutes}>
@@ -80,9 +96,7 @@ function App() {
           <Route path="/job-application-approved" Component={ApprovedApplication} />
         </Route>
 
-        {/* <Route path="" Component={CompanyProtectedRoutes}> */}
-          <Route path="/chat-socket" Component={SocketTest} />
-        {/* </Route> */}
+     
 
       
       </Routes>
