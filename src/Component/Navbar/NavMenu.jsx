@@ -59,7 +59,7 @@ const NavMenu = () => {
               <img src={logo} className="h-[3rem]" />
             </span>
           </div>
-          <div className="md:hidden flex space-x-10 ">
+          <div className="md:hidden flex space-x-5 ">
             {Cookies.get('token') ?
               <>
                 <button className="text-gray-700 w-full md:w-auto px-4 py-2 font-bold"
