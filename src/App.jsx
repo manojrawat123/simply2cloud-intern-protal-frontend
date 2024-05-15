@@ -38,7 +38,6 @@ function App() {
   
   return (
     <>
-      <ToastContainer />
       <NavMenu />
       <Routes>
         {/* UnProtected Routes */}

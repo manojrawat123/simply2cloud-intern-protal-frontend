@@ -33,7 +33,6 @@ const InternAddSkillsForm = (props) => {
   return (
     <div>
        
-       <ToastContainer />
 
       <div className="w-[100%] py-10 bg-blue-50">
         <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300">

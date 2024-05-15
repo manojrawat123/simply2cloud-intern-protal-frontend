@@ -19,6 +19,7 @@ import InSkills from "./Sections/InSkills/InSkills";
 import InExperience from "./Sections/InExperience/InExperience";
 import TestimonialSlides from "./Sections/PortfolioSlides/PortfolioSlides";
 import { CloseOutlined } from "@mui/icons-material";
+import Cookies from "js-cookie";
 
 
 const StudentFullDetails = () => {
@@ -34,7 +35,8 @@ const StudentFullDetails = () => {
   }, []);
 
   if (!internProfileFullDetails?.profile_details) {
-    return <LoadingPage />;  }
+    return <LoadingPage />;
+  }
 
 
   return (
@@ -42,8 +44,31 @@ const StudentFullDetails = () => {
       <div className="grid md:grid-cols-8 grid-cols-1 w-[95%] md:w-[85%] mx-auto gap-10 mt-10">
         <div className="col-span-5 ">
           <InAboutTab internProfileFullDetails={internProfileFullDetails} />
-          <InExperience internProfileFullDetails={internProfileFullDetails} />
-          <InSkills internProfileFullDetails={internProfileFullDetails} />
+          {id == Cookies.get("profile_id") && internProfileFullDetails?.experience_details?.length == 0 ?
+            <div className="my-4 h-[5rem] flex item-center justify-center">
+              <div className="text-center">
+                <h1 className="bg-red-500 text-white rounded font-bold py-2 px-4">You have not Added any Experience</h1>
+                <button className="underline text-blue-500 mx-auto" onClick={() => { navigate("/profile") }}>Compleate Now</button>
+              </div>
+            </div>
+            :
+            <InExperience internProfileFullDetails={internProfileFullDetails} />
+          }
+          {
+            id == Cookies.get("profile_id") && internProfileFullDetails?.profile_details?.skills?.length == 0 ?
+              <div className="my-4 h-[5rem] flex item-center justify-center">
+                <div className="text-center">
+                  <h1 className="bg-red-500 text-white rounded font-bold py-2 px-4">You have not Added any Skills</h1>
+                  <div className=" text-center">
+                  <button className="underline text-blue-500" onClick={() => { navigate("/profile") }}>Compleate Now</button>
+
+                  </div>
+
+                </div>
+              </div> :
+              <InSkills internProfileFullDetails={internProfileFullDetails} />
+
+          }
           <TestimonialSlides internProfileFullDetails={internProfileFullDetails} />
           {/* <PhotoSlider skills={internProfileFullDetails.profile_details.skills} /> */}
         </div>
@@ -53,42 +78,42 @@ const StudentFullDetails = () => {
           </div>
         </div>
       </div>
-      
+
       <div className=" md:hidden ">
-      { 
-showContactInfo ? 
-        <div className="border rounded-xl border-solid border-gray-700 shadow-xl px-8 py-4 w-[90%] mx-[6%] fixed bottom-0 bg-white">
-       {
-         <div className="flex">
-          <button className="ml-auto" onClick={()=>{
-            setShowContactInfo(false);
-          }}>
-        <CloseOutlined  />
-          </button>
-        </div>
-        }
-      
-          <InContact internProfileFullDetails={internProfileFullDetails} /> 
-      </div> : 
-      
-      <div className="mx-4 w-[90%] fixed bottom-0">
-        <button 
-       className={` mb-3 inline-block w-[100%] rounded px-6 pb-2 pt-2.5 font-semibold uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
-       data-te-ripple-init
-       data-te-ripple-color="light"
-       style={{
-         background: "black",
-        }}
-        onClick={()=>{
-          setShowContactInfo(true);
-        }}
-        >
-        Show Contact Info
-      </button>
+        {
+          showContactInfo ?
+            <div className="border rounded-xl border-solid border-gray-700 shadow-xl px-8 py-4 w-[90%] mx-[6%] fixed bottom-0 bg-white">
+              {
+                <div className="flex">
+                  <button className="ml-auto" onClick={() => {
+                    setShowContactInfo(false);
+                  }}>
+                    <CloseOutlined />
+                  </button>
                 </div>
+              }
+
+              <InContact internProfileFullDetails={internProfileFullDetails} />
+            </div> :
+
+            <div className="mx-4 w-[90%] fixed bottom-0">
+              <button
+                className={` mb-3 inline-block w-[100%] rounded px-6 pb-2 pt-2.5 font-semibold uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                data-te-ripple-init
+                data-te-ripple-color="light"
+                style={{
+                  background: "black",
+                }}
+                onClick={() => {
+                  setShowContactInfo(true);
+                }}
+              >
+                Show Contact Info
+              </button>
+            </div>
 
         }
-        </div>
+      </div>
     </>
   );
 };

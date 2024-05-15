@@ -20,25 +20,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DataContext } from '../../../../context';
 import ConfirmDelete from '../../../../Component/ConfirmDelete/ConfirmDelete';
 import API_BASE_URL from '../../../../config';
+import JobCard from "../../../BothUserPages/JobCard/JobCards";
+import CommonJobCard from '../../../BothUserPages/CommonJbCard/CommonJobCard';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-export default function RecipeReviewCard({ jobs }) {
+export default function CompanyJobViewCard({ jobs }) {
   const [showConfirmDelete, setShowConfirmDelete] = React.useState();
   const [deleteButton, setDeleteButton] = React.useState(false);
   const token = Cookies.get('token');
   const {
     getJobsPostedByCompanyFunc
   } = React.useContext(DataContext);
+
+
   const deleteJobFunc = (id) => {
     setDeleteButton(true);
     let data = {}
@@ -75,20 +68,24 @@ export default function RecipeReviewCard({ jobs }) {
   }
 
 
-  const [expanded, setExpanded] = React.useState(false);
-
-  const fieldsArray = {
-    'Location': jobs.location,
-    'Posted at': format(new Date(jobs.posted_at), "dd MMM yy h a"),
-    'Application Deadline': format(new Date(jobs.application_deadline), "dd MMM yy"),
-    'Education': jobs.education,
-    'Required Experience': jobs.experience
-  };
-
-
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+    <div className='border-2 rounded-xl p-4 md:mx-4' style={{
+   display : "flex",  flexDirection: 'column', justifyContent: 'space-between', height: '100%'
+    }}>
+    <CommonJobCard jobs={jobs} />
+    <div className="text-center mx-auto w-[100%] ">
+            <button
+              onClick={() => {
+                setShowConfirmDelete(true)
+              }}
+              className="border mx-auto font-semibold border-red-500 text-red-500 px-2 py-1 space-x-2 rounded-md hover:bg-red-500 hover:text-white focus:outline-none focus:ring focus:border-red-300">
+              <span>Delete</span>
+              <DeleteIcon className="" />
+            </button>
+          </div>
+    </div>
+      {/* <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -123,18 +120,10 @@ export default function RecipeReviewCard({ jobs }) {
           </table>
         </CardContent>
         <CardActions disableSpacing>
-          <div className="text-center mx-auto w-[100%] ">
-            <button
-              onClick={() => {
-                setShowConfirmDelete(true)
-              }}
-              className="border mx-auto font-semibold border-red-500 text-red-500 px-2 py-1 space-x-2 rounded-md hover:bg-red-500 hover:text-white focus:outline-none focus:ring focus:border-red-300">
-              <span>Delete</span>
-              <DeleteIcon className="" />
-            </button>
-          </div>
+         
         </CardActions>
-      </Card>
+      </Card> */}
+      
       {
         showConfirmDelete ?
           <ConfirmDelete setShowConfirmDelete={setShowConfirmDelete} sendDeleteFunc={sendDeleteFunc} deleteButton={deleteButton}/> : null

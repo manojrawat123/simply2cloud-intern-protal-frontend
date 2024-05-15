@@ -29,75 +29,75 @@ const InternJobProfileForm = () => {
 
   const myCompleateJobProfileFunc = (values, { resetForm, setFieldValue }) => {
     try {
-    setAddButton(true);
-    let data = values;
-    Object.entries(data).map(([key, item]) => {
-      if (Array.isArray(item)) {
-        if (key == "desc") {
-          data[key] = item.map((element) => element.value).join("\n");
+      setAddButton(true);
+      let data = values;
+      Object.entries(data).map(([key, item]) => {
+        if (Array.isArray(item)) {
+          if (key == "desc") {
+            data[key] = item.map((element) => element.value).join("\n");
+          }
+          else {
+            data[key] = item.map(element => element.value);
+          }
+        }
+      });
+      data["intern"] = Cookies.get("user");
+      data["expected_salary"] = `${data.expected_salary}.00`
+      data["job_categoery"] = data["job_categoery"].value
+      data["sub_categoery"] = data["sub_categoery"].value;
+      if (Cookies.get("skills_ids") != "") {
+        const skills_id = decodeURIComponent(Cookies.get("skills_ids")).split(",").map(Number);
+        data["skills"] = skills_id ? skills_id : [];
+      }
+      if (Cookies.get("user_avaliable_skills_id") != "") {
+        const user_avl_skl = decodeURIComponent(Cookies.get("user_avaliable_skills_id")).split(",").map(Number);
+        data["available_skills"] = user_avl_skl ? user_avl_skl : [];
+      }
+      const token = Cookies.get("token");
+      data["user_image"] = profilePhoto;
+      data["thumbnail_image"] = thumbnailPhoto;
+
+      const formData = new FormData();
+      Object.entries(values).forEach(([key, value]) => {
+        if (key === 'user_image') {
+          // Check if the value is a File object
+          if (value instanceof File) {
+            formData.append(key, profilePhoto);
+          }
+        }
+        else if (key === "thumbnail_image") {
+          if (value instanceof File) {
+            formData.append(key, thumbnailPhoto);
+          }
         }
         else {
-          data[key] = item.map(element => element.value);
+          formData.append(key, value);
         }
-      }
-    });
-    data["intern"] = Cookies.get("user");
-    data["expected_salary"] = `${data.expected_salary}.00`
-    data["job_categoery"] = data["job_categoery"].value
-    data["sub_categoery"] = data["sub_categoery"].value;
-    if (Cookies.get("skills_ids") != "") {
-      const skills_id = decodeURIComponent(Cookies.get("skills_ids")).split(",").map(Number);
-      data["skills"] = skills_id ? skills_id : [];
-    }
-    if (Cookies.get("user_avaliable_skills_id") != "") {
-      const user_avl_skl = decodeURIComponent(Cookies.get("user_avaliable_skills_id")).split(",").map(Number);
-      data["available_skills"] = user_avl_skl ? user_avl_skl : [];
-    }
-    const token = Cookies.get("token");
-    data["user_image"] = profilePhoto;
-    data["thumbnail_image"] = thumbnailPhoto;
-
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
-      if (key === 'user_image') {
-        // Check if the value is a File object
-        if (value instanceof File) {
-          formData.append(key, profilePhoto);
-        }
-      }
-      else if (key === "thumbnail_image"){
-        if (value instanceof File) {
-          formData.append(key, thumbnailPhoto);
-        }
-      }
-      else {
-        formData.append(key, value);
-      }
-    });
-
-    axios
-      .post(`${API_BASE_URL}/compleate-intern-job-profile/`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        toast.success("Profile Added Sucessfully!", {
-          position: "top-center",
-        });
-        profileFunc();
-        resetForm();
-      })
-      .catch((err) => {
-        toast.error("Internal Server Error", {
-          position: "top-center",
-        });
-        console.log(err);
-      })
-      .finally(() => {
-        setAddButton(false);
-        resetForm();
       });
+
+      axios
+        .post(`${API_BASE_URL}/compleate-intern-job-profile/`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          toast.success("Profile Added Sucessfully!", {
+            position: "top-center",
+          });
+          profileFunc();
+          resetForm();
+        })
+        .catch((err) => {
+          toast.error("Internal Server Error", {
+            position: "top-center",
+          });
+          console.log(err);
+        })
+        .finally(() => {
+          setAddButton(false);
+          resetForm();
+        });
 
     } catch (error) {
       console.log(error);
@@ -133,7 +133,7 @@ const InternJobProfileForm = () => {
                           <h4 className="text-blue-600 mb-2">
                             {element.placeholder}{" "}
                             <span className="text-red-500">*</span>
-                           {/* { <span className="text-xs">{element.helping_text}</span>} */}
+                            {/* { <span className="text-xs">{element.helping_text}</span>} */}
                           </h4>
                           <div className={"w-full relative col-span-1 "}>
                             {element.icon}
@@ -143,10 +143,10 @@ const InternJobProfileForm = () => {
                               placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
                               onChange={(e) => {
                                 const uploadedFile = e.target.files[0];
-                                if(element.name == "user_image"){
+                                if (element.name == "user_image") {
                                   setProfilePhoto(uploadedFile);
                                 }
-                                if(element.name == "thumbnail_image"){
+                                if (element.name == "thumbnail_image") {
                                   setThumbnailPhoto(uploadedFile)
                                 }
                               }}
@@ -162,34 +162,30 @@ const InternJobProfileForm = () => {
                         </div>
                       )
                     }
-                    
-                    if (element.type == "textarea"){
-                      return  <div className="" key={index}>
-                      <h4 className="text-blue-600 mb-2">
-                        {element.placeholder}{" "}
-                        <span className="text-red-500">*</span>
-                      </h4>
-                 
+
+                    if (element.type == "textarea") {
+                      return <div className="" key={index}>
+                        <h4 className="text-blue-600 mb-2">
+                          {element.placeholder}{" "}
+                          <span className="text-red-500">*</span>
+                        </h4>
+
                         <textarea
                           type={element.type}
                           name={element.name}
-                          onChange={(e)=>{
-                            setFieldValue("desc" , e.target.value);
+                          onChange={(e) => {
+                            setFieldValue("desc", e.target.value);
                           }}
                           placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
                           required
                           className={" w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600 h-[6rem]"}
                         />
-
-<ErrorMessage
-                            name={element.name}
-                            component="div"
-                            className="text-red-500"
-                          />
+                        <ErrorMessage
+                          name={element.name}
+                          component="div"
+                          className="text-red-500"
+                        />
                       </div>
-                      
-
-
                     }
                     if (element.type == "array") {
                       return (
@@ -311,8 +307,8 @@ const InternJobProfileForm = () => {
                   <button
                     type="submit"
                     className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
-                 
-                 >
+
+                  >
                     {addButton ? (
                       <CircularProgress size={19} color="inherit" />
                     ) : (

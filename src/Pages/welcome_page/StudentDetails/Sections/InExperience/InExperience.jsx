@@ -18,7 +18,6 @@ const InExperience = ({ internProfileFullDetails }) => {
                                     {element.company_name} <span className='font-semibold'>&nbsp;({element.job_categoery.job_category})</span>
                                     <span className='mx-auto'><LocationIc />{element.location}</span>
                                 </h1>
-
                                 <div>
                                     <p>
                                         [  <span className='font-semibold text-gray-700'>Position: </span>{element.sub_categoery.sub_category_name}]
@@ -26,8 +25,6 @@ const InExperience = ({ internProfileFullDetails }) => {
                                         [  <span className='font-semibold text-gray-900'>Duration: </span><span className='font-semibold text-gray-600'>{format(new Date(element.start_date), 'MMMM d, yyyy')} </span>- <span className='font-semibold text-gray-600'> {format(new Date(element.end_date), "MMMM d, yyyy")} </span>]
                                     </p>
                                 </div>
-
-
                                 <div>
                                     <h1 className='font-semibold text-gray-700'>I have Aquired
                                         {element?.skills_accuired?.map((skill, index) => {
@@ -37,7 +34,6 @@ const InExperience = ({ internProfileFullDetails }) => {
                                             </React.Fragment>)
                                         })} Proficiencies there.</h1>
                                 </div>
-
                                 <div>
                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {element.desc}
                                 </div>

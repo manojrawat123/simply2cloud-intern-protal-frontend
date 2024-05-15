@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import NoDataPage from '../../../Component/NoDataPage/NoDataPage';
 import JobPostModal from './JobsPost/JobsPostModal/JobPostModal';
 import { DataContext } from '../../../context';
-import JobCard from './JobDisplay/DisplayJobsCard';
+import JobCard from "../../BothUserPages/JobCard/JobCards";
 import LoadingPage from '../../../Component/LoadingPage/LodingPage';
+import CompanyJobViewCard from './JobDisplay/DisplayJobsCard';
 
 const CompanyJobs = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { getJobsPostedByCompanyFunc, jobPostedByCompany } = useContext(DataContext);
 
   useEffect(() => {
@@ -29,7 +30,10 @@ const CompanyJobs = () => {
           :
           <div className='mx-[2rem] my-[2rem] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10'>
             {jobPostedByCompany?.map((element, index) => {
-              return <JobCard key={index} jobs={element} />
+              return (
+              <CompanyJobViewCard key={index} jobs={element} />
+                // <JobCard key={index} jobs={element} />
+              )
             })}
           </div>
       }

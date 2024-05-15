@@ -1,4 +1,4 @@
-import { Send } from '@mui/icons-material'
+import { Pause, PauseCircle, PlayCircle, Send } from '@mui/icons-material'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import API_BASE_URL from '../../../../../../config'
@@ -12,6 +12,7 @@ const UserChats = () => {
 
     const { id } = useParams();
     const [sendMessage, setSendMessage] = useState();
+    const [button, setButton] = useState(false);
 
     const { getMessageOfUserFunc,
         userChats, chatSocket, socketFunction, chatTracerId } = useContext(DataContext);
@@ -36,6 +37,7 @@ const UserChats = () => {
 
 
     const sendMessageFunc = () => {
+        setButton(true);
       const token = Cookies.get("token");
     const messageData =  {
             sender: parseInt(Cookies.get("user")),
@@ -56,7 +58,9 @@ const UserChats = () => {
             
         }).catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            setButton(false);
+        })
     }
 
     if (!userChats) {
@@ -128,10 +132,14 @@ const UserChats = () => {
                             setSendMessage(e.target.value);
                         }}
                     />
-                    <button className='absolute right-3 top-4 cursor-pointer' onClick={() => {
+                    <button className='absolute right-0 top-[0.15rem] cursor-pointer  p-3 rounded-xl'
+                    disabled={button}
+                    onClick={() => {
                         sendMessageFunc();
                     }}>
-                        <Send />
+                       {
+                        button ? <PauseCircle /> :  <Send />
+                       }
                     </button>
                 </div>
             </div>

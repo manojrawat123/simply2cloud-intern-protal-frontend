@@ -20,6 +20,7 @@ const InternProfilePage = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className='grid grid-cols-1 md:grid-cols-3 my-8 mx-4 gap-10'>
         <InternBasicDetail user_detail={userDetails?.user_details} />
         <div className='border-2 rounded p-4'>

@@ -29,7 +29,7 @@ const AddExperienceForm = ({ setOpen }) => {
   }, [])
 
   const addExperienceDetailsFunc = (values, { resetForm, setFieldValue }) => {
-
+console.log("hii")
     setAddButton(true);
 
     let token = Cookies.get('token');
@@ -39,11 +39,8 @@ const AddExperienceForm = ({ setOpen }) => {
     data["user"] = Cookies.get("user");
     Object.entries(data).map(([key, item]) => {
       if (Array.isArray(item)) {
-        if (key == "desc") {
-          data[key] = item.map((element) => element.value).join("\n");
-        } else {
+        
           data[key] = item.map((element) => element.value);
-        }
       }
     });
 
@@ -279,7 +276,8 @@ const AddExperienceForm = ({ setOpen }) => {
                           {element.placeholder}{" "}
                           <span className="text-red-500">*</span>
                         </h4>
-                        <textarea
+                        <Field
+                        as={"textarea"}
                           type={element.type}
                           name={element.name}
                           placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}

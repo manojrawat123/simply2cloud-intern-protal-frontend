@@ -10,30 +10,24 @@ const InExperienceMain = (props) => {
 
   return (
     <div className="col-span-1">
-      <ToastContainer />
       {props?.internJobExperienceDetails?.length == 0 ? (
         <div className="text-blue-500 p-8 rounded-xl shadow-md text-left border-2">
           <div className="mb-6  ">
             <InternExModl fromJobPage={false} open={open} setOpen={setOpen}/>
           </div>
         </div>
-      ) : (
-
-      
-     <>
-     
+      ) : (      
+     <>     
      {props?.internJobExperienceDetails?.map((element, index) => {
           return <>
-         
+
             <InExperienceCard internJobExperienceDetails={element} />
           </>
         })}
         <InternExModl2 fromJobPage={false} open={open} setOpen={setOpen}/>
         </>  
-      )
-      
+      )      
       }
-
     </div>
   )
 }

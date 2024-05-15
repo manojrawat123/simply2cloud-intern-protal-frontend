@@ -8,6 +8,7 @@ import { DataContext } from '../../../../../../context';
 import API_BASE_URL from '../../../../../../config';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import NoDataPage from '../../../../../../Component/NoDataPage/NoDataPage';
+import LoadingPage from '../../../../../../Component/LoadingPage/LodingPage';
 
 function App() {
     const [newMessage, setNewMessage] = useState();
@@ -44,7 +45,9 @@ function App() {
     return (
         <div className="App grid md:grid-cols-6 md:h-[87vh] ">
             <header className={`App-header font-semibold col-span-2  border-2 border-sold border-gray rounded-xl my-4 ml-4 ${id ? "md:block hidden " : ""}` }>
-               {userConversation?.length == 0 ? null :  <h1 className='text-xl font-bold mx-10 text-gray-700 underline mt-4'>Messages</h1>}
+               {
+               !userConversation ? <LoadingPage /> : 
+               userConversation?.length == 0 ? null :  <h1 className='text-xl font-bold mx-10 text-gray-700 underline mt-4'>Messages</h1>}
                 <div className='md:h-[90%] h-[70vh] overflow-y-scroll'>
                 {userConversation?.length == 0 ? <NoDataPage domain={"Inbox Empty"} subdomain={"No Conversation yet"} height={"h-[70vh]"}/> :    userConversation?.map((element, index) => {
                     return (

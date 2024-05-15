@@ -7,13 +7,14 @@ import { NavLink } from "react-router-dom";
 // import AddSkillModel from './AddSkillsModel/AddSkillsModel';
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import NormalH from "../../../../RepeatedCode/tags/NormalH";
 import NoDataPage from "../../../../Component/NoDataPage/NoDataPage";
 import InternAddSkillModel from "./InSkillAddModel/InAddSkillModel";
 import DeleteInternSkills from "./InDelSkills/InSkillDelete";
 import UserSkillsCard from "../../../BothUserPages/UserSkillsCard/UserSkillsDetailCd";
 import API_BASE_URL from "../../../../config";
+import Cookies from "js-cookie";
 
 const InternSkills = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -186,7 +187,13 @@ const InternSkills = (props) => {
           <div className="flex justify-center items-center py-4">
             <button
               onClick={() => {
-                setIsModalOpen(true);
+
+                if(Cookies.get('profile_id') == "undefined" || !Cookies.get('profile_id')){
+                  toast.error("Compleate your profile first");
+                }
+                else{
+                  setIsModalOpen(true);
+                }
               }}
               className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300"
             >
