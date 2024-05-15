@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import API_BASE_URL from "./config";
+import API_BASE_URL, { API_SOCKET_URL } from "./config";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -36,7 +36,7 @@ const DataProviderFuncComp = ({ children }) => {
   const location = useLocation();
 
   const socketFunction = ()=>{
-    const socket = io('http://localhost:3000');
+    const socket = io(`${API_SOCKET_URL}`);
         socket.on('connect', () => {
           setSocket(socket);
         });
