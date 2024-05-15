@@ -11,6 +11,7 @@ import generateValidationSchema from "../../../../../Component/GenrateValidation
 import genrateInitalValues from "../../../../../Component/genrateInitialValues/InitialValues";
 import { DataContext } from "../../../../../context";
 import API_BASE_URL from "../../../../../config";
+import WorkIcon from "@mui/icons-material/Work";
 
 
 const InternJobProfileForm = () => {
@@ -56,7 +57,7 @@ const InternJobProfileForm = () => {
       const token = Cookies.get("token");
       data["user_image"] = profilePhoto;
       data["thumbnail_image"] = thumbnailPhoto;
-
+ 
       const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
         if (key === 'user_image') {
@@ -153,7 +154,7 @@ const InternJobProfileForm = () => {
                               required
                               className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
                             />
-                          </div>
+                          </div> 
                           <ErrorMessage
                             name={element.name}
                             component="div"
