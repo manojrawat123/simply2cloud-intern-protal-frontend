@@ -45,7 +45,8 @@ const DataProviderFuncComp = ({ children }) => {
           console.log(data);
           if (data?.receiverId === Cookies.get('user')) {
             getUserConversationFunc();
-            getMessageOfUserFunc(data?.senderId);
+            
+            // getMessageOfUserFunc(data?.senderId);
           }
         });
   }

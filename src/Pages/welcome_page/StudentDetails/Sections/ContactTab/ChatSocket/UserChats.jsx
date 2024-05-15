@@ -40,7 +40,10 @@ const UserChats = () => {
             setSendMessage("");
             getMessageOfUserFunc(id);
             chatSocket?.emit('sendMessage', { message: sendMessage, receiverId : id , senderId : Cookies.get("user")});
-            console.log("Message send successfully!!");
+            chatSocket.on('newMessage', (data) => {
+                if(data?.receiverId == Cookies.get("user"));
+                  getMessageOfUserFunc(data?.senderId);
+              });
         }).catch((err) => {
             console.log(err);
         });
