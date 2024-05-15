@@ -41,6 +41,7 @@ const UserChats = () => {
             getMessageOfUserFunc(id);
             chatSocket?.emit('sendMessage', { message: sendMessage, receiverId : id , senderId : Cookies.get("user")});
             chatSocket.on('newMessage', (data) => {
+                console.log(data);
                 if(data?.senderId == id && data?.receiverId == Cookies.get("user"));{
                     getMessageOfUserFunc(data?.senderId);
                 }
