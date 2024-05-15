@@ -14,12 +14,24 @@ const UserChats = () => {
     const [sendMessage, setSendMessage] = useState();
 
     const { getMessageOfUserFunc,
-        userChats, chatSocket, socketFunction } = useContext(DataContext);
+        userChats, chatSocket, socketFunction, chatTracerId } = useContext(DataContext);
 
     useEffect(() => {
         getMessageOfUserFunc(id);
         socketFunction();
     }, [id]);
+
+    useEffect(()=>{
+        chatSocket?.on('newMessage', (data) => {
+            console.log(data?.senderId == id && data?.receiverId == Cookies.get("user"))
+            if(data?.senderId == id && data?.receiverId == Cookies.get("user") ){
+                  getMessageOfUserFunc(id, false);
+              }
+            });
+            return () => {
+                chatSocket?.off('newMessage');
+              };
+    }, [chatTracerId])
 
 
 
@@ -38,14 +50,10 @@ const UserChats = () => {
             }
         }).then((value) => {
             setSendMessage("");
-            getMessageOfUserFunc(id);
+            getMessageOfUserFunc(id, false);
             chatSocket?.emit('sendMessage', { message: sendMessage, receiverId : id , senderId : Cookies.get("user")});
-            chatSocket.on('newMessage', (data) => {
-                console.log(data);
-                if(data?.senderId == id && data?.receiverId == Cookies.get("user"));{
-                    getMessageOfUserFunc(data?.senderId);
-                }
-              });
+
+            
         }).catch((err) => {
             console.log(err);
         });

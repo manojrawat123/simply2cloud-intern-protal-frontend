@@ -43,7 +43,6 @@ function App() {
 
     return (
         <div className="App grid md:grid-cols-6 md:h-[87vh] ">
-        {console.log(userConversation)}
             <header className={`App-header font-semibold col-span-2  border-2 border-sold border-gray rounded-xl my-4 ml-4 ${id ? "md:block hidden " : ""}` }>
                {userConversation?.length == 0 ? null :  <h1 className='text-xl font-bold mx-10 text-gray-700 underline mt-4'>Messages</h1>}
                 <div className='md:h-[90%] h-[70vh] overflow-y-scroll'>

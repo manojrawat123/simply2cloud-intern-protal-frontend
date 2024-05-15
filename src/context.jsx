@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import API_BASE_URL, { API_SOCKET_URL } from "./config";
 import Cookies from "js-cookie";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 
 const DataContext = createContext();
@@ -29,6 +29,7 @@ const DataProviderFuncComp = ({ children }) => {
   const [userChats, setUserChats] = useState();
   const [chatSocket , setSocket] = useState();
   const [isFilter, setIsFilter] = useState(false);
+  const [chatTracerId, setChatTracerId] = useState();
   
   var token = Cookies.get("token");
 
@@ -42,11 +43,11 @@ const DataProviderFuncComp = ({ children }) => {
         });
 
         socket.on('newMessage', (data) => {
-          console.log(data);
-          if (data?.receiverId === Cookies.get('user')) {
+          if (data?.receiverId === Cookies.get('user') || data?.senderId == Cookies.get('user')) {
             getUserConversationFunc();
+            setChatTracerId(data?.receiverId);
           }
-        });
+          });
   }
 
 
@@ -335,8 +336,11 @@ const getUserConversationFunc = ()=>{
   });
 }
 
-const getMessageOfUserFunc = (user1)=>{
+const getMessageOfUserFunc = (user1, isDifferent = true)=>{
+if(isDifferent){
   setUserChats();
+}
+
   axios.get(`${API_BASE_URL}/chat/${user1}/`, 
   {
     headers : {
@@ -392,7 +396,9 @@ const getMessageOfUserFunc = (user1)=>{
         chatSocket,
         socketFunction,
         isFilter,
-        setIsFilter
+        setIsFilter,
+        setChatTracerId,
+        chatTracerId
       }}
     >
       {children}
