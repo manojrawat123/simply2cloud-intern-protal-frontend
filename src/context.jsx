@@ -45,8 +45,6 @@ const DataProviderFuncComp = ({ children }) => {
           console.log(data);
           if (data?.receiverId === Cookies.get('user')) {
             getUserConversationFunc();
-            
-            // getMessageOfUserFunc(data?.senderId);
           }
         });
   }
@@ -338,6 +336,7 @@ const getUserConversationFunc = ()=>{
 }
 
 const getMessageOfUserFunc = (user1)=>{
+  setUserChats();
   axios.get(`${API_BASE_URL}/chat/${user1}/`, 
   {
     headers : {
