@@ -8,7 +8,6 @@ import CheckCircleIcon from "@mui/icons-material/Check";
 import LanguageIcon from '@mui/icons-material/Language';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import BusinessIcon from '@mui/icons-material/Business';
-import { LogoDev } from "@mui/icons-material";
 
 const design = "absolute top-2 border-r border-black peer-focus:text-violet-700 mx-2"
 
@@ -20,14 +19,6 @@ const design = "absolute top-2 border-r border-black peer-focus:text-violet-700 
           required: true,
           placeholder: "Enter Company Name",
           icon: <PersonIcon className={design} />
-        },
-        {
-          type: "file",
-          id: "logo",
-          name: "logo",
-          required: false,
-          placeholder: "Comapny Logo",
-          icon: <LogoDev className={design}/>,
         },
         {
           type: "tel",

@@ -121,6 +121,7 @@ const NavMenu = () => {
                 <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Graphic Design&search_id=3">Graphic Designing</option>
                 <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Photo Editing&search_id=1">Photo Editing</option>
                 <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Video Editing&search_id=2">Video Editing</option>
+                <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Software%20Devloper&search_id=4">Software Devlopers</option>
               </select>}
               <button className="bg-black text-white px-4 rounded-r-xl hidden md:block ">
                 <Search />
@@ -141,7 +142,8 @@ const NavMenu = () => {
               />
             </button>
           </div>
-          <div className="text-md font-bold text-gray-500 lg:flex md:text-center">
+          {/* NavBar Render */}
+          <div className="text-md font-bold text-gray-500 md:flex md:text-center">
             {navItem?.map((element, index) => {
               if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" && (Cookies.get('user_type') != "company" || element.label == "Home"))) {
                 return (
@@ -237,15 +239,15 @@ const NavMenu = () => {
                         </div>
                       </div> :
                         element.option ?
-                        <>
-                        <div className="hidden md:block">{element.label}</div>
-                        <div className="flex md:hidden ">
-                        <span className=""> {element.label}</span>
-                        <div className="ml-auto ">{element.option ? <div className={element.id == navId ? "transform rotate-[180deg]" : ""}>
-                          <UpArrowIcon />
-                        </div>
-                          : null}</div>
-                      </div>
+                          <>
+                            <div className="hidden md:block">{element.label}</div>
+                            <div className="flex md:hidden ">
+                              <span className=""> {element.label}</span>
+                              <div className="ml-auto ">{element.option ? <div className={element.id == navId ? "transform rotate-[180deg]" : ""}>
+                                <UpArrowIcon />
+                              </div>
+                                : null}</div>
+                            </div>
                           </>
                           : element.label
                       }
@@ -276,10 +278,13 @@ const NavMenu = () => {
                                         }}> <PowerSettingsNewIcon /> Logout</button>
                                     </div>
                                   }
+                                  if (opel.link == "intern-details/undefined" && (!Cookies.get('profile_id') || Cookies.get('profile_id') == "undefined")) {
+                                    return null
+                                  }
                                   return (
                                     <div className="block">
                                       <NavLink
-                                        to={opel.link}
+                                        to={opel.link == "intern-details/undefined" ? `intern-details/${Cookies.get('profile_id')}` : opel.link}
                                         onClick={() => {
                                           setNavId(0);
                                           setMobileVis(false);
@@ -324,7 +329,11 @@ const NavMenu = () => {
               }
             })}
           </div>
-        { Cookies.get("token") ?  <div className="mx-6 md:hidden">
+
+          {/* NavBar Render End */}
+
+
+          {Cookies.get("token") ? <div className="mx-6 md:hidden">
             <button
               onClick={() => {
                 logoutFunc();

@@ -30,10 +30,10 @@ const InternBasicDetail = (props) => {
             icon: <PersonIcon />,
             "label": "name"
         },
-        address : {
-            "val": props.user_detail.address,
+        user_location : {
+            "val": props.user_detail.user_location,
             icon: <LocationOnIcon />,
-            label: "address"
+            label: "user_location"
         },
         phone: {
             "val": props.user_detail.phone,
@@ -69,10 +69,10 @@ const InternBasicDetail = (props) => {
             <div className="text-blue-500 p-8 rounded-xl shadow-md text-left border-2">
                 <div className="mb-6  ">
                     <NormalH heading={"Contact Info"} />
-                    {Object.entries(user_basic_data).map(([key, element], index) => (
+                    {Object.entries(user_basic_data)?.map(([key, element], index) => (
                         <div key={index} className="flex items-center justify-between mb-2 border border-solid mt-4 p-4">
                             <span className="text-blue-500 font-bold">{element.icon}</span>&nbsp;&nbsp;
-                            <span className="mr-4 overflow-auto">{element.val.length > 12 ? `${element.val.substring(0, 12)}...` : element.val}</span>
+                            <span className="mr-4 overflow-auto">{element?.val?.length > 12 ? `${element?.val?.substring(0, 12)}...` : element?.val}</span>
                             <span className="flex items-center">
                                 <Popup
                                     contentStyle={{ width: "270px" }}

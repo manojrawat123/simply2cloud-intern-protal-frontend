@@ -24,12 +24,13 @@ const Register = () => {
             name: values.internName,
             phone: values.phone,
             s2c_certified : values.certified, 
-            address : values.location,
+            user_location : values.location,
             password: values.password,
             password2 : values.password2,
             url : API_ROUTE_URL,
             user_type : "user"
           }).then((value)=>{
+            console.log(values);
               toast.success(value.data.message, {
                   position : "top-center"
                 });
@@ -84,9 +85,7 @@ const Register = () => {
     return (
         <div>
             <ToastContainer />
-
             <div className="w-[100%] py-10 bg-blue-50">
-
                 <div className="sm:w-[80%] w-[90%]  mx-auto bg-white rounded-lg shadow-2xl border border-solid border-gray-300 ">
                     <h2 className="bg-gray-100 text-blue-600 text-3xl py-4 px-6 mb-6 font-semibold text-center">Intern SignUp</h2>
                     <Formik

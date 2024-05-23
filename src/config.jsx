@@ -2,7 +2,7 @@
 // const API_BASE_URL = 'https://kingbahimunna.pythonanywhere.com'; 
 // const API_BASE_URL = ''; 
 
-const API_BASE_URL = 'https://kingbahimunna.pythonanywhere.com'; 
+const API_BASE_URL = 'http://localhost:8000'; 
 const API_ROUTE_URL = 'https://simply2cloud-intern-protal-frontend.vercel.app'; 
 const API_SOCKET_URL = 'https://chat-socket-node-production.up.railway.app';
 

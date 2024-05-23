@@ -29,9 +29,7 @@ const AddExperienceForm = ({ setOpen }) => {
   }, [])
 
   const addExperienceDetailsFunc = (values, { resetForm, setFieldValue }) => {
-console.log("hii")
     setAddButton(true);
-
     let token = Cookies.get('token');
     let data = values;
     data["job_categoery"] = data["job_categoery"].value;

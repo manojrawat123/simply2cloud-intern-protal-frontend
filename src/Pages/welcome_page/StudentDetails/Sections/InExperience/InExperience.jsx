@@ -13,7 +13,7 @@ const InExperience = ({ internProfileFullDetails }) => {
                     </h1>
                     <div>
                         {internProfileFullDetails?.experience_details?.map((element, index) => {
-                            return <div className=' shadow-xl px-4 py-3 rounded-xl border-2 border-solid border-gray-300'>
+                            return <div className=' shadow-xl px-4 py-3 rounded-xl border-2 border-solid border-gray-300 my-4'>
                                 <h1 className='font-bold md:text-lg text-base text-gray-800 flex'>
                                     {element.company_name} <span className='font-semibold'>&nbsp;({element.job_categoery.job_category})</span>
                                     <span className='mx-auto'><LocationIc />{element.location}</span>

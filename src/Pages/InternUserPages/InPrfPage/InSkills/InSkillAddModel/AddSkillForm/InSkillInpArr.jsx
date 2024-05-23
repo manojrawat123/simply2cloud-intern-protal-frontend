@@ -27,7 +27,7 @@ const internSkillInputArr = [
     id: "portfolioLink",
     name: "portfolio_link",
     required: false, // Adjust as needed
-    placeholder: "Enter Portfolio Link",
+    placeholder: "Enter Portfolio or Github Link",
     icon: <LinkIcon className={iconCss} />
   },
   {
@@ -44,7 +44,7 @@ const internSkillInputArr = [
     id: "user_image",
     name: "user_image",
     required: false,
-    placeholder: "Upload Your Image",
+    placeholder: "Upload Project Image",
     icon: <WorkIcon className={iconCss} />,
   },
 ];

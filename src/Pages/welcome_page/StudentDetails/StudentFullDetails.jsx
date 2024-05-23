@@ -20,17 +20,16 @@ import InExperience from "./Sections/InExperience/InExperience";
 import TestimonialSlides from "./Sections/PortfolioSlides/PortfolioSlides";
 import { CloseOutlined } from "@mui/icons-material";
 import Cookies from "js-cookie";
+import InternGithubProfile from "./Sections/GithubProf/GithubProf";
 
 
 const StudentFullDetails = () => {
 
-  const { internProfileFullDetailsFunc, internProfileFullDetails } =
-    useContext(DataContext);
+  const { internProfileFullDetailsFunc, internProfileFullDetails } = useContext(DataContext);
   const { id } = useParams();
   const [showContactInfo, setShowContactInfo] = useState(false);
-  const [tabIndex, setTabIndex] = useState(1);
 
-  useEffect(() => {
+  useEffect(() => { 
     internProfileFullDetailsFunc(id);
   }, []);
 
@@ -38,12 +37,31 @@ const StudentFullDetails = () => {
     return <LoadingPage />;
   }
 
+  const isValidGithubProfile = (url) => {
+    // Check if the URL is a valid GitHub profile URL containing the username
+    const githubRegex = /https?:\/\/(www\.)?github\.com\/([a-zA-Z0-9_-]+)/;
+    return githubRegex.test(url);
+};
+
+const getUsernameFromProfile = (url) => {
+    const githubRegex = /https?:\/\/(www\.)?github\.com\/([a-zA-Z0-9_-]+)/;
+    const match = url.match(githubRegex);
+    return match ? match[2] : null;
+};
 
   return (
     <>
+    
       <div className="grid md:grid-cols-8 grid-cols-1 w-[95%] md:w-[85%] mx-auto gap-10 mt-10">
         <div className="col-span-5 ">
+    
           <InAboutTab internProfileFullDetails={internProfileFullDetails} />
+
+          {
+           internProfileFullDetails?.profile_details?.github_profile &&
+            internProfileFullDetails?.profile_details?.github_profile != "" && isValidGithubProfile(internProfileFullDetails?.profile_details?.github_profile)  ?
+            <InternGithubProfile username={getUsernameFromProfile(internProfileFullDetails.profile_details.github_profile)} /> : null
+          }
           {id == Cookies.get("profile_id") && internProfileFullDetails?.experience_details?.length == 0 ?
             <div className="my-4 h-[5rem] flex item-center justify-center">
               <div className="text-center">
@@ -78,6 +96,8 @@ const StudentFullDetails = () => {
           </div>
         </div>
       </div>
+
+
 
       <div className=" md:hidden ">
         {

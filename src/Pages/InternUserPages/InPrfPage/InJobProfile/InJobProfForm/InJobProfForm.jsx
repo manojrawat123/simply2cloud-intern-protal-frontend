@@ -11,7 +11,6 @@ import generateValidationSchema from "../../../../../Component/GenrateValidation
 import genrateInitalValues from "../../../../../Component/genrateInitialValues/InitialValues";
 import { DataContext } from "../../../../../context";
 import API_BASE_URL from "../../../../../config";
-import WorkIcon from "@mui/icons-material/Work";
 
 
 const InternJobProfileForm = () => {
@@ -57,7 +56,7 @@ const InternJobProfileForm = () => {
       const token = Cookies.get("token");
       data["user_image"] = profilePhoto;
       data["thumbnail_image"] = thumbnailPhoto;
- 
+
       const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
         if (key === 'user_image') {
@@ -154,7 +153,7 @@ const InternJobProfileForm = () => {
                               required
                               className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
                             />
-                          </div> 
+                          </div>
                           <ErrorMessage
                             name={element.name}
                             component="div"
@@ -283,7 +282,7 @@ const InternJobProfileForm = () => {
                       <div className="" key={index}>
                         <h4 className="text-blue-600 mb-2">
                           {element.placeholder}{" "}
-                          <span className="text-red-500">*</span>
+                         {element.required ?  <span className="text-red-500">*</span> : <span className="text-gray-700"> (Optional)</span>}
                         </h4>
                         <div className={"w-full relative col-span-1 "}>
                           {element.icon}
@@ -291,7 +290,6 @@ const InternJobProfileForm = () => {
                             type={element.type}
                             name={element.name}
                             placeholder={element.name == 'title' ? element.helpingtext : element.placeholder}
-                            required
                             className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
                           />
                         </div>

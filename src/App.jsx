@@ -46,7 +46,6 @@ function App() {
         <Route path="/company-register" Component={CompanyRegister} />
         <Route path="/intern-details/:id" Component={StudentFullDetails} />
         <Route path="/accounts/activate/:userid_encode/:verify_token/" Component={EmailVerify} />
-
         {/* Intern Routes */}
         {/* <Route path="" Component={ProtectedRoutes}> */}
         <Route path="" Component={RenderAlgo} />
@@ -95,10 +94,6 @@ function App() {
         <Route path="" Component={CompanyProtectedRoutes}>
           <Route path="/job-application-approved" Component={ApprovedApplication} />
         </Route>
-
-     
-
-      
       </Routes>
       {/* <Footer /> */}
     </>

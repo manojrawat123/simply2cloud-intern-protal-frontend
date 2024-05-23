@@ -1,3 +1,4 @@
+import { GitHub } from "@mui/icons-material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import WorkIcon from "@mui/icons-material/Work";
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
@@ -96,14 +97,14 @@ const InternJobProfilieInputArr = [
       placeholder: "Describe Your Experience",
       icon: <WorkIcon className={iconCss} />,
     },
-    // {
-    //   type: "url",
-    //   id: "github_profile",
-    //   name: "github_profile",
-    //   required: true,
-    //   placeholder: "GitHub Profile Link",
-    //   icon: <WorkIcon className={iconCss} />,
-    // },
+    {
+      type: "url",
+      id: "github_profile",
+      name: "github_profile",
+      required: false,
+      placeholder: "GitHub Profile Link",
+      icon: <GitHub className={iconCss} />,
+    },
 
   ];
 

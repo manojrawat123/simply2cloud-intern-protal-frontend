@@ -38,7 +38,7 @@ const navItem = [
     link: "#",
     visibility: "login",
     user: "company",
-    option : [
+    option: [
       {
         id: 4,
         label: "Post New Jobs",
@@ -57,7 +57,7 @@ const navItem = [
   },
   {
     id: 17,
-    icon : <Notifications />,
+    icon: <Notifications />,
     label: "Notifications",
     link: "/notifications",
     visibility: "login",
@@ -66,12 +66,12 @@ const navItem = [
   {
     id: 18,
     label: "Inbox",
-    icon : <ChatOutlined />,
+    icon: <ChatOutlined />,
     link: "/chat",
     visibility: "login",
-    user: "company"    
+    user: "company"
   },
-  
+
   {
     id: 5,
     label: "Job Application",
@@ -129,10 +129,10 @@ const navItem = [
     link: "/signup",
     visibility: "logout",
     user: "any",
-  }, 
+  },
   {
     id: 14,
-    icon : <Notifications />,
+    icon: <Notifications />,
     label: "Notifications",
     link: "/notifications",
     visibility: "login",
@@ -141,15 +141,15 @@ const navItem = [
   {
     id: 15,
     label: "Inbox",
-    icon : <ChatOutlined />,
+    icon: <ChatOutlined />,
     link: "/chat",
     visibility: "login",
-    user: "user"    
+    user: "user"
   },
   {
     id: 16,
-    label : "Accounts",
-    icon :  <AccountCircleIcon />,
+    label: "Accounts",
+    icon: <AccountCircleIcon />,
     link: "#",
     visibility: "login",
     user: "user",
@@ -157,12 +157,12 @@ const navItem = [
       {
         id: "16b",
         label: "Preview Profile",
-    link: `intern-details/${Cookies.get("profile_id")}`,
+        link: `intern-details/${Cookies.get("profile_id")}`,
         visibility: "login",
         user: "company",
       },
       {
-        id:  "16c",
+        id: "16c",
         label: "Settings",
         link: "/profile",
         visibility: "login",
@@ -183,7 +183,7 @@ const navItem = [
         user: "company",
       },
     ],
-  }  
+  }
 ];
 
 export default navItem;

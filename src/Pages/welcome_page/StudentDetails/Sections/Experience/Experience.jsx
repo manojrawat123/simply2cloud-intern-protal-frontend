@@ -6,7 +6,7 @@ import UserExperienceCard from '../../../../BothUserPages/UserExperienceCard/Use
 const ExperienceSection = (props) => {
     console.log(props)
   return (
-    <div className="bg-white px-6 rounded shadow-md py-4">
+    <div className="bg-white px-6 rounded shadow-md py-4 my-4">
           <div className="mb-6">
           <NormalH heading={"Experience Details"}/>
             {props?.experiences?.map((experience, index) => (

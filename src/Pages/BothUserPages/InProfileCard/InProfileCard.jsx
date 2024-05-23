@@ -35,15 +35,12 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function InternProfileCard({ profile, isCompany }) {
-
+  
   const [expanded, setExpanded] = React.useState(false);
-
   const navigate = useNavigate();
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log(profile)
 
   return (
     <div className="rounded-lg overflow-hidden mx-auto">
@@ -56,8 +53,8 @@ export default function InternProfileCard({ profile, isCompany }) {
         {/* User Details */}
         <div className='flex mt-4'>
           <img src={`${API_BASE_URL}/${profile.user_image}/`} alt="" className=' h-[2rem] w-[2rem] rounded-full' />
-          <h1 className='text-gray-700 font-bold text-base ml-5 mt-1'>{profile?.intern?.name}</h1>
-          <h1 className='text-gray-700 font-semibold text-base ml-auto mt-1 mr-4 underline'>({profile.job_categoery.job_category})</h1>
+          <h1 className='text-gray-700 font-bold text-base ml-4 mr-auto mt-1'>{profile?.intern?.name.length > 10 ? profile?.intern?.name.substring(0, 10) + "..." : profile?.intern?.name}</h1>
+          <h1 className='text-gray-700 font-semibold text-xs mt-1 mr-4 underline'>({profile.job_categoery.job_category})</h1>
         </div>
         <div className='font-semibold text-base'>
           Passionate <span className='font-bold'>{profile.sub_categoery?.sub_category_name}</span> with a flair for creating memorable visual identities

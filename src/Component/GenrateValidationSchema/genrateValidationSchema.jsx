@@ -22,7 +22,7 @@ const generateValidationSchema = (inputFields) => {
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required(`${field.placeholder} is required`);
     }
-    if (field.type == "url"){
+    if (field.type == "url" && validationObject[field.name] == field.required){
      validationObject[field.name] = Yup.string().url('Please enter a valid URL').required('URL is required')
     }
     if (field.name == "salary"){

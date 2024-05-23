@@ -30,6 +30,7 @@ const DataProviderFuncComp = ({ children }) => {
   const [chatSocket , setSocket] = useState();
   const [isFilter, setIsFilter] = useState(false);
   const [chatTracerId, setChatTracerId] = useState();
+  const [githubUserDetail, setGithubUserDetail] = useState();
   
   var token = Cookies.get("token");
 
@@ -49,8 +50,6 @@ const DataProviderFuncComp = ({ children }) => {
           }
           });
   }
-
-
 
   const profileFunc = () => {
     token = Cookies.get('token');
@@ -82,7 +81,9 @@ const DataProviderFuncComp = ({ children }) => {
       })
       .catch((err) => {
         console.log(err)
-        logoutFunc();
+        if(Cookies.get('token') && err.response.status == "401" ){
+          logoutFunc();
+        }
       });
   };
 
@@ -119,7 +120,6 @@ const DataProviderFuncComp = ({ children }) => {
         logoutFunc();
       });
   };
-
 
   const companyJobPageFunc = () => {
     axios
@@ -259,7 +259,6 @@ const c_headers = Cookies.get("token") ?
       });
   };
 
-
   const unAuthInternSerchFunc = (ct_id, search)=>{
     setUnAuthUserDetail(null);
     let url;
@@ -289,6 +288,8 @@ const c_headers = Cookies.get("token") ?
   }
 
 const internProfileFullDetailsFunc = (id)=>{
+  console.log("Hii ")
+  setInternProfileFullDetail(null);
 token = Cookies.get("token");
 let url;
 let myConfig;
@@ -306,7 +307,6 @@ else{
       console.log(err);
     });
 }
-
 
   const getUnAuthJobsFunc = ()=>{
     axios
@@ -350,6 +350,15 @@ if(isDifferent){
     setUserChats(value.data);
     getUserConversationFunc();
   })
+}
+
+const getGithubDetailsFunc = (user)=>{
+  setGithubUserDetail(null);
+  axios.get(`https://api.github.com/users/${user}`).then((value)=>{
+    setGithubUserDetail(value.data);
+  }).catch((err)=>{
+    console.log(err);
+  });
 }
 
   return (
@@ -398,7 +407,9 @@ if(isDifferent){
         isFilter,
         setIsFilter,
         setChatTracerId,
-        chatTracerId
+        chatTracerId,
+        getGithubDetailsFunc,
+        githubUserDetail
       }}
     >
       {children}

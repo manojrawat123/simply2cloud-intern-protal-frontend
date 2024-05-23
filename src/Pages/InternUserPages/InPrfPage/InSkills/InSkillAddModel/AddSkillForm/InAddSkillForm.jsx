@@ -29,6 +29,19 @@ const InternAddSkillsForm = (props) => {
     return <LoadingPage />
   }
 
+  function getLinkType(url) {
+    const githubPattern = /^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)*\/?$/;
+    const youtubePattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+    
+    if (githubPattern.test(url)) {
+      return 'GitHub';
+    } else if (youtubePattern.test(url)) {
+      return 'YouTube';
+    } else {
+      return 'Other';
+    }
+  }
+
 
   return (
     <div>
@@ -53,6 +66,7 @@ const InternAddSkillsForm = (props) => {
               const skill_name = values["skill_name"].label;
               values["skill_name"] = skill_name;
               values["skill_id"] = id;
+
               values["user_image"] = profilePhoto;
               const formData = new FormData();
               Object.entries(values).forEach(([key, value]) => {
