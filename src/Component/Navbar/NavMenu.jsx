@@ -130,7 +130,7 @@ const NavMenu = () => {
             null}
         </div>
         <div className={`menu w-full lg:block lg:items-center lg:w-auto lg:px-3 px-[15%] md:static absolute top-0 bg-white   md:py-0 py-10 
-  ${mobMenuVis ? " h-[100%] flex-grow transition-all duration-1000 ease-in-out -left-[10%]" : "transition-all duration-300 ease-in-out -left-full"
+  ${mobMenuVis ? " z-50 h-[100%] flex-grow transition-all duration-1000 ease-in-out -left-[10%]" : "transition-all duration-300 ease-in-out -left-full"
           }`}>
           <div className="absolute top-4 left-[90%] md:hidden">
             <button>
@@ -143,7 +143,6 @@ const NavMenu = () => {
             </button>
           </div>
           {/* NavBar Render */}
-          
           <div className="text-md font-bold text-gray-500 md:flex md:text-center">
             {navItem?.map((element, index) => {
               if ((!Cookies.get("token") && element.visibility == "logout") || (element.visibility == "both" && (Cookies.get('user_type') != "company" || element.label == "Home"))) {
@@ -178,7 +177,7 @@ const NavMenu = () => {
                           : " "
                         }`}
                     >
-                      {element.icon ? <div> <span className="md:block hidden">  {element.icon}</span> <span className="md:hidden "> {element.label}</span> </div> : element.label+ ""}
+                      {element.icon ? <div> <span className="md:block hidden">  {element.icon}</span> <span className="md:hidden "> {element.label}</span> </div> : element.label}
                     </NavLink>
                 );
               }
@@ -257,7 +256,7 @@ const NavMenu = () => {
                       element.id == navId ?
                         element.option ? (
                           <>
-                            <div className="hidden md:block absolute right-7 top-8 z-50 transform rotate-[180deg] bg-white">
+                            <div className="hidden md:block absolute right-7 top-8 z-[100] transform rotate-[180deg] bg-white">
                               <UpArrowIcon />
                             </div>
                             <div className="md:absolute right-[21rem] top-11 bg-white ml-4 md:ml-0">

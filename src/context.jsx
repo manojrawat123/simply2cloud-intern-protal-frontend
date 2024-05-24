@@ -38,6 +38,9 @@ const DataProviderFuncComp = ({ children }) => {
   const location = useLocation();
 
   const socketFunction = ()=>{
+    try{
+
+    
     const socket = io(`${API_SOCKET_URL}`);
         socket.on('connect', () => {
           setSocket(socket);
@@ -49,6 +52,10 @@ const DataProviderFuncComp = ({ children }) => {
             setChatTracerId(data?.receiverId);
           }
           });
+        }
+        catch(error){
+          console.log(error);
+        }
   }
 
   const profileFunc = () => {
