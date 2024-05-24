@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import generateValidationSchema from '../../GenrateValidationSchema/genrateValidationSchema'
 import genrateInitalValues from '../../genrateInitialValues/InitialValues';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -14,16 +14,37 @@ const CompanyRegister = () => {
     const validationSchema = generateValidationSchema(companyRegisterInputArr);
     const initialValues = genrateInitalValues(companyRegisterInputArr);
     const [registerButton, setRegisterButton] = useState(false);
+    const [logoImg, setLogoImg] = useState();
     const navigate = useNavigate();
+    const fileInputRef = useRef(null);
 
     const registerStudentFunc = (values, { resetForm }) => {
         setRegisterButton(true);
         values["user_type"] = "company"
         values["url"] = API_ROUTE_URL
-        axios.post(`${API_BASE_URL}/company_register/`, values).then((value) => {
+        const data = values;
+        data["logo"] = logoImg;
+
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (key === 'logo') {
+                // Check if the value is a File object
+                if (value instanceof File) {
+                    formData.append(key, logoImg);
+                }
+            }
+            else {
+                formData.append(key, value);
+            }
+        });
+
+
+
+        axios.post(`${API_BASE_URL}/company_register/`, formData).then((value) => {
             toast.success("You are registerd Successfully. Verify Link Send to your email", {
                 position: "top-center"
             });
+            fileInputRef.current.value = null
             resetForm();
         }).catch((err) => {
             if (err.response.data.errors.email && err.response.data.errors.phone) {
@@ -67,7 +88,7 @@ const CompanyRegister = () => {
                         validationSchema={validationSchema}
                     >
                         {({ values, handleSubmit, resetForm, setFieldValue, handleBlur }) => (
-                            <Form>
+                            <Form encType="multipart/form-data">
                                 <div className="mb-4 grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 p-4">
                                     {companyRegisterInputArr.map((element, index) => {
                                         if (element.type == "checkbox") {
@@ -81,6 +102,28 @@ const CompanyRegister = () => {
                                                         className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
                                                     />
                                                     &nbsp;&nbsp;  <h4 className="text-blue-600 mb-2 inline-block mt-4">{element.placeholder} </h4>
+                                                    <ErrorMessage name={element.name} component="div" className="text-red-500" />
+                                                </div>
+                                            )
+                                        }
+                                        if (element.type == "file") {
+                                            return (
+                                                <div className='' key={index}>
+                                                    <h4 className="text-blue-600 mb-2">{element.placeholder} <span className="text-red-500">*</span></h4>
+                                                    <div className={"w-full relative col-span-1 "}>
+                                                        {element.icon}
+                                                        <input
+                                                            type={element.type}
+                                                            name={element.name}
+                                                            placeholder={element.placeholder}
+                                                            required
+                                                            ref={fileInputRef}
+                                                            onChange={(e) => {
+                                                                setLogoImg(e.target.files[0]);
+                                                            }}
+                                                            className="pl-9 w-full py-2 peer px-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                                        />
+                                                    </div>
                                                     <ErrorMessage name={element.name} component="div" className="text-red-500" />
                                                 </div>
                                             )

@@ -308,7 +308,8 @@ else{
     });
 }
 
-  const getUnAuthJobsFunc = ()=>{
+const getUnAuthJobsFunc = ()=>{
+  // const url = token ? '' : 'job-unauth-search'
     axios
       .get(`${API_BASE_URL}/job-unauth-search/`)
       .then((value) => {

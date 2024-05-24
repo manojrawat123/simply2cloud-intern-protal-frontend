@@ -21,7 +21,7 @@ const TestimonialSlide = ({ portfolio_link, user_image }) => {
                 window.open(portfolio_link, "_blank")
             }
             else {
-                window.open(`${API_BASE_URL}/${user_image}`, "_blank")
+                window.open(`${API_BASE_URL}${user_image}`, "_blank")
             }
         }}>
             {isYouTubeVideo(portfolio_link) ? (
@@ -49,7 +49,7 @@ function TestimonialSlides({ internProfileFullDetails }) {
                 </a>
             ) :
                 <div className="slider-item h-[20rem] w-full flex cursor-pointer" onClick={() => {
-                    window.open(skills?.portfolio_link, "_blank");
+                    window.open(skills[0]?.portfolio_link, "_blank");
                 }}>
                     <img src={`${API_BASE_URL}${skills[0].user_image}`} alt="YouTube Thumbnail" className="object-cover h-full w-auto mx-auto" />
                 </div>

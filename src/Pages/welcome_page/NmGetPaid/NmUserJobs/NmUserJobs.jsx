@@ -48,7 +48,7 @@ const NmUnAuthJobsPage = () => {
   return (
     <>
     {console.log(studentJobsObj)}
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <div className="flex items-center justify-center mt-10 space-x-10">
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
           <InternJobSearchByCategoery
@@ -124,7 +124,7 @@ const NmUnAuthJobsPage = () => {
       ) : (
         <div className="md:mx-[2rem] my-[2rem] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10">
           {filteredJobs?.map((element, index) => {
-            return <JobCard key={index} jobs={element} />;
+            return <JobCard key={index} jobs={element} filter={true} setFilteredJobs={setFilteredJobs} selectedCategoery={selectedCategoery} selectedSubCategoery={selectedSubCategoery} selectedLocation={selectedLocation}/>;
           })}
         </div>
       )}

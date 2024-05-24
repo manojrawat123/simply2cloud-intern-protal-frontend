@@ -54,36 +54,20 @@ const getUsernameFromProfile = (url) => {
     
       <div className="grid md:grid-cols-8 grid-cols-1 w-[95%] md:w-[85%] mx-auto gap-10 mt-10">
         <div className="col-span-5 ">
-    
           <InAboutTab internProfileFullDetails={internProfileFullDetails} />
-
           {
            internProfileFullDetails?.profile_details?.github_profile &&
             internProfileFullDetails?.profile_details?.github_profile != "" && isValidGithubProfile(internProfileFullDetails?.profile_details?.github_profile)  ?
             <InternGithubProfile username={getUsernameFromProfile(internProfileFullDetails.profile_details.github_profile)} /> : null
           }
           {id == Cookies.get("profile_id") && internProfileFullDetails?.experience_details?.length == 0 ?
-            <div className="my-4 h-[5rem] flex item-center justify-center">
-              <div className="text-center">
-                <h1 className="bg-red-500 text-white rounded font-bold py-2 px-4">You have not Added any Experience</h1>
-                <button className="underline text-blue-500 mx-auto" onClick={() => { navigate("/profile") }}>Compleate Now</button>
-              </div>
-            </div>
+            <NoDataPage domain={"No experience Added!"} subdomain={"Please add some experience!"} height={"8rem"}/>
             :
             <InExperience internProfileFullDetails={internProfileFullDetails} />
           }
           {
             id == Cookies.get("profile_id") && internProfileFullDetails?.profile_details?.skills?.length == 0 ?
-              <div className="my-4 h-[5rem] flex item-center justify-center">
-                <div className="text-center">
-                  <h1 className="bg-red-500 text-white rounded font-bold py-2 px-4">You have not Added any Skills</h1>
-                  <div className=" text-center">
-                  <button className="underline text-blue-500" onClick={() => { navigate("/profile") }}>Compleate Now</button>
-
-                  </div>
-
-                </div>
-              </div> :
+              <NoDataPage domain={"No Skills Added!"} subdomain={"Please Add some skills!"} height={"8rem"}/> :
               <InSkills internProfileFullDetails={internProfileFullDetails} />
 
           }

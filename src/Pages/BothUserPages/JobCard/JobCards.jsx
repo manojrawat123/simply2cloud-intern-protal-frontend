@@ -47,15 +47,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function JobCard({ jobs }) {
+export default function JobCard({ jobs, filter,selectedCategoery ,selectedSubCategoery ,selectedLocation, setFilteredJobs }) {
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const [applyButton, setApplyButton] = React.useState(false);
   const profile_id = Cookies.get("profile_id");
-  const { getJobsForStudentFunc } = React.useContext(DataContext);
+  const { getJobsForStudentFunc ,jobSearchFilterFunc,  } = React.useContext(DataContext);
 
   const applyJobFunc = () => {
-
     setApplyButton(true);
     const user_id = Cookies.get("user");
     const token = Cookies.get("token");
@@ -76,8 +75,13 @@ export default function JobCard({ jobs }) {
         }
       )
       .then(() => {
-        getJobsForStudentFunc();
-        toast.success("Applied Sucessfully!", {
+        if(filter){
+          jobSearchFilterFunc(selectedCategoery,null, selectedSubCategoery, selectedLocation, setFilteredJobs);
+        }
+        else{
+          getJobsForStudentFunc();
+        }
+        toast.success("Application send to company!", {
           position: "top-center",
         });
       })

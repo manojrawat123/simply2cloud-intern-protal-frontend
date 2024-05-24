@@ -14,6 +14,7 @@ const all_category = [
     { title: "Web Devloper", icon: "", link: "/search?search_sub_categoery=Web%20Devloper&search_id=13" }
 ]
 
+
 function Category() {
     const navigate = useNavigate();
     return (
