@@ -67,7 +67,11 @@ export default function InternProfileCard({ profile, isCompany }) {
         {/* <NavLink to={``} className="text-blue-500 font-semibold border border-solid border-blue-500 rounded hover:bg-blue-500 hover:text-white py-1 mx-auto px-2">
         <button >Show Profile</button>
       </NavLink> */}
-        <a href={profile?.portfolio_link} target='_blank' className='text-blue-500 cursor-pointer  ml-auto'><LanguageIcon /> </a>
+
+        <a href={profile?.portfolio_link} target='_blank' className='text-blue-500 cursor-pointer mr-4 ml-auto'><LanguageIcon /> </a>
+      {
+        profile.intern.id == Cookies.get("user") ? <NavLink to={`/update-profile/${profile?.id}/`}> <ModeEditIcon /> </NavLink> : null
+      }
       </div>
     </div>
   );
