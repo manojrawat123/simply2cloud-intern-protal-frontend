@@ -11,13 +11,15 @@ const filter = createFilterOptions();
 export default function NmAutoCmpSrc(props) {
 
   const [value, setValue] = React.useState(null);
-  const {jobCategoeryOpt, unAuthHomePageFunc, avaibleSkills,jobSubCategoeryOpt} = React.useContext(DataContext);
+  const {jobCategoeryOpt, 
+    avaibleSkills,jobSubCategoeryOpt
+    } = React.useContext(DataContext);
   const navigate = useNavigate();
-  
+  console.log(jobCategoeryOpt);
 
-  React.useEffect(()=>{
-    unAuthHomePageFunc();
-  },[])
+  // React.useEffect(()=>{
+  //   unAuthHomePageFunc();
+  // },[])
 
 
   return (

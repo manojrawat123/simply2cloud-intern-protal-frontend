@@ -26,19 +26,28 @@ import MyApplicationPg from "./Pages/InternUserPages/MyApplicationPg/MyApplicati
 import SocketTest from "./Pages/welcome_page/StudentDetails/Sections/ContactTab/ChatSocket/ChatSocket";
 import { DataContext } from "./context";
 import UserNotifications from "./Pages/BothUserPages/Notifications/Notifications";
+import LoadingPage from "./Component/LoadingPage/LodingPage";
 
 
 function App() {
 
   const { socketFunction } = useContext(DataContext);
+  const {unAuthHomePageFunc,jobCategoeryOpt
+    } = React.useContext(DataContext);
 
-  useEffect(()=>{
+
+  useEffect(() => {
     socketFunction();
-  },[])
-  
+    unAuthHomePageFunc();
+  }, []);
+
+if(!jobCategoeryOpt){
+  return <LoadingPage />
+}
+
   return (
     <>
-      <NavMenu />
+      <NavMenu searchArrForCompany={jobCategoeryOpt}/>
       <Routes>
         {/* UnProtected Routes */}
         <Route path="/login" Component={LoginPage} />
@@ -75,7 +84,7 @@ function App() {
           <Route path="/chat/:id" Component={SocketTest} />
         </Route>
         <Route path="" Component={ProtectedRoutes}>
-        <Route path="/notifications" Component={UserNotifications} />
+          <Route path="/notifications" Component={UserNotifications} />
         </Route>
 
         {/* Company Routes */}

@@ -13,9 +13,7 @@ const RenderAlgo = () => {
     }
   },[])
   return (
-    Cookies.get("user_type") == "user" ?  <NmUnAuthJobsPage />: 
-    <AdLandingPage />
-    
+    Cookies.get("user_type") == "user" ?  <NmUnAuthJobsPage />: <AdLandingPage /> 
   )
 }
 

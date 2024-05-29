@@ -15,7 +15,8 @@ import { useEffect } from "react";
 import UpArrowIcon from "../../image/icons/UpArrow";
 import UserNotifications from "../../Pages/BothUserPages/Notifications/Notifications";
 
-const NavMenu = () => {
+const NavMenu = ({searchArrForCompany}) => {
+  console.log(searchArrForCompany);
   const [mobMenuVis, setMobileVis] = useState(false);
   const { logoutFunc, jobSearchFilterFunc, setFilteredJobs, setTempFilterJobs, setIsFilter } = useContext(DataContext);
   const [navId, setNavId] = useState(0);
@@ -103,10 +104,10 @@ const NavMenu = () => {
                   }}
                 >
                   <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300 font-semibold text-gray-700  !important" value="">{Cookies.get("user_type") == "user" ? "Search for Internship" : "Search For Intern"}</option>
-                  <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="3">Graphic Designing</option>
-                  <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="1">Photo Editing</option>
-                  <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="2">Video Editing</option>
-                </select>
+                  {searchArrForCompany?.map((element, index)=>{
+                    return <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value={element.id}>{element.job_category}</option>
+})}
+                  </select>
               </> : <select type="text" className="hidden md:block pl-4 md:w-[17rem] border border-solid border-gray-300 rounded-l-xl  font-semibold text-gray-700  !important appearance-none"
                 onChange={(e) => {
                   if (!e.target.value || e.target.value == "") {
@@ -118,10 +119,13 @@ const NavMenu = () => {
                 }}
               >
                 <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300 font-semibold text-gray-700  !important" value="">{Cookies.get("user_type") == "user" ? "Search for Internship" : "Search For Intern"}</option>
-                <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Graphic Design&search_id=3">Graphic Designing</option>
-                <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Photo Editing&search_id=1">Photo Editing</option>
+                {searchArrForCompany?.map((element, index)=>{
+               return (<option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value={`/search?search_categoery=${element.job_category}&search_id=${element.id}`}>{element.job_category}</option>
+                )
+                })}
+                {/* <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Photo Editing&search_id=1">Photo Editing</option>
                 <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Video Editing&search_id=2">Video Editing</option>
-                <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Software%20Devloper&search_id=4">Software Devlopers</option>
+                <option class="py-2 px-4 text-lg hover:bg-gray-300 border-b border-solid border-gray-300  font-semibold text-gray-700  !important" value="/search?search_categoery=Software%20Devloper&search_id=4">Software Devlopers</option> */}
               </select>}
               <button className="bg-black text-white px-4 rounded-r-xl hidden md:block ">
                 <Search />

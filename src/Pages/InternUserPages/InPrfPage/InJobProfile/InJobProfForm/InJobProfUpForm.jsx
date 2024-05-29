@@ -1,7 +1,6 @@
-
-
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
 import { CircularProgress, Rating } from "@mui/material";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -28,6 +27,7 @@ const InternJobProfileUpdate = () => {
   const [filterSubCategoeryOpt, setFilterSubCategoeryOpt] = useState([]);
   const [profilePhoto, setProfilePhoto] = useState();
   const [thumbnailPhoto, setThumbnailPhoto] = useState();
+  const navigate = useNavigate();
     const { id } = useParams();
 
 const defaultValue = {
@@ -112,6 +112,7 @@ const defaultValue = {
     position: "top-center",
   });
   profileFunc();
+  navigate('/profile')
   resetForm();
 })
 .catch((err) => {
