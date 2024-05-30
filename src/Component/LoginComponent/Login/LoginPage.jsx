@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import API_BASE_URL, { API_ROUTE_URL } from '../../../config';
 import inputLoginArr from './loginInpArr';
 import { ToastContainer, toast } from 'react-toastify';
+import SignUpMd from '../../Navbar/SignUpOpMd/SignUpMd';
+import ForgotPasswordForm from '../ForgotPassword/ForgotPassword';
+import ForgotPasswordModel from '../ForgotPassword/ForgotPasswordModel';
 
 
 const LoginPage = () => {
@@ -15,7 +18,8 @@ const LoginPage = () => {
   const [loginButton, setLoginButton] = useState(false);
   const navigate = useNavigate();
   const { profileFunc } = useContext(DataContext);
-
+const [open ,setOpen] = useState(false);
+const [forgotPassword , setForgotPassword] = useState(false);
   const loginFunc = (e) => {
     e.preventDefault();
     setLoginButton(true);
@@ -54,6 +58,8 @@ const LoginPage = () => {
 
   return (
     <>
+     {open ? <SignUpMd open={open} setOpen={setOpen} /> : null}
+     {forgotPassword ? <ForgotPasswordModel forgotPassword={forgotPassword} setForgotPassword={setForgotPassword}/> : null}
       <ToastContainer />
       <section className="gradient-form h-[100vh] bg-neutral-200  dark:bg-neutral-700">
         <div className=" h-full p-10">
@@ -88,21 +94,57 @@ const LoginPage = () => {
                           </div>
                         )
                       })}
-                      <div className="mb-12 pb-1 pt-1 text-center">
+                      <div className="pb-1 pt-1 text-center">
                         <button
                           className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
                           type="submit"
                           data-te-ripple-init
                           data-te-ripple-color="light"
                           style={{
-                            background: "green",
+                            background: "black",
                           }}
                         >
                           {loginButton ? <CircularProgress size={19} color='inherit' /> : "Login"}
                         </button>
                       </div>
+                      <div className=" pb-1 pt-1 text-center">
+                        <button
+                          // className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                          className='text-blue-500 underline'
+                          type="button"
+                          data-te-ripple-init
+                          data-te-ripple-color="light"
+                          style={{
+                            // background: "black",
+                          }}
+                          onClick={()=>{
+                            setForgotPassword(true);
+                          }}
+                        >
+                          {"Forgot Password? "}
+                        </button>
+                      </div>
                       {/* End of Loading Button */}
                     </form>
+                    <hr />
+                    <div className="mt-4 pb-1 pt-1 text-center">
+                        <button
+                          // className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                          type="button"
+                          data-te-ripple-init
+                          data-te-ripple-color="light"
+                          style={{
+                            // background: "black",
+                          }}
+                         
+                        >
+                         <span>Don't have an account?</span> <button
+                         onClick={()=>{
+                              setOpen(true);
+                         }} 
+                         className='text-blue-500 underline'>{"SignUp"}</button>
+                        </button>
+                      </div>
                   </div>
                 </div>
               </div>

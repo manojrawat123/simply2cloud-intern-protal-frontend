@@ -27,6 +27,7 @@ import SocketTest from "./Pages/welcome_page/StudentDetails/Sections/ContactTab/
 import { DataContext } from "./context";
 import UserNotifications from "./Pages/BothUserPages/Notifications/Notifications";
 import LoadingPage from "./Component/LoadingPage/LodingPage";
+import ResetPassword from "./Component/LoginComponent/ResetPassword/ResetPassword";
 
 
 function App() {
@@ -55,6 +56,7 @@ if(!jobCategoeryOpt){
         <Route path="/company-register" Component={CompanyRegister} />
         <Route path="/intern-details/:id" Component={StudentFullDetails} />
         <Route path="/accounts/activate/:userid_encode/:verify_token/" Component={EmailVerify} />
+        <Route path="/reset-password/:userid_encode/:verify_token/" Component={ResetPassword} />
         {/* Intern Routes */}
         {/* <Route path="" Component={ProtectedRoutes}> */}
         <Route path="" Component={RenderAlgo} />

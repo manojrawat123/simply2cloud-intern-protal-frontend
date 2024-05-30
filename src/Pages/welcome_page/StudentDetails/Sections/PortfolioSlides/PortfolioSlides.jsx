@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import { SampleNextArrow, SamplePrevArrow } from "../../../LandingPage/Sections/PopularServices/PopularServices";
 import API_BASE_URL from "../../../../../config";
+import YouTube from "react-youtube";
 
 const isYouTubeVideo = (url) => {
     return url.includes("youtube.com") || url.includes("youtu.be");
@@ -14,6 +15,17 @@ const getYouTubeThumbnail = (url) => {
     return null; // Return null for non-YouTube URLs
 };
 
+function getYouTubeVideoId(url) {
+  const regExp = /^.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  
+  if (match && match[1]) {
+    return match[1];
+  } else {
+    return null;
+  }
+}
+
 const TestimonialSlide = ({ portfolio_link, user_image }) => {
     return (
         <div className="slider-item h-[20rem] w-full flex cursor-pointer" onClick={() => {
@@ -25,7 +37,7 @@ const TestimonialSlide = ({ portfolio_link, user_image }) => {
             }
         }}>
             {isYouTubeVideo(portfolio_link) ? (
-                <img src={getYouTubeThumbnail(portfolio_link)} alt="YouTube Thumbnail" className="object-cover h-full w-auto mx-auto" />
+                <YouTube videoId={getYouTubeVideoId(portfolio_link)} />
             ) : (
                 <img src={`${API_BASE_URL}/${user_image}`} alt="User Testimonial" className="object-cover h-full w-auto mx-auto" />
             )}
@@ -44,7 +56,7 @@ function TestimonialSlides({ internProfileFullDetails }) {
             {skills.length === 1 ? isYouTubeVideo(skills[0]?.portfolio_link) ? (
 
                 <a href={skills[0].portfolio_link}><div className="slider-item h-[20rem] w-full flex">
-                    <img src={getYouTubeThumbnail(skills[0]?.portfolio_link)} alt="YouTube Thumbnail" className="object-cover h-full w-auto mx-auto" />
+                <YouTube videoId={getYouTubeVideoId(skills[0]?.portfolio_link)} /> 
                 </div>
                 </a>
             ) :

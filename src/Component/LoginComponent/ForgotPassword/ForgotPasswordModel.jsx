@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import AskCont from './MdCont/AskCont';
+import ForgotPasswordForm from './ForgotPassword';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -18,24 +18,24 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
   }));
 
-const SignUpMd = ({open, setOpen}) => {
+const ForgotPasswordModel = ({forgotPassword, setForgotPassword}) => {
     return (
         <BootstrapDialog
             onClose={() => {
-                setOpen(false);
+                setForgotPassword(false);
             }}
             aria-labelledby="customized-dialog-title"
-            open={open}
+            open={forgotPassword}
             fullWidth
-            maxWidth="md"
+            // maxWidth="md"
         >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                Join Intern Monster
+                Reset Password
             </DialogTitle>
             <IconButton
                 aria-label="close"
                 onClick={() => {
-                    setOpen(false);
+                    setForgotPassword(false);
                 }}
                 sx={{
                     position: "absolute",
@@ -47,10 +47,10 @@ const SignUpMd = ({open, setOpen}) => {
                 <CloseIcon />
             </IconButton>
             <DialogContent dividers>
-                <AskCont setOpen={setOpen}/>
+                <ForgotPasswordForm setForgotPassword={setForgotPassword}/>
             </DialogContent>
         </BootstrapDialog>
     )
 }
 
-export default SignUpMd
+export default ForgotPasswordModel
