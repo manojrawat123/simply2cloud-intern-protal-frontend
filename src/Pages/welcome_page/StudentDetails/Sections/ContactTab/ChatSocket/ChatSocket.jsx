@@ -14,7 +14,7 @@ function App() {
     const [newMessage, setNewMessage] = useState();
 
     const { getUserConversationFunc,
-        userConversation, chatSocket, socketFunction } = useContext(DataContext);
+        userConversation, chatSocket, socketFunction ,chatTracerId} = useContext(DataContext);
     const { id } = useParams();
     
     const navigate = useNavigate();
@@ -41,6 +41,19 @@ function App() {
     //         socket.disconnect();
     //     };
     // }, []); // Empty dependency array ensures the effect runs only once
+
+    useEffect(()=>{
+        chatSocket?.on('newMessage', (data) => {
+            console.log({"reciver Id": data?.receiverId,
+                "Sender ID" : Cookies.get("user")})
+            if(data?.receiverId == Cookies.get("user")){
+                getUserConversationFunc();
+              }
+            });
+            return () => {
+                chatSocket?.off('newMessage');
+              };
+    }, [chatTracerId])
 
     return (
         <div className="App grid md:grid-cols-6 md:h-[87vh] ">

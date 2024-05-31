@@ -68,6 +68,7 @@ const DataProviderFuncComp = ({ children }) => {
       })
       .then((value) => {
         setUserDetails(value.data);
+        socketFunction();
         Cookies.set("user_type", value.data.user_details.user_type);
         Cookies.set("user", value.data.user_details.id);
         let skills_id = [];

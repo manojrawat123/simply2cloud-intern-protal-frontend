@@ -16,7 +16,6 @@ import UpArrowIcon from "../../image/icons/UpArrow";
 import UserNotifications from "../../Pages/BothUserPages/Notifications/Notifications";
 
 const NavMenu = ({searchArrForCompany}) => {
-  console.log(searchArrForCompany);
   const [mobMenuVis, setMobileVis] = useState(false);
   const { logoutFunc, jobSearchFilterFunc, setFilteredJobs, setTempFilterJobs, setIsFilter } = useContext(DataContext);
   const [navId, setNavId] = useState(0);
