@@ -16,19 +16,19 @@ const getYouTubeThumbnail = (url) => {
 };
 
 function getYouTubeVideoId(url) {
-  const regExp = /^.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  
-  if (match && match[1]) {
-    return match[1];
-  } else {
-    return null;
-  }
+    const regExp = /^.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[1]) {
+        return match[1];
+    } else {
+        return null;
+    }
 }
 
 const TestimonialSlide = ({ portfolio_link, user_image }) => {
     return (
-        <div className="slider-item h-[20rem] w-full flex cursor-pointer" onClick={() => {
+        <div className="slider-item h-[20rem] w-full flex cursor-pointer bg-green" onClick={() => {
             if (isYouTubeVideo(portfolio_link)) {
                 window.open(portfolio_link, "_blank")
             }
@@ -37,7 +37,16 @@ const TestimonialSlide = ({ portfolio_link, user_image }) => {
             }
         }}>
             {isYouTubeVideo(portfolio_link) ? (
-                <YouTube videoId={getYouTubeVideoId(portfolio_link)} />
+                <YouTube videoId={getYouTubeVideoId(portfolio_link)} 
+                className="overflow-x-scroll w-full h-full"
+                opts={{
+                  width: '100%',
+                  height: '100%',
+                  playerVars: {
+                    // Any additional playerVars you may need
+                  }
+                }}
+                />
             ) : (
                 <img src={`${API_BASE_URL}/${user_image}`} alt="User Testimonial" className="object-cover h-full w-auto mx-auto" />
             )}
@@ -54,11 +63,19 @@ function TestimonialSlides({ internProfileFullDetails }) {
                 <h1 className="font-semibold text-2xl text-gray-700 mb-4">Visual Creations</h1>
             </div>
             {skills.length === 1 ? isYouTubeVideo(skills[0]?.portfolio_link) ? (
-
-                <a href={skills[0].portfolio_link}><div className="slider-item h-[20rem] w-full flex">
-                <YouTube videoId={getYouTubeVideoId(skills[0]?.portfolio_link)} /> 
+                <div className="slider-item h-[20rem] w-full flex cursor-pointer">
+                    <YouTube videoId={getYouTubeVideoId(skills[0]?.portfolio_link)} 
+                     containerClassName="relative w-full overflow-hidden"
+                     className="overflow-x-scroll w-full h-full"
+                     opts={{
+                       width: '100%',
+                       height: '100%',
+                       playerVars: {
+                         // Any additional playerVars you may need
+                       }
+                     }} 
+                     />
                 </div>
-                </a>
             ) :
                 <div className="slider-item h-[20rem] w-full flex cursor-pointer" onClick={() => {
                     window.open(skills[0]?.portfolio_link, "_blank");

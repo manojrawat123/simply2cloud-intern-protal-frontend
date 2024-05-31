@@ -14,10 +14,13 @@ const InExperience = ({ internProfileFullDetails }) => {
                     <div>
                         {internProfileFullDetails?.experience_details?.map((element, index) => {
                             return <div className=' shadow-xl px-4 py-3 rounded-xl border-2 border-solid border-gray-300 my-4'>
-                                <h1 className='font-bold md:text-lg text-base text-gray-800 flex'>
+                                <h1 className='font-bold md:text-lg text-base text-gray-800 md:flex'>
                                     {element.company_name} <span className='font-semibold'>&nbsp;({element.job_categoery.job_category})</span>
-                                    <span className='mx-auto'><LocationIc />{element.location}</span>
+                                   <div className='mx-auto'><span className='md:hidden'>Location </span> <LocationIc />{element.location}</div>
                                 </h1>
+                                    <div className='md:hidden'>
+                                        <br />
+                                    </div>
                                 <div>
                                     <p>
                                         [  <span className='font-semibold text-gray-700'>Position: </span>{element.sub_categoery.sub_category_name}]

@@ -40,13 +40,18 @@ const [forgotPassword , setForgotPassword] = useState(false);
       console.log(err);
       if (err.response) {
         if (err.response.status == 400) {
-          toast.error(err.response.data.error, { position: "top-center" })
+          if (err?.response?.data?.error){
+            toast.error(err.response.data.error, { position: "top-center" })
+          }
+          else{
+            toast.error("Invalid Info",{ position: "top-center" });
+          }
         }
         else if (err.response.status == 401) {
-          toast.error(err.response.data.error, { position: "top-center" })
+          toast.error("Incorrect Password", { position: "top-center" })
         }
-        else {
-          toast.error(err.response.data.error, { position: "top-center" })
+        else{
+          toast.error("Invalid Info!")
         }
       }
 

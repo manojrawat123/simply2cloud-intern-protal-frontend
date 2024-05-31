@@ -6,7 +6,7 @@ import LocationIc from '../../../../../image/location';
 
 const InAboutTab = ({ internProfileFullDetails }) => {
   return (
-    <div className="flex space-x-4 ">
+    <div className="md:flex space-x-4 border-2 md:border-none rounded text-center md:text-start py-4 md:py-0">
       <div id="imageDiv">
         <img
           src={
@@ -15,7 +15,7 @@ const InAboutTab = ({ internProfileFullDetails }) => {
               : noUsr
           }
           alt={"loading..."}
-          className="rounded-full md:h-[10rem] md:w-[10rem] w-[4rem] h-[4rem] object-cover border-4 border-solid border-white"
+          className="rounded-[100%] mx-auto  w-[10rem] h-[10rem]  object-cover border-4 border-solid border-white"
         />
       </div>
       <div className="flex justify-center items-center">
@@ -42,7 +42,7 @@ const InAboutTab = ({ internProfileFullDetails }) => {
           <div className='2'>
             <div className='font-semibold text-sm'>
               <Tick />
-              <span className=''> Simply 2 Cloud Certified</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className=''> Simply2Cloud Certified</span>&nbsp;&nbsp;&nbsp;&nbsp;
               <LocationIc /> 
               {internProfileFullDetails?.profile_details?.intern.address}
             </div>
