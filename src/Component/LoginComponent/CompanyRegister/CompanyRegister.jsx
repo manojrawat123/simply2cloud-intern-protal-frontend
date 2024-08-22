@@ -45,22 +45,22 @@ const design = "absolute top-2 border-r border-black peer-focus:text-violet-700 
           placeholder: "Enter Company Email",
           icon: <EmailIcon className={design} />
         },
-        {
-          type: "textarea",
-          id: "location",
-          name: "location",
-          required: true,
-          placeholder: "Enter Company Address",
-          icon: <LocationOnIcon className={design} />
-        },
-        {
-          type: "date",
-          id: "founded_date",
-          name: "founded_date",
-          required: true,
-          placeholder: "Enter Company Founded Date",
-          icon: <EventNoteIcon className={design}/>
-        },
+        // {
+        //   type: "textarea",
+        //   id: "location",
+        //   name: "location",
+        //   required: true,
+        //   placeholder: "Enter Company Address",
+        //   icon: <LocationOnIcon className={design} />
+        // },
+        // {
+        //   type: "date",
+        //   id: "founded_date",
+        //   name: "founded_date",
+        //   required: true,
+        //   placeholder: "Enter Company Founded Date",
+        //   icon: <EventNoteIcon className={design}/>
+        // },
         {
           type: "url",
           id: "website",
@@ -69,14 +69,14 @@ const design = "absolute top-2 border-r border-black peer-focus:text-violet-700 
           placeholder: "Enter Company Website Link",
           icon: <LanguageIcon className={design}/>
         },
-        {
-          type: "text",
-          id: "industry",
-          name: "industry",
-          required: true,
-          placeholder: "Select Industry",
-          icon: <BusinessIcon className={design}/>
-        },
+        // {
+        //   type: "text",
+        //   id: "industry",
+        //   name: "industry",
+        //   required: true,
+        //   placeholder: "Select Industry",
+        //   icon: <BusinessIcon className={design}/>
+        // },
         {
             type: "password",
             id: "password",

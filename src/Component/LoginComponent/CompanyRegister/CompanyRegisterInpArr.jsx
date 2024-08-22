@@ -47,27 +47,28 @@ const CompanyRegister = () => {
             fileInputRef.current.value = null
             resetForm();
         }).catch((err) => {
-            if (err.response.data.errors.email && err.response.data.errors.phone) {
+            if (err?.response?.data?.errors?.email && err?.response?.data?.errors?.phone) {
                 toast.error("This Email and Phone Number is already in use", {
                     position: "top-center"
                 })
             }
-            else if (err.response.data.errors.email) {
+            else if (err?.response?.data?.errors?.email) {
                 toast.error("This Email is already in use", {
                     position: "top-center"
                 })
             }
-            else if (err.response.data.errors.phone) {
+            else if (err?.response?.data?.errors?.phone) {
                 toast.error("This Phone Number is already in use", {
                     position: "top-center"
                 })
             }
-            else if (err.response.data.errors.company_name) {
+            else if (err?.response?.data?.errors?.company_name) {
                 toast.error("This Company already exist", {
                     position: "top-center"
                 })
             }
             else {
+                console.log(err);
                 toast.error("Internal Server Error", {
                     position: "top-center"
                 })
